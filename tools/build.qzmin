@@ -1,0 +1,13 @@
+{
+	projects: [	
+			{
+				name :  "magicform.js",
+				target : "../release/magicform-0.0.1.js",
+				template:[
+				],
+				include : [
+					"../src/magicform.js"
+				]
+			}
+	]
+}
