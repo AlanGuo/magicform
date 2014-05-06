@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>key-value</title>
+	<link rel="stylesheet" type="text/css" href="../styles/default.css"></style>
+</head>
+<body>
+	<form id="form" class="mf" style="width:500px;margin:0 auto;margin-top:100px;">
+		
+	</form>
+	<script type="text/javascript" src="../release/magicform-0.0.1.js"></script>
+	<script type="text/javascript">
+		var form = document.getElementById("form");
+		form.innerHTML = magicForm.json2html({
+			name:1,
+			sex:2,
+			初中:{mf:1,control:"radio",checked:true,name:"graduate"},
+			高中:{mf:1,control:"radio",inline:true,name:"graduate"}
+		});
+	</script>
+</body>
+</html>

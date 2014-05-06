@@ -1,0 +1,7 @@
+.mf .formitem-ml50{
+	margin-left: 50px;
+}
+
+.mf .formitem-p{height: 32px;margin: 0}
+.mf .formitem-label{ font-weight:bold;display:inline-block;width: 100px;overflow: hidden;text-overflow:ellipsis;vertical-align: middle}
+.mf .formitem-input{width: 150px;}

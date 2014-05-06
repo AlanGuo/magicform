@@ -27,11 +27,11 @@ READ# Magic Form #
 
 	** json **
 	
-		{a:{mf:1,control:"radio",value:true, group:"sex"},b:{type:"radio",value:false}}
+		{a:{mf:1,control:"radio",checked:true, group:"sex"},b:{type:"radio",value:false}}
 		
 	** html **
 		
-		<p><lable>a</lable><input type="radio" name="sex"/></p>
+		<p><lable>a</lable><input type="radio" name="sex" checked/></p>
 		<p><lable>b</lable><input type="radio" name="sex"/></p>
 		<!--支持data-mf-exp-->
 	
@@ -39,11 +39,11 @@ READ# Magic Form #
 	
 	** json **
 	
-		{a:{mf:1,control:"checkbox",value:true},b:{type:"checkbox",value:false}}
+		{a:{mf:1,control:"checkbox",checked:true},b:{type:"checkbox"}}
 		
 	** html **
 		
-		<p><lable>a</lable><input type="checkbox"/></p>
+		<p><lable>a</lable><input type="checkbox" checked/></p>
 		<p><lable>b</lable><input type="checkbox"/></p>
 		<!--支持data-mf-exp-->
 
@@ -99,11 +99,24 @@ READ# Magic Form #
 
 1. json
 
-		{a:{mf:1,hash:1,value:1001,keycontrol:"",control:""}}
+		{a:{mf:1,value:1001,hash:1,keycontrol:"",control:""}}
 		//使用keycontrol控制a的类型，规则遵循key:object经典键值对规则
 		
 2. html		
 
 		<p>
 			<input/><input/>
+		</p>
+		
+### 格式
+
+1. json
+
+		{a:{mf:1,value:1001},b:{mf:1,value:1002,inline:1}}
+	
+2. html
+		
+		<p>
+			<label>a</label><input/>
+			<label>b</label><input/>
 		</p>

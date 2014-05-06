@@ -4,6 +4,7 @@
 				name :  "magicform.js",
 				target : "../release/magicform-0.0.1.js",
 				template:[
+					"../src/template.html"
 				],
 				include : [
 					"../src/magicform.js"

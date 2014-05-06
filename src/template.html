@@ -1,0 +1,27 @@
+<template name="MFFormTemplate">
+	<%for(var p in data){
+		if(p.mf){%>
+
+		<%} else {%>
+			<!--key-*-->
+			<%if(!data[p].inline){%>
+				</p><p class="formitem-p"><label class="formitem-label"><%=p%></label>
+			<%}else{%>
+				<label class="formitem-label formitem-ml50"><%=p%></label>
+			<%}%>
+			<%if(data[p].mf){
+				if(data[p].control === "radio"){
+					if(data[p].checked){%>
+						<input class="formitem-radio" type="radio" checked name="<%=data[p].name%>">
+					<%}else{%>
+						<input class="formitem-radio" type="radio" name="<%=data[p].name%>">
+					<%}%>
+				<%}else if(data[p].control==="checkbox"){%>
+				<%}%>
+			<%}else{%>
+				<!--key-value-->
+				<input class="formitem-input" value="<%=data[p]%>"></p>
+			<%}%>
+		<%}
+	}%>
+</template>
