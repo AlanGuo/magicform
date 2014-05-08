@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
 	<title>key-value</title>
 	<link rel="stylesheet" type="text/css" href="../styles/default.css"></style>
 </head>
@@ -14,8 +15,21 @@
 		form.innerHTML = magicForm.json2html({
 			name:1,
 			sex:2,
-			初中:{mf:1,control:"radio",checked:true,name:"graduate"},
-			高中:{mf:1,control:"radio",inline:true,name:"graduate"}
+			学历:{mf:1,control:"radio",name:"graduate",options:[{label:"初中",checked:true},{label:"高中"}]},
+			不喜欢上课:{mf:1,control:"checkbox",options:[{checked:true,label:"十分"},{checked:true,label:"非常"}]},
+			密码:{mf:1,control:"password",value:"siemenlon"},
+			出生日期:{mf:1,control:"date",value:"1988"},
+			毕业院校:{mf:1,control:"select",options:[
+				{val:"optgroup",text:"母校"},
+				{text:"武昌理工学院",val:1},
+				{val:"optgroup",text:"名牌"},
+				{text:"清华大学",val:2},
+				{val:"optgroup",text:"垃圾"},
+				{text:"深职院",val:3}
+			]},
+			学科:{语文:1,数学:2},
+			数字:[{mf:1,control:"checkbox",options:[{checked:true}]},2,3,4,5],
+			返回码:{mf:1,hash:1,control:"text",value:"value",key:{mf:1,value:"key",control:"text"}}
 		});
 	</script>
 </body>

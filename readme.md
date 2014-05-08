@@ -99,7 +99,7 @@ READ# Magic Form #
 
 1. json
 
-		{a:{mf:1,value:1001,hash:1,keycontrol:"",control:""}}
+		{a:{mf:1,value:1001,hash:1,key:{}}
 		//使用keycontrol控制a的类型，规则遵循key:object经典键值对规则
 		
 2. html		

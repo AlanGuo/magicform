@@ -2,6 +2,9 @@
 	margin-left: 50px;
 }
 
-.mf .formitem-p{height: 32px;margin: 0}
-.mf .formitem-label{ font-weight:bold;display:inline-block;width: 100px;overflow: hidden;text-overflow:ellipsis;vertical-align: middle}
+.mf .formitem-p{min-height: 32px;margin: 0}
+.mf .formitem-label{ font-weight:bold;display:inline-block;width: 150px;overflow: hidden;text-overflow:ellipsis;vertical-align: middle}
+.mf .formitem-radio-label{margin-right: 10px;}
+.mf .formitem-checkbox-label{margin-right: 10px;}
 .mf .formitem-input{width: 150px;}
+.mf .ml10{margin-left: 10px;}
