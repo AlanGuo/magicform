@@ -3,10 +3,10 @@
 <head>
 	<meta charset="utf-8">
 	<title>key-value</title>
-	<link rel="stylesheet" type="text/css" href="../styles/default.css"></style>
+	<link rel="stylesheet" type="text/css" href="../assets/styles/default.css"></style>
 </head>
 <body>
-	<form id="form" class="mf" style="width:500px;margin:0 auto;margin-top:100px;">
+	<form id="form" class="mf" style="width:600px;margin:0 auto;margin-top:100px;">
 		
 	</form>
 	<script type="text/javascript" src="../release/magicform-0.0.1.js"></script>
@@ -29,8 +29,12 @@
 			]},
 			学科:{语文:1,数学:2},
 			数字:[{mf:1,control:"checkbox",options:[{checked:true}]},2,3,4,5],
-			返回码:{mf:1,hash:1,control:"text",value:"value",key:{mf:1,value:"key",control:"text"}}
+			返回码:[
+				{mf:1,hash:1,control:"text",value:"value",key:{mf:1,value:"key",control:"text"}},
+				{mf:1,hash:1,control:"text",value:"value2",key:{mf:1,value:"key2",control:"text"}}
+			]
 		});
+		magicForm.init(form);
 	</script>
 </body>
 </html>

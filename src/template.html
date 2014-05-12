@@ -1,44 +1,43 @@
 <template name="MFFormTemplate">
 	<%var flag=false;for(var p in data){
 		if(p.mf){%>
-
 		<%} else {%>
 			<!--key-*-->
 			<%if(!data[p].inline){%>
 				<%if(flag){%>
 					<%if(data[p].hash){%>
-						</p><p><label class="formitem-label"><%=p%></label><%=util.tmpl(valueItemTemplate,{data:data[p].key})%><span class="ml10"></span>
+						</p><p><label class="formitem-label "><%=p%></label><%=util.tmpl(valueItemTemplate,{data:data[p].key})%><span class="formitem-ml10"></span>
 					<%}else{%>
-						</p><p class="formitem-p"><label class="formitem-label"><%=p%></label>
+						</p><p class="formitem-p"><label class="formitem-label "><%=p%></label>
 					<%}%>
 				<%}else{flag=true;%>
 					<%if(data[p].hash){%>
-						<label class="formitem-label"><%=p%></label><%=util.tmpl(valueItemTemplate,{data:data[p].key})%><span class="ml10"></span>
+						<label class="formitem-label "><%=p%></label><%=util.tmpl(valueItemTemplate,{data:data[p].key})%><span class="formitem-ml10"></span>
 					<%}else{%>
-						<p class="formitem-p"><label class="formitem-label"><%=p%></label>
+						<p class="formitem-p"><label class="formitem-label "><%=p%></label>
 					<%}%>
 				<%}%>
 			<%}else if(data[p].hash){%>
-				<p><label class="formitem-label"><%=p%></label></p>
-				<%=util.tmpl(valueItemTemplate,{data:data[p].key})%><span class="ml10"></span>
+				<p><label class="formitem-label "><%=p%></label></p>
+				<%=util.tmpl(valueItemTemplate,{data:data[p].key})%><span class="formitem-ml10"></span>
 			<%}else{%>
-				<label class="formitem-label formitem-ml50"><%=p%></label>
+				<label class="formitem-label formitem-ml50 "><%=p%></label>
 			<%}%>
 			<%if(/array/i.test(Object.prototype.toString.call(data[p]))){%>
 				<!--key-array-->
-				<span style="display:inline-block">
-					<a href="javascript:;">+</a>
+				<span class="form-array-ul">
+					<a href="javascript:;" class="form-icon form-item-add" title="新增"><i class="iconfont">&#xf0154;</i></a>
 					<%for(var i=data[p].length-1;i>=0;i--){%>
 						<br>
 						<%if(data[p][i].hash){%>
-							<%=util.tmpl(valueItemTemplate,{data:data[p][i].key})%><span class="ml10"></span>
+							<span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data[p][i].key})%><span class="formitem-ml10"></span></span>
 						<%}%>
-						<%=util.tmpl(valueItemTemplate,{data:data[p][i]})%><a href="javascript:;">-</a>
+						<span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data[p][i]})%><a href="javascript:;" class="form-icon form-item-remove" title="移除"><i class="iconfont">&#xf0153;</i></a></span>
 					<%}%>
 				</span>
 			<%}else if("[object Object]" === Object.prototype.toString.call(data[p]) && !data[p].mf){%>
 				<!--key-object-->
-				<a class="formitem-detail-a" href="javascript:;" data-mf-val="<%=encodeURIComponent(JSON.stringify(data[p]))%>">详细</a>
+				<a href="javascript:;" class="form-icon form-item-detail" data-mf-val="<%=encodeURIComponent(JSON.stringify(data[p]))%>" title="详细设定"><i class="iconfont">&#xf00e1;</i></a>
 			<%}else{%>
 				<!--key-value-->
 				<%=util.tmpl(valueItemTemplate,{data:data[p]})%>

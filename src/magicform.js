@@ -83,16 +83,63 @@ function(exports) {
     var magicForm = (function() {
         return {
             formTemplate: template.formTemplate,
+
+            /**
+             * json -> html
+             * @method json2html
+             */
             json2html: function(json) {
                 return util.tmpl(this.formTemplate, {
                     data: json,
                     util: util,
                     valueItemTemplate: template.formValueItemTemplate
                 });
+            },
+
+            /**
+             * 初始化一些事件处理
+             * @method init
+             */
+            init: function(wrapper) {
+                var controls = wrapper.querySelectorAll(".form-array-li");
+                for (var i = 0; i < controls.length; i++) {
+                    var con = controls[i];
+                    con.addEventListener("mouseover", function() {
+                        var remove = this.querySelector(".form-item-remove");
+                        if (remove) remove.style.visibility = "visible";
+                    });
+                    con.addEventListener("mouseout", function() {
+                        var remove = this.querySelector(".form-item-remove");
+                        if (remove) remove.style.visibility = "hidden";
+                    });
+
+                    var removeAnchor = con.querySelector(".form-item-remove");
+
+                    if (removeAnchor) {
+                        removeAnchor.addEventListener("click", function() {
+                            var removeParent = this.parentNode.parentNode;
+                            //删除换行
+
+                            var previousSibling = this.parentNode.previousSibling;
+
+                            if (/form-array-li/i.test(previousSibling.className)) {
+                                //删除三个元素
+                                removeParent.removeChild(this.parentNode.previousSibling.previousSibling);
+                                removeParent.removeChild(this.parentNode.previousSibling);
+                                removeParent.removeChild(this.parentNode);
+                            } else {
+                                //删除两个元素
+                                removeParent.removeChild(this.parentNode.previousSibling);
+                                removeParent.removeChild(this.parentNode);
+                            }
+                        });
+                    }
+                }
+
+                return this;
             }
         };
     })();
-
 
     exports.magicForm = magicForm;
 }(window);
