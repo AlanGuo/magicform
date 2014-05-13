@@ -11,7 +11,8 @@
 function(exports) {
     var template = {
         formTemplate: MFFormTemplate,
-        formValueItemTemplate: MFFormValueItemTemplate
+        formValueItemTemplate: MFFormValueItemTemplate,
+        formArrayItemTemplate: MFFormArrayItemTemplate
     }
 
     var util = (function() {
@@ -40,10 +41,10 @@ function(exports) {
             _typeof: function(data) {
                 return /\[object\s(\w*)\]/i.exec(Object.prototype.toString.call(data))[1];
             },
-            createElementWithTemplate: function(template) {
+            createElementsWithTemplate: function(template) {
                 var div = document.createElement("div");
                 div.innerHTML = template;
-                return div.children[0];
+                return div.children;
             },
             tmpl: function() {
                 var cache = {};
@@ -97,13 +98,31 @@ function(exports) {
             },
 
             /**
-             * 初始化一些事件处理
+             * 初始化一些事件
              * @method init
              */
             init: function(wrapper) {
-                var controls = wrapper.querySelectorAll(".form-array-li");
-                for (var i = 0; i < controls.length; i++) {
-                    var con = controls[i];
+                var initRemoveAnchor = function(removeAnchor) {
+                    removeAnchor.addEventListener("click", function() {
+                        var removeParent = this.parentNode.parentNode;
+                        //删除换行
+
+                        var previousSibling = this.parentNode.previousSibling;
+
+                        if (/form-array-li/i.test(previousSibling.className)) {
+                            //删除三个元素
+                            removeParent.removeChild(this.parentNode.previousSibling.previousSibling);
+                            removeParent.removeChild(this.parentNode.previousSibling);
+                            removeParent.removeChild(this.parentNode);
+                        } else {
+                            //删除两个元素
+                            removeParent.removeChild(this.parentNode.previousSibling);
+                            removeParent.removeChild(this.parentNode);
+                        }
+                    });
+                }
+
+                var initFormArrayItem = function(con) {
                     con.addEventListener("mouseover", function() {
                         var remove = this.querySelector(".form-item-remove");
                         if (remove) remove.style.visibility = "visible";
@@ -116,24 +135,48 @@ function(exports) {
                     var removeAnchor = con.querySelector(".form-item-remove");
 
                     if (removeAnchor) {
-                        removeAnchor.addEventListener("click", function() {
-                            var removeParent = this.parentNode.parentNode;
-                            //删除换行
-
-                            var previousSibling = this.parentNode.previousSibling;
-
-                            if (/form-array-li/i.test(previousSibling.className)) {
-                                //删除三个元素
-                                removeParent.removeChild(this.parentNode.previousSibling.previousSibling);
-                                removeParent.removeChild(this.parentNode.previousSibling);
-                                removeParent.removeChild(this.parentNode);
-                            } else {
-                                //删除两个元素
-                                removeParent.removeChild(this.parentNode.previousSibling);
-                                removeParent.removeChild(this.parentNode);
-                            }
-                        });
+                        initRemoveAnchor(removeAnchor);
                     }
+                }
+
+                var uls = wrapper.querySelectorAll(".form-array-ul");
+                for (var i = 0; i < uls.length; i++) {
+                    var addAnchor = uls[i].querySelector(".form-item-add");
+                    if (addAnchor) {
+                        //绑定新增事件
+                        (function(anchor, ul) {
+                            anchor.addEventListener("click", function(evt) {
+                                var newtemplate = anchor.getAttribute("data-newtemplate") == "undefined" ? null : anchor.getAttribute("data-newtemplate");
+
+                                if (newtemplate) {
+                                    var elems = util.createElementsWithTemplate(util.tmpl(template.formArrayItemTemplate, {
+                                        valueItemTemplate: template.formValueItemTemplate,
+                                        data: JSON.parse(decodeURIComponent(newtemplate)),
+                                        util: util
+                                    }));
+                                    //插入元素
+                                    var br = ul.querySelector("br");
+                                    var last = null;
+                                    while (elems.length) {
+                                        last = elems[0];
+                                        ul.insertBefore(elems[0], br);
+                                    }
+                                    if (last) {
+                                        var input = last.querySelector("input");
+                                        input && input.focus();
+
+                                        initFormArrayItem(last);
+                                    }
+                                }
+                            });
+                        })(addAnchor, uls[i]);
+                    }
+                }
+
+                //初始化表单数组
+                var controls = wrapper.querySelectorAll(".form-array-li");
+                for (var i = 0; i < controls.length; i++) {
+                    initFormArrayItem(controls[i])
                 }
 
                 return this;

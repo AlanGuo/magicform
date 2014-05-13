@@ -26,13 +26,15 @@
 			<%if(/array/i.test(Object.prototype.toString.call(data[p]))){%>
 				<!--key-array-->
 				<span class="form-array-ul">
-					<a href="javascript:;" class="form-icon form-item-add" title="新增"><i class="iconfont">&#xf0154;</i></a>
+					<a href="javascript:;" class="form-icon form-item-add" title="新增" data-newtemplate="<%=encodeURIComponent(JSON.stringify(data[p].filter(function(item){if(item.fornew) return item;})[0]))%>"><i class="iconfont">&#xf0154;</i></a>
 					<%for(var i=data[p].length-1;i>=0;i--){%>
-						<br>
-						<%if(data[p][i].hash){%>
-							<span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data[p][i].key})%><span class="formitem-ml10"></span></span>
+						<%if(!data[p][i].fornew){%>
+							<br>
+							<%if(data[p][i].hash){%>
+								<span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data[p][i].key})%><span class="formitem-ml10"></span></span>
+							<%}%>
+							<span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data[p][i]})%><a href="javascript:;" class="form-icon form-item-remove" title="移除"><i class="iconfont">&#xf0153;</i></a></span>
 						<%}%>
-						<span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data[p][i]})%><a href="javascript:;" class="form-icon form-item-remove" title="移除"><i class="iconfont">&#xf0153;</i></a></span>
 					<%}%>
 				</span>
 			<%}else if("[object Object]" === Object.prototype.toString.call(data[p]) && !data[p].mf){%>
@@ -86,4 +88,12 @@
 		<!--key-value-->
 		<input class="formitem-input" value="<%=data%>">
 	<%}%>
+</template>
+
+<template name="MFFormArrayItemTemplate">
+	<br>
+	<%if(data.hash){%>
+		<span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data.key})%><span class="formitem-ml10"></span></span>
+	<%}%>
+	<span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data})%><a href="javascript:;" class="form-icon form-item-remove" title="移除"><i class="iconfont">&#xf0153;</i></a></span>
 </template>
