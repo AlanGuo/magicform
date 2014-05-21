@@ -128,7 +128,9 @@ function(exports) {
                         } else {
                             //数组或者hash
                             var controls = control.querySelectorAll(".formitem-control");
-                            json = [];
+                            var add = control.querySelector(".form-item-add");
+                            var addItem = add.getAttribute("data-newtemplate");
+                            json = addItem ? [JSON.parse(decodeURIComponent(addItem))] : [];
                             for (var i = 0; i < controls.length; i++) {
                                 var con = controls[i];
                                 if (con.getAttribute("data-flag") == "true") {
@@ -253,6 +255,12 @@ function(exports) {
                     }
                 }
 
+                var initFormDetailItem = function(con) {
+                    con.addEventListener("click", function(evt) {
+                        //弹窗
+                    });
+                }
+
                 var uls = wrapper.querySelectorAll(".form-array-ul");
                 for (var i = 0; i < uls.length; i++) {
                     var addAnchor = uls[i].querySelector(".form-item-add");
@@ -294,6 +302,11 @@ function(exports) {
                 var controls = wrapper.querySelectorAll(".form-array-li");
                 for (var i = 0; i < controls.length; i++) {
                     initFormArrayItem(controls[i])
+                }
+                //初始化详情按钮
+                var details = wrapper.querySelectorAll(".form-item-detail");
+                for (var i = 0; i < controls.length; i++) {
+                    initFormDetailItem(controls[i])
                 }
 
                 return this;
