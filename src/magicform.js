@@ -97,6 +97,120 @@ function(exports) {
                 });
             },
 
+
+            /**
+             * html2value
+             * @method _html2value
+             * @private
+             */
+            _html2value: function(control) {
+                var json = null;
+                if (control) {
+                    //判断控件类型
+                    if (/span/i.test(control.tagName)) {
+                        var type = control.getAttribute("type");
+                        if (type == "checkbox" || type == "radio") {
+                            var inputs = control.querySelectorAll("input");
+                            var labels = control.querySelectorAll("label");
+                            var options = [];
+                            for (var j = 0; j < inputs.length; j++) {
+                                options.push({
+                                    label: labels[j].innerHTML,
+                                    checked: inputs[j].checked
+                                });
+                            }
+                            json = {
+                                mf: 1,
+                                control: type,
+                                name: inputs[0].name,
+                                options: options
+                            };
+                        } else {
+                            //数组或者hash
+                            var controls = control.querySelectorAll(".formitem-control");
+                            json = [];
+                            for (var i = 0; i < controls.length; i++) {
+                                var con = controls[i];
+                                if (con.getAttribute("data-flag") == "true") {
+                                    //key
+                                    var key = this._html2value(con);
+                                    var con2 = controls[i + 1];
+                                    if (con2) {
+                                        var val = this._html2value(con2);
+                                        if (/string/i.test(typeof val)) {
+                                            val = {
+                                                value: val
+                                            }
+                                        }
+                                        val.mf = 1;
+                                        val.hash = 1;
+                                        val.key = key;
+                                        json.push(val);
+
+                                        i++;
+                                    }
+                                } else {
+                                    json.push(this._html2value(con));
+                                }
+                            }
+                        }
+                    } else if (/select/i.test(control.tagName)) {
+                        //select
+                        var optionControls = control.querySelectorAll(".formitem-selectoption");
+                        var options = [];
+                        for (var j = 0; j < optionControls.length; j++) {
+                            if (/optgroup/i.test(optionControls[j])) {
+                                options.push({
+                                    val: "optgroup",
+                                    text: optionControls[j].getAttribute("label")
+                                });
+                            } else {
+                                options.push({
+                                    val: optionControls[j].value,
+                                    text: optionControls[j].innerHTML,
+                                });
+                            }
+
+                            json = {
+                                mf: 1,
+                                control: "select",
+                                options: options
+                            };
+                        }
+                    } else if (/input/i.test(control.tagName)) {
+                        if (control.type && control.type != "text") {
+                            //其他input类型
+                            json = {
+                                mf: 1,
+                                control: control.type,
+                                value: control.value
+                            };
+                        } else {
+                            //字符串
+                            json = control.value;
+                        }
+                    }
+                }
+
+                return json;
+            },
+            /**
+             * html -> json
+             * @method html2json
+             */
+            html2json: function(form, options) {
+                options = options || {}
+                var items = form.querySelectorAll(".formitem-p");
+                var json = {};
+                for (var i = 0; i < items.length; i++) {
+                    var key = items[i].querySelector(".formitem-label").getAttribute("data-key");
+                    var control = items[i].querySelector(".formitem-control");
+                    //转换html结构
+                    json[key] = this._html2value(control);
+                }
+                return json;
+            },
+
             /**
              * 初始化一些事件
              * @method init
@@ -157,14 +271,17 @@ function(exports) {
                                     //插入元素
                                     var br = ul.querySelector("br");
                                     var last = null;
+                                    var focusElem = null;
                                     while (elems.length) {
                                         last = elems[0];
+                                        if (!focusElem) focusElem = last.querySelector("input");
                                         ul.insertBefore(elems[0], br);
                                     }
+                                    //焦点元素
+                                    if (focusElem) {
+                                        focusElem.focus();
+                                    }
                                     if (last) {
-                                        var input = last.querySelector("input");
-                                        input && input.focus();
-
                                         initFormArrayItem(last);
                                     }
                                 }
