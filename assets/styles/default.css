@@ -12,6 +12,9 @@
     -webkit-text-stroke-width: 0.2px;
     -moz-osx-font-smoothing: grayscale;
 }
+.mf .f32{
+    font-size: 32px;
+}
 .mf .form-icon{
     text-decoration: none;
     color: gray;
@@ -20,6 +23,11 @@
     text-decoration: none;
     color: #3a92db;
 }
+.mf .form-icon-close:hover{
+    color: red;
+}
+.mf .clearfix{clear:both;}
+.mf .fr{float:right;}
 
 
 .mf .formitem-ml10{margin-left: 10px;}
@@ -38,3 +46,10 @@
 .mf .form-item-remove{margin-left: 6px;visibility: hidden;}
 .mf .form-item-remove:hover{color: red;}
 .mf .form-item-add{padding-bottom: 5px;}
+
+.mf .form-dialog{background: #eee;position: absolute;}
+.mf .form-dialog .form-dialog-topbar{background: #ddd;padding:2px;}
+.mf .form-dialog .form-dialog-topbar .form-dialog-topbar-title{float:left;padding: 5px;}
+.mf .form-dialog .form-dialog-topbar .form-dialog-topbar-buttons{float: right;}
+.mf .form-dialog .form-dialog-content{padding: 10px;}
+.mf .form-dialog .form-dialog-buttons{padding: 10px;}

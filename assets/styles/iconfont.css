@@ -1,3 +1,4 @@
+
 @font-face {font-family: 'iconfont';
   src: url('iconfont.eot'); /* IE9*/
   src: url('iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
@@ -5,6 +6,7 @@
   url('iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
   url('iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
 }
+
 
 .iconfont {
   font-family:"iconfont" !important;
@@ -21,4 +23,6 @@
 .icon-jian:before { content: "\f0153"; }
 
 .icon-jia:before { content: "\f0154"; }
+
+.icon-guanbi:before { content: "\343c"; }
 

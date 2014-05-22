@@ -12,7 +12,8 @@ function(exports) {
     var template = {
         formTemplate: MFFormTemplate,
         formValueItemTemplate: MFFormValueItemTemplate,
-        formArrayItemTemplate: MFFormArrayItemTemplate
+        formArrayItemTemplate: MFFormArrayItemTemplate,
+        formDialogTemplate: MFFormDialogTemplate
     }
 
     var util = (function() {
@@ -218,6 +219,7 @@ function(exports) {
              * @method init
              */
             init: function(wrapper) {
+                var self = this;
                 var initRemoveAnchor = function(removeAnchor) {
                     removeAnchor.addEventListener("click", function() {
                         var removeParent = this.parentNode.parentNode;
@@ -257,7 +259,42 @@ function(exports) {
 
                 var initFormDetailItem = function(con) {
                     con.addEventListener("click", function(evt) {
-                        //弹窗
+                        var dialog = util.createElementsWithTemplate(util.tmpl(template.formDialogTemplate, {
+                            title: "详细"
+                        }))[0];
+                        //只允许有一个dialog
+                        var globalDialog = document.getElementById("form-dialog");
+                        if (!globalDialog) {
+                            wrapper.appendChild(dialog);
+                            globalDialog = dialog;
+                        } else {
+                            globalDialog.innerHTML = dialog.innerHTML;
+                        }
+                        var w = dialog.clientWidth,
+                            h = dialog.clientHeight;
+                        //窗口尺寸
+                        var winWidth = document.documentElement.clientWidth;
+                        var winHeight = document.documentElement.clientHeight;
+
+                        //窗口居中
+                        dialog.style.left = (winWidth - w) / 2 + "px";
+                        dialog.style.top = (winHeight - h) / 2 + "px";
+
+                        //填充内容
+                        var content = dialog.querySelector(".form-dialog-content");
+                        content.innerHTML = self.json2html(JSON.parse(decodeURIComponent(con.getAttribute("data-mf-val"))));
+
+                        //绑定按钮事件
+                        var closeButton = globalDialog.querySelector(".form-icon-close");
+                        var saveButton = globalDialog.querySelector(".form-button-close");
+
+                        closeButton.onclick = function() {
+                            wrapper.removeChild(globalDialog);
+                        }
+                        saveButton.onclick = function() {
+                            wrapper.removeChild(globalDialog);
+                        }
+
                     });
                 }
 
@@ -301,12 +338,12 @@ function(exports) {
                 //初始化表单数组
                 var controls = wrapper.querySelectorAll(".form-array-li");
                 for (var i = 0; i < controls.length; i++) {
-                    initFormArrayItem(controls[i])
+                    initFormArrayItem(controls[i]);
                 }
                 //初始化详情按钮
                 var details = wrapper.querySelectorAll(".form-item-detail");
-                for (var i = 0; i < controls.length; i++) {
-                    initFormDetailItem(controls[i])
+                for (var i = 0; i < details.length; i++) {
+                    initFormDetailItem(details[i]);
                 }
 
                 return this;
