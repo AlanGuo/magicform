@@ -1,0 +1,448 @@
+@charset "UTF-8";
+@font-face {
+  font-family: 'iconfont';
+  src: url('iconfont.eot');
+  src: url('iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('iconfont.woff') format('woff'), /* chrome、firefox */ url('iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('iconfont.svg#iconfont') format('svg');
+  
+  /* IE9*/
+  /* iOS 4.1- */
+}
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-mulu:before {
+  content: "\f00e1";
+}
+.icon-jian:before {
+  content: "\f0153";
+}
+.icon-jia:before {
+  content: "\f0154";
+}
+.icon-guanbi:before {
+  content: "\343c";
+}
+.icon-icon:before {
+  content: "\e604";
+}
+/**
+ * 
+ * @authors alandlguo (alandlguo@tencent.com)
+ * @date    2013-12-23 20:12:08
+ */
+/*reset*/
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+summary,
+time,
+mark,
+audio,
+video,
+input {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+html,
+body,
+form,
+fieldset,
+p,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  -webkit-text-size-adjust: none;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  font-family: arial, sans-serif;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+ins {
+  text-decoration: none;
+}
+del {
+  text-decoration: line-through;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+/**
+ * confui layout
+ * @authors alandlguo (alandlguo@tencent.com)
+ * @date    2013-12-23 20:12:08
+ */
+/*less params*/
+/*common style*/
+.confui .clearfix:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.confui .left {
+  padding-left: 1em;
+}
+.confui .center {
+  text-align: center;
+}
+.confui .right {
+  padding-right: 1em;
+  float: right;
+}
+.confui .fl {
+  float: left;
+}
+.confui .fr {
+  float: right;
+}
+.confui .inlineblock {
+  display: inline-block;
+}
+.confui .h1 {
+  height: 1px;
+}
+.confui .noborder {
+  border: 0;
+}
+.confui .noresize {
+  resize: none;
+}
+.confui .padding1 {
+  padding: 1em;
+}
+.confui .buttonpadding {
+  padding: 0.3em 1.2em 0.3em 1.2em;
+}
+.confui .lineheight2p5 {
+  line-height: 2.5em;
+}
+/*预定义宽度*/
+.confui .w100 {
+  width: 100px;
+}
+/**
+ * confui style
+ * @authors alandlguo (alandlguo@tencent.com)
+ * @date    2013-12-23 20:12:08
+ */
+.confui .round2 {
+  border-radius: 2px;
+}
+.confui .pointer {
+  cursor: pointer;
+}
+/*子样式可组合*/
+.confui.default .nodecoration {
+  text-decoration: none;
+}
+.confui.default .blackbg {
+  background-color: #333333;
+}
+.confui.default .whitebg {
+  background-color: white;
+}
+.confui.default .bluebg {
+  background-color: #2986d3;
+}
+.confui.default .lightgraybg {
+  background-color: #e2e2e2;
+}
+.confui.default .graybg {
+  background-color: #dddddd;
+}
+.confui.default .lightgraybg2 {
+  background-color: #f2f2f2;
+}
+.confui.default .blackcolor {
+  color: #333333;
+}
+.confui.default .darkgraycolor {
+  color: #555555;
+}
+.confui.default .whitecolor {
+  color: #ffffff;
+}
+.confui.default .darkredcolor {
+  color: #bf0005;
+}
+.confui.default .borderbottomwidth1 {
+  border-bottom-width: 1px;
+}
+.confui.default .grayborderbottom {
+  border-bottom-color: #dddddd;
+}
+.confui.default .borderwidth1 {
+  border-width: 1px;
+}
+.confui.default .grayborder {
+  border-color: #dddddd;
+}
+.confui.default .blueborder {
+  border-color: #006db7;
+}
+/**
+ * confui font.less
+ * @authors alandlguo (alandlguo@tencent.com)
+ * @date    2013-12-23 20:12:08
+ */
+.confui .bold {
+  font-weight: bold;
+}
+.confui .ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.confui .nodecoration {
+  text-decoration: none;
+}
+.confui .f32 {
+  font-size: 32px;
+}
+.confui.default .icon16 {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+}
+.confui.default .seprator {
+  border: 0;
+  height: 1px;
+  background-color: #dddddd;
+}
+.confui.default .bar {
+  background-color: #333333;
+  color: #ffffff;
+}
+.confui.default .bar .content {
+  line-height: 2.5em;
+}
+.confui.default .list li {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #dddddd;
+}
+.confui.default .list li:active {
+  background-color: #dddddd;
+}
+.confui.default .list li .content {
+  padding: 1em;
+}
+.confui.default .link {
+  text-decoration: none;
+  color: #333333;
+}
+.confui.default input,
+.confui.default select {
+  border-style: solid;
+  border-color: #dddddd;
+  border-width: 1px;
+  border-radius: 2px;
+  color: #555555;
+}
+.confui.default select {
+  -webkit-appearance: initial;
+  font-size: inherit;
+  box-sizing: content-box;
+  background-color: #f2f2f2;
+  cursor: pointer;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAASCAYAAACJgPRIAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAMNJREFUeNqMUdERwiAMbaj/OgJO4Ah2lI5QJwA26AjdQDfg2EA36AjtBPXlLigqlr67kEt4CeSFlmWpStilgXOugbOw3hhzi3n1VdTDzrABBYcfEpIt3EnCPayLd8R/kqpRLlMc8ewYO3UZAmPgoyYiDX/9M5gOAHfSBQU0bdFJVRtA1loW0K9wLkpGX8O99t5PGIAQNBlCgE5WJeuYM6T29XGwp3QNcVOs9sd0SLC6Dwln6Z6VgLsFfka6vxdcwlOAAQB3fT4YAQKO8gAAAABJRU5ErkJggg==);
+  background-position: 96% center;
+  background-repeat: no-repeat;
+}
+.confui.default input:active,
+.confui.default input:focus,
+.confui.default select:focus,
+.confui.default select:active {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #006db7;
+}
+.confui.default input[disabled],
+.confui.default input[readonly],
+.confui.default select[disabled],
+.confui.default select[readonly] {
+  background-color: #e2e2e2;
+}
+.confui.default .primarybutton {
+  border-style: solid;
+  padding: 0.3em 1.2em 0.3em 1.2em;
+  border-color: #006db7;
+  background-color: #2986d3;
+  color: #ffffff;
+  text-decoration: none;
+}
+.confui.default .primarybutton:hover {
+  background: #3196db;
+}
+.confui.default .primarybutton:active {
+  background: #1574b5;
+}
+.confui.default .primarybutton:disabled,
+.confui.default .primarybutton.disabled {
+  cursor: default;
+  background-color: #e2e2e2;
+  border-bottom-width: 1px;
+  border-color: #dddddd;
+}
+.confui.default .codeblock {
+  border-style: solid;
+  background-color: #e2e2e2;
+  border-bottom-width: 1px;
+  border-color: #dddddd;
+}
+/*dialog*/
+.confui.default .dialog {
+  border: 1px solid #777777;
+  position: absolute;
+  background: #fff;
+}
+.confui.default .dialog .topbar {
+  background: #333333;
+  height: 30px;
+}
+.confui.default .dialog .topbar .title {
+  float: left;
+  padding-left: 8px;
+  line-height: 30px;
+  color: white;
+}
+.confui.default .dialog .topbar .buttons {
+  float: right;
+}
+.confui.default .dialog .topbar .buttons .close {
+  text-decoration: none;
+  color: #bf0005;
+}
+.confui.default .dialog .topbar .buttons .close:before {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 32px;
+  background-color: white;
+  content: "\e604";
+}
+.confui.default .dialog .topbar .buttons .close:hover {
+  color: red;
+}
+.confui.default .dialog .content {
+  padding: 10px;
+}
+.confui.default .dialog .toolbars {
+  padding: 10px;
+  margin-bottom: 10px;
+}

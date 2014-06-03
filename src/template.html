@@ -1,5 +1,5 @@
 <template name="MFFormTemplate">
-	<%var flag=false;for(var p in data){
+	<%var flag=false;for(var i in order){var p = order[i].p;
 		if(p.mf){%>
 		<%} else {%>
 			<!--key-*-->
@@ -39,7 +39,7 @@
 				</span>
 			<%}else if("[object Object]" === Object.prototype.toString.call(data[p]) && !data[p].mf){%>
 				<!--key-object-->
-				<a href="javascript:;" class="form-icon form-item-detail" data-mf-val="<%=encodeURIComponent(JSON.stringify(data[p]))%>" title="详细设定"><i class="iconfont">&#xf00e1;</i></a>
+				<a href="javascript:;" class="form-icon form-item-detail formitem-control" data-mf-val="<%=encodeURIComponent(JSON.stringify(data[p]))%>" title="详细设定"><i class="iconfont">&#xf00e1;</i></a>
 			<%}else{%>
 				<!--key-value-->
 				<%=util.tmpl(valueItemTemplate,{data:data[p]})%>
@@ -51,27 +51,19 @@
 <template name="MFFormValueItemTemplate">
 	<%if(data.mf){%>
 		<%if(data.control === "radio"){%>
-			<span class="formitem-control" type="radio">
-				<%for(var i=0;i<data.options.length;i++){
-					if(data.options[i].checked){%>
-						<input class="formitem-radio" data-flag="<%=flag%>" type="radio" checked name="<%=data.name%>" id="formitem-radio-<%=data.options[i].label%>"><label class="formitem-radio-label" for="formitem-radio-<%=data.options[i].label%>"><%=data.options[i].label%></label>
-					<%}else{%>
-						<input class="formitem-radio" data-flag="<%=flag%>" type="radio" name="<%=data.name%>" id="formitem-radio-<%=data.options[i].label%>"><label for="formitem-radio-<%=data.options[i].label%>" class="formitem-radio-label"><%=data.options[i].label%></label>
-					<%}%>
+			<span class="formitem-control" type="radio" data-order="<%=data.order%>">
+				<%for(var i=0;i<data.options.length;i++){%>
+					<input class="formitem-radio" data-flag="<%=flag%>" <%=data.options[i].disabled%> type="radio" <%=data.options[i].checked%> data-order="<%=data.order%>" name="<%=data.name%>" id="formitem-radio-<%=data.options[i].label%>"><label class="formitem-radio-label" for="formitem-radio-<%=data.options[i].label%>"><%=data.options[i].label%></label>
 				<%}%>
 			</span>
 		<%}else if(data.control === "checkbox"){%>
-			<span class="formitem-control" type="checkbox">
-				<%for(var i=0;i<data.options.length;i++){
-					if(data.options[i].checked){%>
-						<input class="formitem-checkbox" data-flag="<%=flag%>" type="checkbox" checked id="formitem-radio-<%=data.options[i].label%>"><label for="formitem-radio-<%=data.options[i].label%>" class="formitem-checkbox-label"><%=data.options[i].label%></label>
-					<%}else{%>
-						<input class="formitem-checkbox" data-flag="<%=flag%>" type="checkbox" id="formitem-radio-<%=data.options[i].label%>"><label for="formitem-radio-<%=data.options[i].label%>" class="formitem-checkbox-label"><%=data.options[i].label%></label>
-					<%}%>
+			<span class="formitem-control" type="checkbox" data-order="<%=data.order%>">
+				<%for(var i=0;i<data.options.length;i++){%>
+					<input class="formitem-checkbox" <%=data.options[i].disabled%> data-flag="<%=flag%>" type="checkbox" <%=data.options[i].checked%> id="formitem-radio-<%=data.options[i].label%>"><label for="formitem-radio-<%=data.options[i].label%>" class="formitem-checkbox-label"><%=data.options[i].label%></label>
 				<%}%>
 			</span>
 		<%}else if(data.control==="select"){var flag=false;%>
-			<select class="formitem-control formitem-select" data-flag="<%=flag%>">
+			<select class="formitem-control formitem-select" data-flag="<%=flag%>" <%=data.disabled%> data-order="<%=data.order%>">
 				<%for(var i=0;i<data.options.length;i++){%>
 					<%if(data.options[i].val==="optgroup"){%>
 						<%if(flag){%>
@@ -85,8 +77,8 @@
 					<%}
 				}%>
 			</select>
-		<%}else if(data.control){%>
-			<input class="formitem-control formitem-input" data-flag="<%=flag%>" type="<%=data.control%>" value="<%=data.value%>">
+		<%}else{%>
+			<input class="formitem-control formitem-input" data-flag="<%=flag%>" <%=data.disabled%> data-order="<%=data.order%>" type="<%=data.control%>" value="<%=data.value%>">
 		<%}%>
 	<%}else{%>
 		<!--key-value-->
@@ -103,18 +95,15 @@
 </template>
 
 <template name="MFFormDialogTemplate">
-	<div class="form-dialog" id="form-dialog">
-		<div class="form-dialog-topbar">
-			<span class="form-dialog-topbar-title"><%=title%></span>
-			<span class="form-dialog-topbar-buttons"><a class="form-icon form-icon-close" href="javascript:;"><i class="iconfont f32">&#x343c;</i></a></span>
-			<div class="clearfix"></div>
+	<div class="form-dialog dialog" id="form-dialog">
+		<div class="topbar clearfix">
+			<span class="title"><%=title%></span>
+			<span class="buttons"><a class="form-icon form-icon-close close" href="javascript:;"></a></span>
 		</div>
-		<div class="form-dialog-content">
-			dialog
+		<div class="form-dialog-content content">
 		</div>
-		<div class="form-dialog-buttons">
-			<a href="javascript:;" class="fr form-button form-button-close">保存</a>
-			<div class="clearfix"></div>
+		<div class="form-dialog-buttons toolbars clearfix">
+			<a href="javascript:;" class="fr form-button form-button-save primarybutton">保存</a>
 		</div>
 	</div>
 </template>

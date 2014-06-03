@@ -23,6 +23,10 @@
     text-decoration: none;
     color: #3a92db;
 }
+
+.mf .form-icon-close{
+    color: #bf0005;
+}
 .mf .form-icon-close:hover{
     color: red;
 }
@@ -34,22 +38,19 @@
 .mf .formitem-ml50{margin-left: 50px;}
 
 
-.mf .formitem-p{margin: 10px 0 0 0;}
+.mf .formitem-p{margin: 16px 0 0 0;}
 .mf .formitem-p:first-child{margin: 0;}
-.mf .formitem-label{ font-weight:bold;display:inline-block;margin-right:80px;width:100px;text-align: right;overflow: hidden;text-overflow:ellipsis;vertical-align: middle;}
-.mf .formitem-label.align-left{ font-weight:bold;display:inline-block;width: 150px;overflow: hidden;text-overflow:ellipsis;vertical-align: middle;text-align: left;margin-right: 0;}
-.mf .formitem-radio-label{margin-right: 10px;}
-.mf .formitem-checkbox-label{margin-right: 10px;}
+.mf .formitem-label{ font-weight:normal;display:inline-block;margin-right:80px;width:100px;text-align: right;overflow: hidden;text-overflow:ellipsis;vertical-align: middle;}
+.mf .formitem-label.align-left{ font-weight:normal;display:inline-block;width: 150px;overflow: hidden;text-overflow:ellipsis;vertical-align: middle;text-align: left;margin-right: 0;}
+.mf .formitem-radio-label{margin: 0 10px;}
+.mf .formitem-checkbox-label{margin: 0 10px;}
 .mf .form-array-ul{display: inline-block;}
 .mf .form-array-li{display: inline-block;margin-top: 5px;}
-.mf .formitem-input{width: 150px;}
+.mf .formitem-input,.mf .formitem-select{width: 150px;padding:3px;}
 .mf .form-item-remove{margin-left: 6px;visibility: hidden;}
 .mf .form-item-remove:hover{color: red;}
 .mf .form-item-add{padding-bottom: 5px;}
 
-.mf .form-dialog{background: #eee;position: absolute;}
-.mf .form-dialog .form-dialog-topbar{background: #ddd;padding:2px;}
-.mf .form-dialog .form-dialog-topbar .form-dialog-topbar-title{float:left;padding: 5px;}
-.mf .form-dialog .form-dialog-topbar .form-dialog-topbar-buttons{float: right;}
-.mf .form-dialog .form-dialog-content{padding: 10px;}
-.mf .form-dialog .form-dialog-buttons{padding: 10px;}
+.mf .form-dialog{ position: absolute;background: gray;}
+.mf .form-dialog .form-dialog-content{padding:10px;margin: 20px 80px 20px 0;}
+.mf .form-dialog .form-dialog-buttons{padding:10px;margin: 0 80px 5px 0;}

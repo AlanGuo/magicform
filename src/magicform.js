@@ -91,8 +91,23 @@ function(exports) {
              * @method json2html
              */
             json2html: function(json) {
+                var orders = [];
+                //排序
+                for (var p in json) {
+                    orders.push({
+                        p: p,
+                        order: json[p].order
+                    });
+                }
+                orders = orders.sort(function(a, b) {
+                    if (a.order == null || a.order == "") a.order = 100;
+                    if (b.order == null || b.order == "") b.order = 100;
+                    if (a.order > b.order) return true;
+                    if (a.order < b.order) return false;
+                });
                 return util.tmpl(this.formTemplate, {
                     data: json,
+                    order: orders,
                     util: util,
                     valueItemTemplate: template.formValueItemTemplate
                 });
@@ -117,14 +132,23 @@ function(exports) {
                             for (var j = 0; j < inputs.length; j++) {
                                 options.push({
                                     label: labels[j].innerHTML,
-                                    checked: inputs[j].checked
+                                    checked: inputs[j].checked ? "checked" : "",
+                                    disabled: inputs[j].disabled ? "disabled" : ""
                                 });
+                            }
+
+                            var order = null;
+                            try {
+                                order = parseInt(control.getAttribute("data-order"), 10);
+                            } catch (e) {
+                                order = null;
                             }
                             json = {
                                 mf: 1,
                                 control: type,
                                 name: inputs[0].name,
-                                options: options
+                                options: options,
+                                order: order,
                             };
                         } else {
                             //数组或者hash
@@ -132,26 +156,33 @@ function(exports) {
                             var add = control.querySelector(".form-item-add");
                             var addItem = add.getAttribute("data-newtemplate");
                             json = addItem ? [JSON.parse(decodeURIComponent(addItem))] : [];
-                            for (var i = 0; i < controls.length; i++) {
+                            for (var i = controls.length - 1; i >= 0; i--) {
                                 var con = controls[i];
-                                if (con.getAttribute("data-flag") == "true") {
-                                    //key
-                                    var key = this._html2value(con);
-                                    var con2 = controls[i + 1];
-                                    if (con2) {
-                                        var val = this._html2value(con2);
-                                        if (/string/i.test(typeof val)) {
-                                            val = {
-                                                value: val
-                                            }
+                                var con2 = controls[i - 1];
+                                if (con2 && con2.getAttribute("data-flag") == "true") {
+                                    var key = this._html2value(con2);
+                                    var val = this._html2value(con);
+                                    if (/string/i.test(typeof val)) {
+                                        val = {
+                                            value: val
                                         }
-                                        val.mf = 1;
-                                        val.hash = 1;
-                                        val.key = key;
-                                        json.push(val);
-
-                                        i++;
                                     }
+                                    val.mf = 1;
+                                    val.hash = 1;
+                                    val.key = key;
+                                    val.control = con.getAttribute("type");
+
+                                    var order = null;
+                                    try {
+                                        order = parseInt(con.getAttribute("data-order"), 10);
+                                    } catch (e) {
+                                        order = null;
+                                    }
+                                    val.order = order;
+                                    val.disabled = con.disabled ? "disabled" : ""
+                                    json.push(val);
+
+                                    i--;
                                 } else {
                                     json.push(this._html2value(con));
                                 }
@@ -174,19 +205,42 @@ function(exports) {
                                 });
                             }
 
+
+                            var order = null;
+                            try {
+                                order = parseInt(control.getAttribute("data-order"), 10);
+                            } catch (e) {
+                                order = null;
+                            }
                             json = {
                                 mf: 1,
                                 control: "select",
-                                options: options
+                                options: options,
+                                order: order,
+                                disabled: control.disabled ? "disabled" : ""
                             };
                         }
+                    } else if (/a/i.test(control.tagName)) {
+                        var value = control.getAttribute("data-mf-val");
+                        if (value) {
+                            value = decodeURIComponent(value);
+                            json = JSON.parse(value);
+                        }
                     } else if (/input/i.test(control.tagName)) {
-                        if (control.type && control.type != "text") {
+                        if (control.type) {
+                            var order = null;
+                            try {
+                                order = parseInt(control.getAttribute("data-order"), 10);
+                            } catch (e) {
+                                order = null;
+                            }
                             //其他input类型
                             json = {
                                 mf: 1,
                                 control: control.type,
-                                value: control.value
+                                value: control.value,
+                                order: order,
+                                disabled: control.disabled ? "disabled" : ""
                             };
                         } else {
                             //字符串
@@ -286,13 +340,18 @@ function(exports) {
 
                         //绑定按钮事件
                         var closeButton = globalDialog.querySelector(".form-icon-close");
-                        var saveButton = globalDialog.querySelector(".form-button-close");
+                        var saveButton = globalDialog.querySelector(".form-button-save");
 
                         closeButton.onclick = function() {
                             wrapper.removeChild(globalDialog);
                         }
                         saveButton.onclick = function() {
-                            wrapper.removeChild(globalDialog);
+                            var dialogContent = globalDialog.querySelector(".form-dialog-content");
+                            if (dialogContent) {
+                                var json = self.html2json(dialogContent);
+                                con.setAttribute("data-mf-val", encodeURIComponent(JSON.stringify(json)));
+                                wrapper.removeChild(globalDialog);
+                            }
                         }
 
                     });

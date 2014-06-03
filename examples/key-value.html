@@ -4,19 +4,36 @@
 	<meta charset="utf-8">
 	<title>key-value</title>
 	<link rel="stylesheet" type="text/css" href="../assets/styles/default.css"></style>
+	<link rel="stylesheet" type="text/css" href="assets/styles/component.css"></style>
 </head>
-<body>
-	<form id="form" class="mf" style="width:600px;margin:0 auto;margin-top:100px;">
+<body class="confui default">
+	<form id="form" class="mf" style="width:600px;margin-top:100px;display:inline-block;">
 		
 	</form>
+	<div style="display:inline-block;">
+		<button onclick="html2json()">html->json</button>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<button onclick="json2html()">html<-json</button>
+	</div>
+	<textarea style="display:inline-block;width:600px;height:500px;font-size:16pt;margin-left:80px" id="jsonvalue">
+			
+	</textarea>
 	<script type="text/javascript" src="../release/magicform-0.0.1.js"></script>
 	<script type="text/javascript">
 		var form = document.getElementById("form");
-		form.innerHTML = magicForm.json2html({
-			name:1,
+		var textarea = document.getElementById("jsonvalue");
+
+		var jsonObj = {
+			name:{mf:1,control:"text",value:1,disabled:"disabled"},
 			sex:2,
-			学历:{mf:1,control:"radio",name:"graduate",options:[{label:"初中",checked:true},{label:"高中"}]},
-			不喜欢上课:{mf:1,control:"checkbox",options:[{checked:true,label:"十分"},{checked:true,label:"非常"}]},
+			学历:{mf:1,order:2,control:"radio",name:"graduate",options:[{label:"初中",checked:"checked"},{label:"高中"}]},
+			不喜欢上课:{mf:1,order:0,control:"checkbox",options:[{checked:"checked",label:"十分"},{checked:"checked",label:"非常"}]},
 			密码:{mf:1,control:"password",value:"siemenlon"},
 			出生日期:{mf:1,control:"date",value:"1988"},
 			毕业院校:{mf:1,control:"select",options:[
@@ -28,14 +45,29 @@
 				{text:"深职院",val:3}
 			]},
 			学科:{语文:1,数学:2},
-			数字:[{mf:1,control:"number",fornew:1},{mf:1,control:"checkbox",options:[{checked:true}]},2,3,4,5],
+			数字:[{mf:1,control:"number",fornew:1},{mf:1,control:"checkbox",options:[{checked:"checked"}]},2,3,4,5],
 			返回码:[
 				{mf:1,hash:1,fornew:1,control:"text",key:{mf:1,control:"text"}},
 				{mf:1,hash:1,control:"text",value:"value",key:{mf:1,value:"key",control:"text"}},
 				{mf:1,hash:1,control:"text",value:"value2",key:{mf:1,value:"key2",control:"text"}}
 			]
-		});
-		magicForm.init(form);
+		};
+		
+
+		function json2html(){
+			try{
+				jsonObj = JSON.parse(textarea.value);
+			}
+			catch(e){
+			}
+			form.innerHTML = magicForm.json2html(jsonObj);
+			magicForm.init(form);
+		}
+		function html2json(){
+			jsonvalue.value = JSON.stringify(magicForm.html2json(form));
+		}
+
+		json2html();
 	</script>
 </body>
 </html>
