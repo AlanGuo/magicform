@@ -29,13 +29,30 @@
 		var form = document.getElementById("form");
 		var textarea = document.getElementById("jsonvalue");
 
-		var jsonObj = {
-			name:{mf:1,control:"text",value:1,disabled:"disabled"},
+		
+		//纯数据
+		var pureJson = {
+			name:1,
 			sex:2,
+			学历:"",
+			不喜欢上课:"",
+			密码:"siemenlon",
+			出生日期:"1988",
+			毕业院校:"武昌理工学院",
+			学科:{语文:1,数学:2},
+			数字:[1,2,3,4,5],
+			返回码:[
+				{value:"value",key:"key"},
+				{value:"value2",key:"key2"}
+			]
+		};
+		//attach数据
+		var jsonObj = {
+			name:{mf:1,control:"text",disabled:"disabled"},
 			学历:{mf:1,order:2,control:"radio",name:"graduate",options:[{label:"初中",checked:"checked"},{label:"高中"}]},
 			不喜欢上课:{mf:1,order:0,control:"checkbox",options:[{checked:"checked",label:"十分"},{checked:"checked",label:"非常"}]},
-			密码:{mf:1,control:"password",value:"siemenlon"},
-			出生日期:{mf:1,control:"date",value:"1988"},
+			密码:{mf:1,control:"password"},
+			出生日期:{mf:1,control:"date"},
 			毕业院校:{mf:1,control:"select",options:[
 				{val:"optgroup",text:"母校"},
 				{text:"武昌理工学院",val:1},
@@ -44,10 +61,14 @@
 				{val:"optgroup",text:"垃圾"},
 				{text:"深职院",val:3}
 			]},
-			学科:{语文:1,数学:2},
 			数字:[{mf:1,control:"number",fornew:1},{mf:1,control:"checkbox",options:[{checked:"checked"}]},2,3,4,5],
 			返回码:[
-				{mf:1,hash:1,fornew:1,control:"text",key:{mf:1,control:"text"}},
+				{mf:1,hash:1,fornew:1,control:"text",key:{mf:1,control:"text"},proc:function(dest,src){
+					src.value = dest.value;
+					src.key.value = dest.key;
+
+					return src;
+				}},
 				{mf:1,hash:1,control:"text",value:"value",key:{mf:1,value:"key",control:"text"}},
 				{mf:1,hash:1,control:"text",value:"value2",key:{mf:1,value:"key2",control:"text"}}
 			]
@@ -60,11 +81,11 @@
 			}
 			catch(e){
 			}
-			form.innerHTML = magicForm.json2html(jsonObj);
-			magicForm.init(form);
+			form.innerHTML = magicform.json2html(magicform.attach(pureJson,jsonObj));
+			magicform.init(form);
 		}
 		function html2json(){
-			jsonvalue.value = JSON.stringify(magicForm.html2json(form));
+			jsonvalue.value = JSON.stringify(magicform.html2json(form));
 		}
 
 		json2html();
