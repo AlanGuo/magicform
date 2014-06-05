@@ -1,14 +1,14 @@
 @charset "UTF-8";
 @font-face {
-  font-family: 'iconfont';
+  font-family: 'confui-iconfont';
   src: url('iconfont.eot');
   src: url('iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('iconfont.woff') format('woff'), /* chrome、firefox */ url('iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('iconfont.svg#iconfont') format('svg');
   
   /* IE9*/
   /* iOS 4.1- */
 }
-.iconfont {
-  font-family: "iconfont" !important;
+.confui .confui-iconfont {
+  font-family: "confui-iconfont" !important;
   font-size: 16px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
@@ -426,7 +426,7 @@ table {
   color: #bf0005;
 }
 .confui.default .dialog .topbar .buttons .close:before {
-  font-family: "iconfont" !important;
+  font-family: "confui-iconfont" !important;
   font-size: 16px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;

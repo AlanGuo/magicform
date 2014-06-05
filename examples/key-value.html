@@ -46,10 +46,29 @@
 				{value:"value2",key:"key2"}
 			]
 		};
+
+		//hashattachProc
+		var hashAttachProc = function(atta,prop,src,index){
+			atta.value = src[prop][index].value;
+			atta.key.value = src[prop][index].key;
+
+			return atta;
+		};
+		//hashdetachProc
+		var hashDetachProc = function(prop,src){
+			var obj = {};
+			obj.value = src.value;
+			obj.key = src.key.value;
+
+			return obj;
+		}
 		//attach数据
 		var jsonObj = {
 			name:{mf:1,control:"text",disabled:"disabled"},
-			学历:{mf:1,order:2,control:"radio",name:"graduate",options:[{label:"初中",checked:"checked"},{label:"高中"}]},
+			学历:{mf:1,order:2,control:"radio",name:"graduate",options:[{label:"初中",checked:"checked"},{label:"高中"}],
+			detaproc:function(prop,src){
+				return src.options.filter(function(item){if(item.checked=="checked") return item;})[0].label;	
+			}},
 			不喜欢上课:{mf:1,order:0,control:"checkbox",options:[{checked:"checked",label:"十分"},{checked:"checked",label:"非常"}]},
 			密码:{mf:1,control:"password"},
 			出生日期:{mf:1,control:"date"},
@@ -61,31 +80,28 @@
 				{val:"optgroup",text:"垃圾"},
 				{text:"深职院",val:3}
 			]},
-			数字:[{mf:1,control:"number",fornew:1},{mf:1,control:"checkbox",options:[{checked:"checked"}]},2,3,4,5],
+			数字:[{mf:1,control:"number",fornew:1},{mf:1,control:"checkbox",options:[{checked:"checked",label:"1"}],detaproc:function(prop,src){
+				return src.options.filter(function(item){if(item.checked=="checked") return item;})[0].label;	
+			}},2,3,4,5],
 			返回码:[
-				{mf:1,hash:1,fornew:1,control:"text",key:{mf:1,control:"text"},proc:function(dest,src){
-					src.value = dest.value;
-					src.key.value = dest.key;
-
-					return src;
-				}},
-				{mf:1,hash:1,control:"text",value:"value",key:{mf:1,value:"key",control:"text"}},
-				{mf:1,hash:1,control:"text",value:"value2",key:{mf:1,value:"key2",control:"text"}}
+				{mf:1,hash:1,fornew:1,control:"text",key:{mf:1,control:"text"}},
+				{mf:1,hash:1,control:"text",key:{mf:1,control:"text"},attaproc:hashAttachProc,detaproc:hashDetachProc},
+				{mf:1,hash:1,control:"text",key:{mf:1,control:"text"},attaproc:hashAttachProc,detaproc:hashDetachProc}
 			]
 		};
 		
 
 		function json2html(){
+			var json = pureJson;
 			try{
-				jsonObj = JSON.parse(textarea.value);
+				json = JSON.parse(textarea.value);
 			}
-			catch(e){
-			}
-			form.innerHTML = magicform.json2html(magicform.attach(pureJson,jsonObj));
+			catch(e){}
+			form.innerHTML = magicform.json2html(magicform.attach(json,jsonObj));
 			magicform.init(form);
 		}
 		function html2json(){
-			jsonvalue.value = JSON.stringify(magicform.html2json(form));
+			jsonvalue.value = JSON.stringify(magicform.detach(magicform.html2json(form),jsonObj));
 		}
 
 		json2html();

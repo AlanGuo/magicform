@@ -7,15 +7,11 @@
 "use strict";
 
 
-/*global /*<MFFormTemplate>*/'<%var flag=false;for(var i in order){var p = order[i].p;if(p.mf){%><%} else {%><!--key-*--><%if(!data[p].inline){%><%if(flag){%><%if(data[p].hash){%></p><p><label class="formitem-label " data-key="<%=p%>"><%=p%></label><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true})%><span class="formitem-ml10"></span><%}else{%></p><p class="formitem-p"><label class="formitem-label " data-key="<%=p%>"><%=p%></label><%}%><%}else{flag=true;%><%if(data[p].hash){%><label class="formitem-label " data-key="<%=p%>"><%=p%></label><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true})%><span class="formitem-ml10"></span><%}else{%><p class="formitem-p"><label class="formitem-label " data-key="<%=p%>"><%=p%></label><%}%><%}%><%}else if(data[p].hash){%><p><label class="formitem-label " data-key="<%=p%>"><%=p%></label></p><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true})%><span class="formitem-ml10"></span><%}else{%><label class="formitem-label formitem-ml50 " data-key="<%=p%>"><%=p%></label><%}%><%if(/array/i.test(Object.prototype.toString.call(data[p]))){%><!--key-array--><span class="form-array-ul formitem-control" type="array"><a href="javascript:;" class="form-icon form-item-add" title="新增" data-newtemplate="<%=encodeURIComponent(JSON.stringify(data[p].filter(function(item){if(item.fornew) return item;})[0]))%>"><i class="iconfont">&#xf0154;</i></a><%for(var i=data[p].length-1;i>=0;i--){%><%if(!data[p][i].fornew){%><br><%if(data[p][i].hash){%><span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data[p][i].key,flag:true})%><span class="formitem-ml10"></span></span><%}%><span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data[p][i]})%><a href="javascript:;" class="form-icon form-item-remove" title="移除"><i class="iconfont">&#xf0153;</i></a></span><%}%><%}%></span><%}else if("[object Object]" === Object.prototype.toString.call(data[p]) && !data[p].mf){%><!--key-object--><a href="javascript:;" class="form-icon form-item-detail formitem-control" data-mf-val="<%=encodeURIComponent(JSON.stringify(data[p]))%>" title="详细设定"><i class="iconfont">&#xf00e1;</i></a><%}else{%><!--key-value--><%=util.tmpl(valueItemTemplate,{data:data[p]})%><%}%><%}}%>'/*</MFFormTemplate>*/:false */
-/*global /*<MFFormValueItemTemplate>*/'<%if(data.mf){%><%if(data.control === "radio"){%><span class="formitem-control" type="radio" data-order="<%=data.order%>"><%for(var i=0;i<data.options.length;i++){%><input class="formitem-radio" data-flag="<%=flag%>" <%=data.options[i].disabled%> type="radio" <%=data.options[i].checked%> data-order="<%=data.order%>" name="<%=data.name%>" id="formitem-radio-<%=data.options[i].label%>"><label class="formitem-radio-label" for="formitem-radio-<%=data.options[i].label%>"><%=data.options[i].label%></label><%}%></span><%}else if(data.control === "checkbox"){%><span class="formitem-control" type="checkbox" data-order="<%=data.order%>"><%for(var i=0;i<data.options.length;i++){%><input class="formitem-checkbox" <%=data.options[i].disabled%> data-flag="<%=flag%>" type="checkbox" <%=data.options[i].checked%> id="formitem-radio-<%=data.options[i].label%>"><label for="formitem-radio-<%=data.options[i].label%>" class="formitem-checkbox-label"><%=data.options[i].label%></label><%}%></span><%}else if(data.control==="select"){var flag=false;%><select class="formitem-control formitem-select" data-flag="<%=flag%>" <%=data.disabled%> data-order="<%=data.order%>"><%for(var i=0;i<data.options.length;i++){%><%if(data.options[i].val==="optgroup"){%><%if(flag){%></optgroup><optgroup label="<%=data.options[i].text%>" class="formitem-selectoption formitem-selectoptiongroup"><%}else{flag=true;%><optgroup label="<%=data.options[i].text%>" class="formitem-selectoption formitem-selectoptiongroup"><%}%><%}else{%><option value="<%=data.options[i].val%>" class="formitem-selectoption"><%=data.options[i].text%></option><%}}%></select><%}else{%><input class="formitem-control formitem-input" data-flag="<%=flag%>" <%=data.disabled%> data-order="<%=data.order%>" type="<%=data.control%>" value="<%=data.value%>"><%}%><%}else{%><!--key-value--><input class="formitem-control formitem-input" data-flag="<%=flag%>" value="<%=data%>"><%}%>'/*</MFFormValueItemTemplate>*/:false */
-/*global /*<MFFormArrayItemTemplate>*/'<br><%if(data.hash){%><span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data.key,flag:true})%><span class="formitem-ml10"></span></span><%}%><span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data,flag:false})%><a href="javascript:;" class="form-icon form-item-remove" title="移除"><i class="iconfont">&#xf0153;</i></a></span>'/*</MFFormArrayItemTemplate>*/:false */
-/*global /*<MFFormDialogTemplate>*/'<div class="form-dialog dialog" id="form-dialog"><div class="topbar clearfix"><span class="title"><%=title%></span><span class="buttons"><a class="form-icon form-icon-close close" href="javascript:;"></a></span></div><div class="form-dialog-content content"></div><div class="form-dialog-buttons toolbars clearfix"><a href="javascript:;" class="fr form-button form-button-save primarybutton">保存</a></div></div>'/*</MFFormDialogTemplate>*/:false */
 (function(exports) {
     var template = {
-        formTemplate: /*<MFFormTemplate>*/'<%var flag=false;for(var i in order){var p = order[i].p;if(p.mf){%><%} else {%><!--key-*--><%if(!data[p].inline){%><%if(flag){%><%if(data[p].hash){%></p><p><label class="formitem-label " data-key="<%=p%>"><%=p%></label><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true})%><span class="formitem-ml10"></span><%}else{%></p><p class="formitem-p"><label class="formitem-label " data-key="<%=p%>"><%=p%></label><%}%><%}else{flag=true;%><%if(data[p].hash){%><label class="formitem-label " data-key="<%=p%>"><%=p%></label><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true})%><span class="formitem-ml10"></span><%}else{%><p class="formitem-p"><label class="formitem-label " data-key="<%=p%>"><%=p%></label><%}%><%}%><%}else if(data[p].hash){%><p><label class="formitem-label " data-key="<%=p%>"><%=p%></label></p><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true})%><span class="formitem-ml10"></span><%}else{%><label class="formitem-label formitem-ml50 " data-key="<%=p%>"><%=p%></label><%}%><%if(/array/i.test(Object.prototype.toString.call(data[p]))){%><!--key-array--><span class="form-array-ul formitem-control" type="array"><a href="javascript:;" class="form-icon form-item-add" title="新增" data-newtemplate="<%=encodeURIComponent(JSON.stringify(data[p].filter(function(item){if(item.fornew) return item;})[0]))%>"><i class="iconfont">&#xf0154;</i></a><%for(var i=data[p].length-1;i>=0;i--){%><%if(!data[p][i].fornew){%><br><%if(data[p][i].hash){%><span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data[p][i].key,flag:true})%><span class="formitem-ml10"></span></span><%}%><span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data[p][i]})%><a href="javascript:;" class="form-icon form-item-remove" title="移除"><i class="iconfont">&#xf0153;</i></a></span><%}%><%}%></span><%}else if("[object Object]" === Object.prototype.toString.call(data[p]) && !data[p].mf){%><!--key-object--><a href="javascript:;" class="form-icon form-item-detail formitem-control" data-mf-val="<%=encodeURIComponent(JSON.stringify(data[p]))%>" title="详细设定"><i class="iconfont">&#xf00e1;</i></a><%}else{%><!--key-value--><%=util.tmpl(valueItemTemplate,{data:data[p]})%><%}%><%}}%>'/*</MFFormTemplate>*/,
+        formTemplate: /*<MFFormTemplate>*/'<%var flag=false;for(var i in order){var p = order[i].p;if(p.mf){%><%} else {%><!--key-*--><%if(!data[p].inline){%><%if(flag){%><%if(data[p].hash){%></p><p><label class="formitem-label " data-key="<%=p%>"><%=p%></label><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true})%><span class="formitem-ml10"></span><%}else{%></p><p class="formitem-p"><label class="formitem-label " data-key="<%=p%>"><%=p%></label><%}%><%}else{flag=true;%><%if(data[p].hash){%><label class="formitem-label " data-key="<%=p%>"><%=p%></label><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true})%><span class="formitem-ml10"></span><%}else{%><p class="formitem-p"><label class="formitem-label " data-key="<%=p%>"><%=p%></label><%}%><%}%><%}else if(data[p].hash){%><p><label class="formitem-label " data-key="<%=p%>"><%=p%></label></p><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true})%><span class="formitem-ml10"></span><%}else{%><label class="formitem-label formitem-ml50 " data-key="<%=p%>"><%=p%></label><%}%><%if(/array/i.test(Object.prototype.toString.call(data[p]))){%><!--key-array--><span class="form-array-ul formitem-control" type="array"><a href="javascript:;" class="form-icon form-item-add" title="新增" data-newtemplate="<%=encodeURIComponent(JSON.stringify(data[p].filter(function(item){if(item.fornew) return item;})[0]))%>"><i class="mf-iconfont">&#xf0154;</i></a><%for(var i=data[p].length-1;i>=0;i--){%><%if(!data[p][i].fornew){%><br><%if(data[p][i].hash){%><span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data[p][i].key,flag:true})%><span class="formitem-ml10"></span></span><%}%><span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data[p][i]})%><a href="javascript:;" class="form-icon form-item-remove" title="移除"><i class="mf-iconfont">&#xf0153;</i></a></span><%}%><%}%></span><%}else if("[object Object]" === Object.prototype.toString.call(data[p]) && !data[p].mf){%><!--key-object--><a href="javascript:;" class="form-icon form-item-detail formitem-control" data-mf-val="<%=encodeURIComponent(JSON.stringify(data[p]))%>" title="详细设定"><i class="mf-iconfont">&#xf00e1;</i></a><%}else{%><!--key-value--><%=util.tmpl(valueItemTemplate,{data:data[p]})%><%}%><%}}%>'/*</MFFormTemplate>*/,
         formValueItemTemplate: /*<MFFormValueItemTemplate>*/'<%if(data.mf){%><%if(data.control === "radio"){%><span class="formitem-control" type="radio" data-order="<%=data.order%>"><%for(var i=0;i<data.options.length;i++){%><input class="formitem-radio" data-flag="<%=flag%>" <%=data.options[i].disabled%> type="radio" <%=data.options[i].checked%> data-order="<%=data.order%>" name="<%=data.name%>" id="formitem-radio-<%=data.options[i].label%>"><label class="formitem-radio-label" for="formitem-radio-<%=data.options[i].label%>"><%=data.options[i].label%></label><%}%></span><%}else if(data.control === "checkbox"){%><span class="formitem-control" type="checkbox" data-order="<%=data.order%>"><%for(var i=0;i<data.options.length;i++){%><input class="formitem-checkbox" <%=data.options[i].disabled%> data-flag="<%=flag%>" type="checkbox" <%=data.options[i].checked%> id="formitem-radio-<%=data.options[i].label%>"><label for="formitem-radio-<%=data.options[i].label%>" class="formitem-checkbox-label"><%=data.options[i].label%></label><%}%></span><%}else if(data.control==="select"){var flag=false;%><select class="formitem-control formitem-select" data-flag="<%=flag%>" <%=data.disabled%> data-order="<%=data.order%>"><%for(var i=0;i<data.options.length;i++){%><%if(data.options[i].val==="optgroup"){%><%if(flag){%></optgroup><optgroup label="<%=data.options[i].text%>" class="formitem-selectoption formitem-selectoptiongroup"><%}else{flag=true;%><optgroup label="<%=data.options[i].text%>" class="formitem-selectoption formitem-selectoptiongroup"><%}%><%}else{%><option value="<%=data.options[i].val%>" class="formitem-selectoption"><%=data.options[i].text%></option><%}}%></select><%}else{%><input class="formitem-control formitem-input" data-flag="<%=flag%>" <%=data.disabled%> data-order="<%=data.order%>" type="<%=data.control%>" value="<%=data.value%>"><%}%><%}else{%><!--key-value--><input class="formitem-control formitem-input" data-flag="<%=flag%>" value="<%=data%>"><%}%>'/*</MFFormValueItemTemplate>*/,
-        formArrayItemTemplate: /*<MFFormArrayItemTemplate>*/'<br><%if(data.hash){%><span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data.key,flag:true})%><span class="formitem-ml10"></span></span><%}%><span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data,flag:false})%><a href="javascript:;" class="form-icon form-item-remove" title="移除"><i class="iconfont">&#xf0153;</i></a></span>'/*</MFFormArrayItemTemplate>*/,
+        formArrayItemTemplate: /*<MFFormArrayItemTemplate>*/'<br><%if(data.hash){%><span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data.key,flag:true})%><span class="formitem-ml10"></span></span><%}%><span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data,flag:false})%><a href="javascript:;" class="form-icon form-item-remove" title="移除"><i class="mf-iconfont">&#xf0153;</i></a></span>'/*</MFFormArrayItemTemplate>*/,
         formDialogTemplate: /*<MFFormDialogTemplate>*/'<div class="form-dialog dialog" id="form-dialog"><div class="topbar clearfix"><span class="title"><%=title%></span><span class="buttons"><a class="form-icon form-icon-close close" href="javascript:;"></a></span></div><div class="form-dialog-content content"></div><div class="form-dialog-buttons toolbars clearfix"><a href="javascript:;" class="fr form-button form-button-save primarybutton">保存</a></div></div>'/*</MFFormDialogTemplate>*/
     };
 
@@ -63,7 +59,6 @@
                     }
                     return rawStr;
                 }
-                /* jslint evil: true */
                 /* jshint -W054 */
                 return function tmpl(str, data, opt) {
                     opt = opt || {};
@@ -123,27 +118,110 @@
             /**
              * 把显示属性，附加上去，此方法可以保持数据对象的纯净
              * @method attach
-             * @param proc
-             * @param proc.dest 目标对象
-             * @param proc.src 附加对象
+             * @param attaproc
+             * @param attaproc.atta 附加对象
+             * @param attaproc.prop 属性
+             * @param attaproc.src 源数据
+             * @param attaproc.index 索引
              */
 
             attach: function(json, attr) {
                 var jsonCopy = util.extend({}, json);
-                for (var p in jsonCopy) {
-                    if (attr[p]) {
-                        if (attr[p].proc) {
+
+                var defproc = function(a, p, i) {
+                    /*jshint eqnull:true */
+                    if (i != null) {
+                        if (a.attaproc) {
                             //自定义处理过程
-                            jsonCopy[p] = attr[p].proc(jsonCopy[p], attr[p]);
+                            jsonCopy[p][i] = a.attaproc(a, p, json, i);
+                        } else {
+                            //默认处理过程
+                            if (json[p][i]) {
+                                a.value = json[p][i];
+                            }
+                            jsonCopy[p][i] = a;
+                        }
+                    } else {
+                        if (a.attaproc) {
+                            //自定义处理过程
+                            jsonCopy[p] = a.attaproc(a, p, json);
                         } else {
                             //默认处理过程
                             if (json[p]) {
-                                attr[p].value = json[p];
+                                a.value = json[p];
                             }
-                            jsonCopy[p] = attr[p];
+                            jsonCopy[p] = a;
+                        }
+                    }
+                };
+
+                for (var p in jsonCopy) {
+                    if (attr[p]) {
+                        var index = 0;
+                        if (/array/i.test(util._typeof(attr[p]))) {
+                            for (var i = 0; i < attr[p].length; i++) {
+                                if (!attr[p][i].fornew) {
+                                    defproc(attr[p][i], p, i - index);
+                                } else {
+                                    //fornew
+                                    jsonCopy[p].push(attr[p][i]);
+                                    index++;
+                                }
+                            }
+                        } else {
+                            defproc(attr[p], p);
                         }
                     }
                 }
+                return jsonCopy;
+            },
+
+
+            /**
+             * 把显示属性，剥离出来，此方法可以保持数据对象的纯净
+             * @method detach
+             * @param detaproc
+             * @param detaproc.prop 属性
+             * @param detaproc.src 源数据
+             * @param detaproc.index 索引
+             */
+
+            detach: function(json, attr) {
+                var jsonCopy = {};
+                var defproc = function(jsonCopy, src, p, index) {
+                    /*jshint eqnull:true*/
+                    if (index != null) {
+                        jsonCopy[p] = jsonCopy[p] || [];
+                        if (attr[p][i].detaproc) {
+                            jsonCopy[p].push(attr[p][i].detaproc(p, src, index));
+                        } else {
+                            jsonCopy[p].push(src.value);
+                        }
+                    } else {
+                        if (attr[p] && attr[p].detaproc) {
+                            jsonCopy[p] = attr[p].detaproc(p, src, index);
+                        } else {
+                            if (src.mf) {
+                                jsonCopy[p] = src.value || "";
+                            } else if (/object/i.test(util._typeof(src))) {
+                                //是个对象
+                                jsonCopy[p] = src;
+                            }
+                        }
+                    }
+                };
+                for (var p in json) {
+                    if (/array/i.test(util._typeof(json[p]))) {
+                        for (var i = 0; i < json[p].length; i++) {
+                            if (!json[p][i].fornew) {
+                                defproc(jsonCopy, json[p][i], p, i);
+                            }
+                        }
+                    } else {
+                        defproc(jsonCopy, json[p], p);
+                    }
+                }
+
                 return jsonCopy;
             },
 
@@ -172,12 +250,17 @@
                                     disabled: inputs[j].disabled ? "disabled" : ""
                                 });
                             }
+
+                            order = parseInt(control.getAttribute("data-order"), 10);
+                            if (isNaN(order)) {
+                                order = null;
+                            }
                             json = {
                                 mf: 1,
                                 control: type,
                                 name: inputs[0].name,
                                 options: options,
-                                order: control.getAttribute("data-order"),
+                                order: order
                             };
                         } else {
                             //数组或者hash
@@ -201,12 +284,11 @@
                                     val.key = key;
                                     val.control = con.getAttribute("type");
 
-                                    try {
-                                        order = parseInt(control.getAttribute("data-order"), 10);
-                                    } catch (e) {
+                                    order = parseInt(control.getAttribute("data-order"), 10);
+                                    if (isNaN(order)) {
                                         order = null;
                                     }
-                                    val.order = con.getAttribute("data-order");
+                                    val.order = order;
                                     val.disabled = con.disabled ? "disabled" : "";
                                     json.push(val);
 
@@ -234,9 +316,8 @@
                             }
 
 
-                            try {
-                                order = parseInt(control.getAttribute("data-order"), 10);
-                            } catch (e) {
+                            order = parseInt(control.getAttribute("data-order"), 10);
+                            if (isNaN(order)) {
                                 order = null;
                             }
                             json = {
@@ -255,10 +336,8 @@
                         }
                     } else if (/input/i.test(control.tagName)) {
                         if (control.type) {
-
-                            try {
-                                order = parseInt(control.getAttribute("data-order"), 10);
-                            } catch (e) {
+                            order = parseInt(control.getAttribute("data-order"), 10);
+                            if (isNaN(order)) {
                                 order = null;
                             }
                             //其他input类型
@@ -380,7 +459,6 @@
                                 wrapper.removeChild(globalDialog);
                             }
                         };
-
                     });
                 };
 

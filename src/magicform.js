@@ -7,10 +7,6 @@
 "use strict";
 
 
-/*global MFFormTemplate:false */
-/*global MFFormValueItemTemplate:false */
-/*global MFFormArrayItemTemplate:false */
-/*global MFFormDialogTemplate:false */
 (function(exports) {
     var template = {
         formTemplate: MFFormTemplate,
@@ -63,7 +59,6 @@
                     }
                     return rawStr;
                 }
-                /* jslint evil: true */
                 /* jshint -W054 */
                 return function tmpl(str, data, opt) {
                     opt = opt || {};
@@ -123,27 +118,110 @@
             /**
              * 把显示属性，附加上去，此方法可以保持数据对象的纯净
              * @method attach
-             * @param proc
-             * @param proc.dest 目标对象
-             * @param proc.src 附加对象
+             * @param attaproc
+             * @param attaproc.atta 附加对象
+             * @param attaproc.prop 属性
+             * @param attaproc.src 源数据
+             * @param attaproc.index 索引
              */
 
             attach: function(json, attr) {
                 var jsonCopy = util.extend({}, json);
-                for (var p in jsonCopy) {
-                    if (attr[p]) {
-                        if (attr[p].proc) {
+
+                var defproc = function(a, p, i) {
+                    /*jshint eqnull:true */
+                    if (i != null) {
+                        if (a.attaproc) {
                             //自定义处理过程
-                            jsonCopy[p] = attr[p].proc(jsonCopy[p], attr[p]);
+                            jsonCopy[p][i] = a.attaproc(a, p, json, i);
+                        } else {
+                            //默认处理过程
+                            if (json[p][i]) {
+                                a.value = json[p][i];
+                            }
+                            jsonCopy[p][i] = a;
+                        }
+                    } else {
+                        if (a.attaproc) {
+                            //自定义处理过程
+                            jsonCopy[p] = a.attaproc(a, p, json);
                         } else {
                             //默认处理过程
                             if (json[p]) {
-                                attr[p].value = json[p];
+                                a.value = json[p];
                             }
-                            jsonCopy[p] = attr[p];
+                            jsonCopy[p] = a;
+                        }
+                    }
+                };
+
+                for (var p in jsonCopy) {
+                    if (attr[p]) {
+                        var index = 0;
+                        if (/array/i.test(util._typeof(attr[p]))) {
+                            for (var i = 0; i < attr[p].length; i++) {
+                                if (!attr[p][i].fornew) {
+                                    defproc(attr[p][i], p, i - index);
+                                } else {
+                                    //fornew
+                                    jsonCopy[p].push(attr[p][i]);
+                                    index++;
+                                }
+                            }
+                        } else {
+                            defproc(attr[p], p);
                         }
                     }
                 }
+                return jsonCopy;
+            },
+
+
+            /**
+             * 把显示属性，剥离出来，此方法可以保持数据对象的纯净
+             * @method detach
+             * @param detaproc
+             * @param detaproc.prop 属性
+             * @param detaproc.src 源数据
+             * @param detaproc.index 索引
+             */
+
+            detach: function(json, attr) {
+                var jsonCopy = {};
+                var defproc = function(jsonCopy, src, p, index) {
+                    /*jshint eqnull:true*/
+                    if (index != null) {
+                        jsonCopy[p] = jsonCopy[p] || [];
+                        if (attr[p][i].detaproc) {
+                            jsonCopy[p].push(attr[p][i].detaproc(p, src, index));
+                        } else {
+                            jsonCopy[p].push(src.value);
+                        }
+                    } else {
+                        if (attr[p] && attr[p].detaproc) {
+                            jsonCopy[p] = attr[p].detaproc(p, src, index);
+                        } else {
+                            if (src.mf) {
+                                jsonCopy[p] = src.value || "";
+                            } else if (/object/i.test(util._typeof(src))) {
+                                //是个对象
+                                jsonCopy[p] = src;
+                            }
+                        }
+                    }
+                };
+                for (var p in json) {
+                    if (/array/i.test(util._typeof(json[p]))) {
+                        for (var i = 0; i < json[p].length; i++) {
+                            if (!json[p][i].fornew) {
+                                defproc(jsonCopy, json[p][i], p, i);
+                            }
+                        }
+                    } else {
+                        defproc(jsonCopy, json[p], p);
+                    }
+                }
+
                 return jsonCopy;
             },
 
@@ -172,12 +250,17 @@
                                     disabled: inputs[j].disabled ? "disabled" : ""
                                 });
                             }
+
+                            order = parseInt(control.getAttribute("data-order"), 10);
+                            if (isNaN(order)) {
+                                order = null;
+                            }
                             json = {
                                 mf: 1,
                                 control: type,
                                 name: inputs[0].name,
                                 options: options,
-                                order: control.getAttribute("data-order"),
+                                order: order
                             };
                         } else {
                             //数组或者hash
@@ -201,12 +284,11 @@
                                     val.key = key;
                                     val.control = con.getAttribute("type");
 
-                                    try {
-                                        order = parseInt(control.getAttribute("data-order"), 10);
-                                    } catch (e) {
+                                    order = parseInt(control.getAttribute("data-order"), 10);
+                                    if (isNaN(order)) {
                                         order = null;
                                     }
-                                    val.order = con.getAttribute("data-order");
+                                    val.order = order;
                                     val.disabled = con.disabled ? "disabled" : "";
                                     json.push(val);
 
@@ -234,9 +316,8 @@
                             }
 
 
-                            try {
-                                order = parseInt(control.getAttribute("data-order"), 10);
-                            } catch (e) {
+                            order = parseInt(control.getAttribute("data-order"), 10);
+                            if (isNaN(order)) {
                                 order = null;
                             }
                             json = {
@@ -255,10 +336,8 @@
                         }
                     } else if (/input/i.test(control.tagName)) {
                         if (control.type) {
-
-                            try {
-                                order = parseInt(control.getAttribute("data-order"), 10);
-                            } catch (e) {
+                            order = parseInt(control.getAttribute("data-order"), 10);
+                            if (isNaN(order)) {
                                 order = null;
                             }
                             //其他input类型
@@ -380,7 +459,6 @@
                                 wrapper.removeChild(globalDialog);
                             }
                         };
-
                     });
                 };
 
