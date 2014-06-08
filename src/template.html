@@ -46,6 +46,7 @@
 			<%}%>
 		<%}
 	}%>
+	<button>Submit</button>
 </template>
 
 <template name="MFFormValueItemTemplate">
@@ -53,17 +54,17 @@
 		<%if(data.control === "radio"){%>
 			<span class="formitem-control" type="radio" data-order="<%=data.order%>">
 				<%for(var i=0;i<data.options.length;i++){%>
-					<input class="formitem-radio" data-flag="<%=flag%>" <%=data.options[i].disabled%> type="radio" <%=data.options[i].checked%> data-order="<%=data.order%>" name="<%=data.name%>" id="formitem-radio-<%=data.options[i].label%>"><label class="formitem-radio-label" for="formitem-radio-<%=data.options[i].label%>"><%=data.options[i].label%></label>
+					<input class="formitem-radio" data-flag="<%=flag%>" <%=data.options[i].validation%> <%=data.options[i].disabled%> type="radio" <%=data.options[i].checked%> data-order="<%=data.order%>" name="<%=data.name%>" id="formitem-radio-<%=data.options[i].label%>"><label class="formitem-radio-label" for="formitem-radio-<%=data.options[i].label%>"><%=data.options[i].label%></label>
 				<%}%>
 			</span>
 		<%}else if(data.control === "checkbox"){%>
 			<span class="formitem-control" type="checkbox" data-order="<%=data.order%>">
 				<%for(var i=0;i<data.options.length;i++){%>
-					<input class="formitem-checkbox" <%=data.options[i].disabled%> data-flag="<%=flag%>" type="checkbox" <%=data.options[i].checked%> id="formitem-radio-<%=data.options[i].label%>"><label for="formitem-radio-<%=data.options[i].label%>" class="formitem-checkbox-label"><%=data.options[i].label%></label>
+					<input class="formitem-checkbox" <%=data.options[i].disabled%> <%=data.options[i].validation%> data-flag="<%=flag%>" type="checkbox" <%=data.options[i].checked%> id="formitem-radio-<%=data.options[i].label%>"><label for="formitem-radio-<%=data.options[i].label%>" class="formitem-checkbox-label"><%=data.options[i].label%></label>
 				<%}%>
 			</span>
 		<%}else if(data.control==="select"){var flag=false;%>
-			<select class="formitem-control formitem-select" data-flag="<%=flag%>" <%=data.disabled%> data-order="<%=data.order%>">
+			<select class="formitem-control formitem-select" data-flag="<%=flag%>" <%=data.validation%> <%=data.disabled%> data-order="<%=data.order%>">
 				<%for(var i=0;i<data.options.length;i++){%>
 					<%if(data.options[i].val==="optgroup"){%>
 						<%if(flag){%>
@@ -78,11 +79,11 @@
 				}%>
 			</select>
 		<%}else{%>
-			<input class="formitem-control formitem-input" data-flag="<%=flag%>" <%=data.disabled%> data-order="<%=data.order%>" type="<%=data.control%>" value="<%=data.value%>">
+			<input class="formitem-control formitem-input" data-flag="<%=flag%>" <%=data.validation%> <%=data.disabled%> data-order="<%=data.order%>" type="<%=data.control%>" value="<%=data.value%>">
 		<%}%>
 	<%}else{%>
 		<!--key-value-->
-		<input class="formitem-control formitem-input" data-flag="<%=flag%>" value="<%=data%>">
+		<input class="formitem-control formitem-input" data-flag="<%=flag%>" <%=data.validation%> value="<%=data%>">
 	<%}%>
 </template>
 

@@ -205,17 +205,20 @@ var Map = function(dir, build) {
 
             for (var p in _tmplMap[item]) {
                 var n = p.replace(/\./g, "\\.");
-                var r = new RegExp("\\/\\*<" + n + ">\\*\\/(.*?)\\/\\*<\\/" + n + ">\\*\\/", 'g')
+                var r = new RegExp("\\/\\*<" + n + ">\\*\\/(.*?)\\/\\*<\\/" + n + ">\\*\\/", 'g');
+                //保存已经替换过的，防止重复替换
                 codes = codes.replace(r, function(match) {
                     i++;
                     tmp[i] = "/*<" + p + ">*/'" + _tmplMap[item][p] + "'/*</" + p + ">*/";
                     return '<@' + i + '@>';
                 });
-                codes = codes.replace(new RegExp(p.replace(/\./g, "\\."), 'g'), function(match) {
+                //替换
+                codes = codes.replace(new RegExp("\\b" + n + "\\b", 'g'), function(match) {
                     i++;
                     tmp[i] = "/*<" + p + ">*/'" + _tmplMap[item][p] + "'/*</" + p + ">*/";
                     return '<@' + i + '@>';
                 });
+                //把替换过的还原
                 codes = codes.replace(/<@(\d+)@>/g, function(match, i) {
                     return tmp[i];
                 });

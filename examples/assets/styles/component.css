@@ -293,6 +293,12 @@ table {
 .confui.default .blueborder {
   border-color: #006db7;
 }
+.confui.default .darkredborder {
+  border-color: #bf0005;
+}
+.confui.default .greenborder {
+  border-color: #00bf05;
+}
 /**
  * confui font.less
  * @authors alandlguo (alandlguo@tencent.com)
@@ -365,9 +371,13 @@ table {
 .confui.default input:focus,
 .confui.default select:focus,
 .confui.default select:active {
-  border-style: solid;
-  border-width: 1px;
   border-color: #006db7;
+}
+/*合法*/
+/*不合法*/
+.confui.default input:invalid,
+.confui.default input:focus:invalid {
+  border-color: #bf0005;
 }
 .confui.default input[disabled],
 .confui.default input[readonly],
@@ -402,7 +412,7 @@ table {
   border-bottom-width: 1px;
   border-color: #dddddd;
 }
-/*dialog*/
+/*dialog 与magicform遵循同一套classname*/
 .confui.default .dialog {
   border: 1px solid #777777;
   position: absolute;

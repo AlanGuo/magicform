@@ -8,7 +8,6 @@
 </head>
 <body class="confui default">
 	<form id="form" class="mf" style="width:600px;margin-top:100px;display:inline-block;">
-		
 	</form>
 	<div style="display:inline-block;">
 		<button onclick="html2json()">html->json</button>
@@ -64,7 +63,7 @@
 		}
 		//attach数据
 		var jsonObj = {
-			name:{mf:1,control:"text",disabled:"disabled"},
+			name:{mf:1,control:"text",validation:"required maxlength=10 minlength=4"},
 			学历:{mf:1,order:2,control:"radio",name:"graduate",options:[{label:"初中",checked:"checked"},{label:"高中"}],
 			detaproc:function(prop,src){
 				return src.options.filter(function(item){if(item.checked=="checked") return item;})[0].label;	

@@ -1,21 +1,29 @@
 READ# Magic Form #
 
 ## 功能
-- 把对象转换成form
-- 把form转换成object
+- 把json对象转换成form
+- 把form转换成json对象
+- 表单验证
+- 服务器端数据同步
 
-## 类型
 
-### key:value 对应经典键值对
+## 数据结构和生成表单的格式说明
+magicform支持多种类型的数据，根据不同类型来生成不同的html结构，满足多种需求，json数据分为两种
+	
+	{a:1}
+	{a:{mf:1,value:1}}
+	
+第一种结构只有json的key值和value值，这种结构将直接生成input标签并且类型是string，最通用的形式，但如果你想要对表单控件样式加以控制，就需要用到第二种结构，第二种结构json的key值a对应的是一个object，这个object中有个mf:1，表示这是个包含mf配置数据的结构，magicform将会读取配置信息对form控件的样式进行控制，object中的value字段才是真正的值，关于配置字段的详解参见第三节。下面是一个最简单的数据类型和他对应生成的html结构的对照表。
 
-1. value是input type=string
 
 	** json **
 
 		{a:1,b:2}
 
 	** html **
-
+	
+		<!--省略部分class-->
+		
 		<p><lable>a</lable><input/></p>
 		<p><lable>b</lable><input/></p>
 		
@@ -23,100 +31,29 @@ READ# Magic Form #
 		<!--this表示元素自己-->
 		<p><lable>a</lable><input data-mf-exp="this.value*2"/></p>
 		
-2. value是input type=radio
+		
+## 配置字段说明
+- **mf:1**
 
-	** json **
+	这个字段一直为1，标明这个object是mf的配置结构。
 	
-		{a:{mf:1,control:"radio",checked:true, group:"sex"},b:{type:"radio",value:false}}
-		
-	** html **
-		
-		<p><lable>a</lable><input type="radio" name="sex" checked/></p>
-		<p><lable>b</lable><input type="radio" name="sex"/></p>
-		<!--支持data-mf-exp-->
+- **control**
+
+	配置控件的类型，取值可以是text,password,checkbox,radio,date,week等值。
 	
-3. value是input type=checkbox		
+- **order**
+
+	配置控件显示的顺序，数字越小越靠前，如果不写，将默认排在有order控件的后面。
 	
-	** json **
-	
-		{a:{mf:1,control:"checkbox",checked:true},b:{type:"checkbox"}}
+- **options** 
+- **name**
+- **attaproc**
+- **detaproc**
+- **hash**
+- **fornew**
+- **key**
+- **validation**
+
 		
-	** html **
-		
-		<p><lable>a</lable><input type="checkbox" checked/></p>
-		<p><lable>b</lable><input type="checkbox"/></p>
-		<!--支持data-mf-exp-->
-
-4. value是input type=number，password...和上述情况类似		
-5. value是select		
-	
-	** json **
-	
-		{a:{mf:1, control:"select",value:1,options:[{val:1,text:1},{val:2,text:2},{val:3,text:3}]}}
-		
-	** html **
-		
-		<p>
-			<lable>a</lable>
-			<select value=1>
-				<option value=1>1</option>
-				<option value=2>2</option>
-				<option value=3>3</option>
-			</select>
-		</p>
-		<!--支持data-mf-exp-->
-		
-
-### key:object	对应对象类型
-
-1. json
-
-		{a:{x:1,y:1}}
-	
-2. html
-
-		<p>
-			<lable>a</lable>
-			<a data-mf-val="{x:1,y:1}">详细</a>
-		</p>
-
-
-### key:[array]	对应数组类型
-
-1. json
-
-		{a:[1,2,3,4]}
-2. html
-
-		<p>
-			<lable>a</lable>
-			<div><input value=1><a>+</a><a>-</a></div>
-		</p>
-		<!--input 类型遵循key:value和key:array的规则-->
-
-
-### hash:value	key和value都是可编辑的
-
-1. json
-
-		{a:{mf:1,value:1001,hash:1,key:{}}
-		//使用keycontrol控制a的类型，规则遵循key:object经典键值对规则
-		
-2. html		
-
-		<p>
-			<input/><input/>
-		</p>
-		
-### 格式
-
-1. json
-
-		{a:{mf:1,value:1001},b:{mf:1,value:1002,inline:1}}
-	
-2. html
-		
-		<p>
-			<label>a</label><input/>
-			<label>b</label><input/>
-		</p>
+## 表单验证
+## 数据和配置分离
