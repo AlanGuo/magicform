@@ -6,22 +6,22 @@
 			<%if(!data[p].inline){%>
 				<%if(flag){%>
 					<%if(data[p].hash){%>
-						</p><p><label class="formitem-label " data-key="<%=p%>"><%=p%></label><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true})%><span class="formitem-ml10"></span>
+						</p><p><label class="formitem-label " for="<%=p%>" data-key="<%=p%>"><%=p%></label><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true})%><span class="formitem-ml10"></span>
 					<%}else{%>
-						</p><p class="formitem-p"><label class="formitem-label " data-key="<%=p%>"><%=p%></label>
+						</p><p class="formitem-p"><label class="formitem-label " for="<%=p%>" data-key="<%=p%>"><%=p%></label>
 					<%}%>
 				<%}else{flag=true;%>
 					<%if(data[p].hash){%>
-						<label class="formitem-label " data-key="<%=p%>"><%=p%></label><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true})%><span class="formitem-ml10"></span>
+						<label class="formitem-label " for="<%=p%>" data-key="<%=p%>"><%=p%></label><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true})%><span class="formitem-ml10"></span>
 					<%}else{%>
-						<p class="formitem-p"><label class="formitem-label " data-key="<%=p%>"><%=p%></label>
+						<p class="formitem-p"><label class="formitem-label " for="<%=p%>" data-key="<%=p%>"><%=p%></label>
 					<%}%>
 				<%}%>
 			<%}else if(data[p].hash){%>
-				<p><label class="formitem-label " data-key="<%=p%>"><%=p%></label></p>
+				<p><label class="formitem-label " for="<%=p%>" data-key="<%=p%>"><%=p%></label></p>
 				<%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true})%><span class="formitem-ml10"></span>
 			<%}else{%>
-				<label class="formitem-label formitem-ml50 " data-key="<%=p%>"><%=p%></label>
+				<label class="formitem-label formitem-ml50 " for="<%=p%>" data-key="<%=p%>"><%=p%></label>
 			<%}%>
 			<%if(/array/i.test(Object.prototype.toString.call(data[p]))){%>
 				<!--key-array-->
@@ -46,7 +46,10 @@
 			<%}%>
 		<%}
 	}%>
-	<button>Submit</button>
+	<p class="formpannel">
+		<label class="formitem-label"></label>
+		<button class="primarybutton" title="提交表单">Submit</button>
+	</p>
 </template>
 
 <template name="MFFormValueItemTemplate">

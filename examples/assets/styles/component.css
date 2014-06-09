@@ -368,15 +368,20 @@ table {
   background-repeat: no-repeat;
 }
 .confui.default input:active,
+.confui.default textarea:active,
 .confui.default input:focus,
+.confui.default select:active,
 .confui.default select:focus,
 .confui.default select:active {
   border-color: #006db7;
 }
-/*合法*/
 /*不合法*/
 .confui.default input:invalid,
-.confui.default input:focus:invalid {
+.confui.default select:invalid,
+.confui.default textarea:invalid,
+.confui.default input:focus:invalid,
+.confui.default select:focus:invalid,
+.confui.default textarea:focus:invalid {
   border-color: #bf0005;
 }
 .confui.default input[disabled],
@@ -392,6 +397,7 @@ table {
   background-color: #2986d3;
   color: #ffffff;
   text-decoration: none;
+  cursor: pointer;
 }
 .confui.default .primarybutton:hover {
   background: #3196db;
@@ -411,6 +417,10 @@ table {
   background-color: #e2e2e2;
   border-bottom-width: 1px;
   border-color: #dddddd;
+}
+/*form*/
+.confui.default form .formpannel {
+  margin-top: 30px;
 }
 /*dialog 与magicform遵循同一套classname*/
 .confui.default .dialog {
