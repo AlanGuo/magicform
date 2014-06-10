@@ -12,6 +12,10 @@
     -webkit-text-stroke-width: 0.2px;
     -moz-osx-font-smoothing: grayscale;
 }
+
+.mf .ml10{
+    margin-left: 10px;
+}
 .mf .f32{
     font-size: 32px;
 }

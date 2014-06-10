@@ -7,22 +7,8 @@
 	<link rel="stylesheet" type="text/css" href="assets/styles/component.css"></style>
 </head>
 <body class="confui default">
-	<form id="form" class="mf" style="width:600px;margin-top:100px;display:inline-block;">
+	<form id="form" class="mf" style="width:600px;margin:100px auto 0 auto">
 	</form>
-	<div style="display:inline-block;">
-		<button onclick="html2json()">html->json</button>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<button onclick="json2html()">html<-json</button>
-	</div>
-	<textarea style="display:inline-block;width:600px;height:500px;font-size:16pt;margin-left:80px" id="jsonvalue">
-			
-	</textarea>
 	<script type="text/javascript" src="../release/magicform-0.0.1.js"></script>
 	<script type="text/javascript">
 		var form = document.getElementById("form");
@@ -63,7 +49,7 @@
 		}
 		//attach数据
 		var jsonObj = {
-			name:{mf:1,control:"text",validation:"required maxlength=10 minlength=4"},
+			name:{mf:1,control:"text",validation:"required maxlength=10 minlength=4",label:"姓名"},
 			学历:{mf:1,order:2,control:"radio",name:"graduate",options:[{label:"初中",checked:"checked"},{label:"高中"}],
 			detaproc:function(prop,src){
 				return src.options.filter(function(item){if(item.checked=="checked") return item;})[0].label;	
@@ -96,8 +82,10 @@
 				json = JSON.parse(textarea.value);
 			}
 			catch(e){}
-			form.innerHTML = magicform.json2html(magicform.attach(json,jsonObj));
-			magicform.init(form);
+			//form.innerHTML = magicform.json2html(magicform.attach(json,jsonObj));
+			//magicform.init(form);
+
+			magicform.generate(form,magicform.attach(json,jsonObj),{status:"editable"});
 		}
 		function html2json(){
 			jsonvalue.value = JSON.stringify(magicform.detach(magicform.html2json(form),jsonObj));

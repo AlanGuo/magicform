@@ -87,12 +87,63 @@
         return {
             formTemplate: template.formTemplate,
 
+            DEFAUTLBUTTONS: [{
+                "name": "提交",
+                "title": "提交表单",
+                "className": "primarybutton",
+                "submit": true
+            }, {
+                "name": "取消",
+                "title": "取消",
+                "className": "normalbutton"
+            }],
+
+            /**
+             * @method _setOptions
+             * @private
+             */
+            _setOptions: function(options) {
+                options = options || {};
+
+                //默认按钮
+                if (!options.buttons) {
+                    options.buttons = magicForm.DEFAUTLBUTTONS.concat();
+                }
+                options.status = options.status || "disabled";
+                options.functions = options.functions || ["editable"];
+
+                return options;
+            },
+
+
+            /**
+             * json2html -> init
+             * @method generate
+             * @param json 数据对象
+             * @param options
+             * @param options.status {String} 表单状态 "disabled","editable","new"
+             * @param options.functions {Array} 表单功能 ["editable"]
+             * @param options.buttons {Array} 按钮功能 [{name:"submit","title":"提交表单"},{name:"cancel",title:""},{name:"reset"}]
+             */
+
+            generate: function(form, json, options) {
+                form.innerHTML = this.json2html(json, options);
+                this.init(form, options);
+                return this;
+            },
+
             /**
              * json -> html
              * @method json2html
+             * @param json 数据对象
+             * @param options
+             * @param options.status {String} 表单状态 "disabled","editable","new"
+             * @param options.functions {Array} 表单功能 ["editable"]
+             * @param options.buttons {Array} 按钮功能 [{name:"submit","title":"提交表单"},{name:"cancel",title:""},{name:"reset"}]
              */
-            json2html: function(json) {
+            json2html: function(json, options) {
                 var orders = [];
+                options = this._setOptions(options);
                 //排序
                 for (var p in json) {
                     orders.push({
@@ -107,10 +158,13 @@
                     if (a.order > b.order) return true;
                     if (a.order < b.order) return false;
                 });
+
+
                 return util.tmpl(this.formTemplate, {
                     data: json,
                     order: orders,
                     util: util,
+                    options: options,
                     valueItemTemplate: template.formValueItemTemplate
                 });
             },
@@ -378,8 +432,9 @@
              * 初始化一些事件
              * @method init
              */
-            init: function(wrapper) {
+            init: function(wrapper, options) {
                 var self = this;
+                options = this._setOptions(options);
                 var initRemoveAnchor = function(removeAnchor) {
                     removeAnchor.addEventListener("click", function() {
                         var removeParent = this.parentNode.parentNode;
@@ -442,22 +497,13 @@
 
                         //填充内容
                         var content = dialog.querySelector(".form-dialog-content");
-                        content.innerHTML = self.json2html(JSON.parse(decodeURIComponent(con.getAttribute("data-mf-val"))));
+                        content.innerHTML = self.json2html(JSON.parse(decodeURIComponent(con.getAttribute("data-mf-val"))), options);
 
                         //绑定按钮事件
                         var closeButton = globalDialog.querySelector(".form-icon-close");
-                        var saveButton = globalDialog.querySelector(".form-button-save");
 
                         closeButton.onclick = function() {
                             wrapper.removeChild(globalDialog);
-                        };
-                        saveButton.onclick = function() {
-                            var dialogContent = globalDialog.querySelector(".form-dialog-content");
-                            if (dialogContent) {
-                                var json = self.html2json(dialogContent);
-                                con.setAttribute("data-mf-val", encodeURIComponent(JSON.stringify(json)));
-                                wrapper.removeChild(globalDialog);
-                            }
                         };
                     });
                 };
@@ -477,7 +523,8 @@
                                     var elems = util.createElementsWithTemplate(util.tmpl(template.formArrayItemTemplate, {
                                         valueItemTemplate: template.formValueItemTemplate,
                                         data: JSON.parse(decodeURIComponent(newtemplate)),
-                                        util: util
+                                        util: util,
+                                        options: options
                                     }));
                                     //插入元素
                                     var br = ul.querySelector("br");

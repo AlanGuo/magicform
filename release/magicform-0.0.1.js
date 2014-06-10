@@ -9,10 +9,10 @@
 
 (function(exports) {
     var template = {
-        formTemplate: /*<MFFormTemplate>*/'<%var flag=false;for(var i in order){var p = order[i].p;if(p.mf){%><%} else {%><!--key-*--><%if(!data[p].inline){%><%if(flag){%><%if(data[p].hash){%></p><p><label class="formitem-label " for="<%=p%>" data-key="<%=p%>"><%=p%></label><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true})%><span class="formitem-ml10"></span><%}else{%></p><p class="formitem-p"><label class="formitem-label " for="<%=p%>" data-key="<%=p%>"><%=p%></label><%}%><%}else{flag=true;%><%if(data[p].hash){%><label class="formitem-label " for="<%=p%>" data-key="<%=p%>"><%=p%></label><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true})%><span class="formitem-ml10"></span><%}else{%><p class="formitem-p"><label class="formitem-label " for="<%=p%>" data-key="<%=p%>"><%=p%></label><%}%><%}%><%}else if(data[p].hash){%><p><label class="formitem-label " for="<%=p%>" data-key="<%=p%>"><%=p%></label></p><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true})%><span class="formitem-ml10"></span><%}else{%><label class="formitem-label formitem-ml50 " for="<%=p%>" data-key="<%=p%>"><%=p%></label><%}%><%if(/array/i.test(Object.prototype.toString.call(data[p]))){%><!--key-array--><span class="form-array-ul formitem-control" type="array"><a href="javascript:;" class="form-icon form-item-add" title="新增" data-newtemplate="<%=encodeURIComponent(JSON.stringify(data[p].filter(function(item){if(item.fornew) return item;})[0]))%>"><i class="mf-iconfont">&#xf0154;</i></a><%for(var i=data[p].length-1;i>=0;i--){%><%if(!data[p][i].fornew){%><br><%if(data[p][i].hash){%><span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data[p][i].key,flag:true})%><span class="formitem-ml10"></span></span><%}%><span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data[p][i]})%><a href="javascript:;" class="form-icon form-item-remove" title="移除"><i class="mf-iconfont">&#xf0153;</i></a></span><%}%><%}%></span><%}else if("[object Object]" === Object.prototype.toString.call(data[p]) && !data[p].mf){%><!--key-object--><a href="javascript:;" class="form-icon form-item-detail formitem-control" data-mf-val="<%=encodeURIComponent(JSON.stringify(data[p]))%>" title="详细设定"><i class="mf-iconfont">&#xf00e1;</i></a><%}else{%><!--key-value--><%=util.tmpl(valueItemTemplate,{data:data[p]})%><%}%><%}}%><p class="formpannel"><label class="formitem-label"></label><button class="primarybutton" title="提交表单">Submit</button></p>'/*</MFFormTemplate>*/,
-        formValueItemTemplate: /*<MFFormValueItemTemplate>*/'<%if(data.mf){%><%if(data.control === "radio"){%><span class="formitem-control" type="radio" data-order="<%=data.order%>"><%for(var i=0;i<data.options.length;i++){%><input class="formitem-radio" data-flag="<%=flag%>" <%=data.options[i].validation%> <%=data.options[i].disabled%> type="radio" <%=data.options[i].checked%> data-order="<%=data.order%>" name="<%=data.name%>" id="formitem-radio-<%=data.options[i].label%>"><label class="formitem-radio-label" for="formitem-radio-<%=data.options[i].label%>"><%=data.options[i].label%></label><%}%></span><%}else if(data.control === "checkbox"){%><span class="formitem-control" type="checkbox" data-order="<%=data.order%>"><%for(var i=0;i<data.options.length;i++){%><input class="formitem-checkbox" <%=data.options[i].disabled%> <%=data.options[i].validation%> data-flag="<%=flag%>" type="checkbox" <%=data.options[i].checked%> id="formitem-radio-<%=data.options[i].label%>"><label for="formitem-radio-<%=data.options[i].label%>" class="formitem-checkbox-label"><%=data.options[i].label%></label><%}%></span><%}else if(data.control==="select"){var flag=false;%><select class="formitem-control formitem-select" data-flag="<%=flag%>" <%=data.validation%> <%=data.disabled%> data-order="<%=data.order%>"><%for(var i=0;i<data.options.length;i++){%><%if(data.options[i].val==="optgroup"){%><%if(flag){%></optgroup><optgroup label="<%=data.options[i].text%>" class="formitem-selectoption formitem-selectoptiongroup"><%}else{flag=true;%><optgroup label="<%=data.options[i].text%>" class="formitem-selectoption formitem-selectoptiongroup"><%}%><%}else{%><option value="<%=data.options[i].val%>" class="formitem-selectoption"><%=data.options[i].text%></option><%}}%></select><%}else{%><input class="formitem-control formitem-input" data-flag="<%=flag%>" <%=data.validation%> <%=data.disabled%> data-order="<%=data.order%>" type="<%=data.control%>" value="<%=data.value%>"><%}%><%}else{%><!--key-value--><input class="formitem-control formitem-input" data-flag="<%=flag%>" <%=data.validation%> value="<%=data%>"><%}%>'/*</MFFormValueItemTemplate>*/,
-        formArrayItemTemplate: /*<MFFormArrayItemTemplate>*/'<br><%if(data.hash){%><span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data.key,flag:true})%><span class="formitem-ml10"></span></span><%}%><span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data,flag:false})%><a href="javascript:;" class="form-icon form-item-remove" title="移除"><i class="mf-iconfont">&#xf0153;</i></a></span>'/*</MFFormArrayItemTemplate>*/,
-        formDialogTemplate: /*<MFFormDialogTemplate>*/'<div class="form-dialog dialog" id="form-dialog"><div class="topbar clearfix"><span class="title"><%=title%></span><span class="buttons"><a class="form-icon form-icon-close close" href="javascript:;"></a></span></div><div class="form-dialog-content content"></div><div class="form-dialog-buttons toolbars clearfix"><a href="javascript:;" class="fr form-button form-button-save primarybutton">保存</a></div></div>'/*</MFFormDialogTemplate>*/
+        formTemplate: /*<MFFormTemplate>*/'<%var flag=false;for(var i in order){var p = order[i].p;if(p.mf){%><%} else {%><!--key-*--><%if(!data[p].inline){%><%if(flag){%><%if(data[p].hash){%></p><p><label class="formitem-label " for="<%=p%>" data-key="<%=p%>"><%=p%></label><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true,options:options})%><span class="formitem-ml10"></span><%}else{%></p><p class="formitem-p"><label class="formitem-label " for="<%=p%>" data-key="<%=p%>"><%=data[p].label?data[p].label:p%></label><%}%><%}else{flag=true;%><%if(data[p].hash){%><label class="formitem-label " for="<%=p%>" data-key="<%=p%>"><%=p%></label><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true,options:options})%><span class="formitem-ml10"></span><%}else{%><p class="formitem-p"><label class="formitem-label " for="<%=p%>" data-key="<%=p%>"><%=data[p].label?data[p].label:p%></label><%}%><%}%><%}else if(data[p].hash){%><p><label class="formitem-label " for="<%=p%>" data-key="<%=p%>"><%=p%></label></p><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true,options:options})%><span class="formitem-ml10"></span><%}else{%><label class="formitem-label formitem-ml50 " for="<%=p%>" data-key="<%=p%>"><%=data[p].label?data[p].label:p%></label><%}%><%if(/array/i.test(Object.prototype.toString.call(data[p]))){%><!--key-array--><span class="form-array-ul formitem-control" type="array"><%if(options.status == "editable" || options.status == "new"){%><a href="javascript:;" class="form-icon form-item-add" title="新增" data-newtemplate="<%=encodeURIComponent(JSON.stringify(data[p].filter(function(item){if(item.fornew) return item;})[0]))%>"><i class="mf-iconfont">&#xf0154;</i></a><%}%><%if(options.status != "new"){%><%for(var i=data[p].length-1;i>=0;i--){%><%if(!data[p][i].fornew){%><br><%if(data[p][i].hash){%><span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data[p][i].key,flag:true,options:options})%><span class="formitem-ml10"></span></span><%}%><span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data[p][i],flag:true,options:options})%><%if(options.status == "editable" || options.status == "new"){%><a href="javascript:;" class="form-icon form-item-remove" title="移除"><i class="mf-iconfont">&#xf0153;</i></a><%}%></span><%}%><%}%><%}%></span><%}else if("[object Object]" === Object.prototype.toString.call(data[p]) && !data[p].mf){%><!--key-object--><a href="javascript:;" class="form-icon form-item-detail formitem-control" data-mf-val="<%=encodeURIComponent(JSON.stringify(data[p]))%>" title="详细设定"><i class="mf-iconfont">&#xf00e1;</i></a><%}else{%><!--key-value--><%=util.tmpl(valueItemTemplate,{data:data[p],flag:true,options:options})%><%}%><%}}%><%if(options.status == "editable" || options.status == "new"){%><p class="formpannel"><label class="formitem-label"></label><%for(var i=0;i<options.buttons.length;i++){%><%if(options.buttons[i].submit){%><button class="<%=options.buttons[i].className%>" title="<%=options.buttons[i].title%>"><%=options.buttons[i].name%></button><%}else{%><a class="ml10 <%=options.buttons[i].className%>" href="javascript:;" title="<%=options.buttons[i].title%>"><%=options.buttons[i].name%></a><%}%><%}%></p><%}%>'/*</MFFormTemplate>*/,
+        formValueItemTemplate: /*<MFFormValueItemTemplate>*/'<%if(data.mf){%><%if(data.control === "radio"){%><span class="formitem-control" type="radio" data-order="<%=data.order%>"><%for(var i=0;i<data.options.length;i++){%><input class="formitem-radio" <%=options.status=="disabled" ? "disabled": ""%> data-flag="<%=flag%>" <%=data.options[i].validation%> <%=data.options[i].disabled%> type="radio" <%=options.status=="new" ? "" : data.options[i].checked%> data-order="<%=data.order%>" name="<%=data.name%>" id="formitem-radio-<%=data.options[i].label%>"><label class="formitem-radio-label" for="formitem-radio-<%=data.options[i].label%>"><%=data.options[i].label%></label><%}%></span><%}else if(data.control === "checkbox"){%><span class="formitem-control" type="checkbox" data-order="<%=data.order%>"><%for(var i=0;i<data.options.length;i++){%><input class="formitem-checkbox" <%=options.status=="disabled" ? "disabled": ""%> <%=data.options[i].disabled%> <%=data.options[i].validation%> data-flag="<%=flag%>" type="checkbox" <%=options.status=="new" ? "" : data.options[i].checked%> id="formitem-radio-<%=data.options[i].label%>"><label for="formitem-radio-<%=data.options[i].label%>" class="formitem-checkbox-label"><%=data.options[i].label%></label><%}%></span><%}else if(data.control==="select"){var flag=false;%><select class="formitem-control formitem-select" <%=options.status=="disabled" ? "disabled": ""%> data-flag="<%=flag%>" <%=data.validation%> <%=data.disabled%> data-order="<%=data.order%>"><%for(var i=0;i<data.options.length;i++){%><%if(data.options[i].val==="optgroup"){%><%if(flag){%></optgroup><optgroup label="<%=data.options[i].text%>" class="formitem-selectoption formitem-selectoptiongroup"><%}else{flag=true;%><optgroup label="<%=data.options[i].text%>" class="formitem-selectoption formitem-selectoptiongroup"><%}%><%}else{%><option value="<%=data.options[i].val%>" class="formitem-selectoption"><%=data.options[i].text%></option><%}}%></select><%}else{%><input class="formitem-control formitem-input" <%=options.status=="disabled" ? "disabled": ""%> data-flag="<%=flag%>" <%=data.validation%> <%=data.disabled%> data-order="<%=data.order%>" type="<%=data.control%>" value="<%=options.status=="new" ? "" : data.value%>"><%}%><%}else{%><!--key-value--><input class="formitem-control formitem-input" <%=options.status=="disabled" ? "disabled": ""%> data-flag="<%=flag%>" <%=data.validation%> value="<%=options.status=="new" ? "" : data%>"><%}%>'/*</MFFormValueItemTemplate>*/,
+        formArrayItemTemplate: /*<MFFormArrayItemTemplate>*/'<br><%if(data.hash){%><span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data.key,flag:true,options:options})%><span class="formitem-ml10"></span></span><%}%><span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data,flag:false,options:options})%><%if(options.status == "editable" || options.status == "new"){%><a href="javascript:;" class="form-icon form-item-remove" title="移除"><i class="mf-iconfont">&#xf0153;</i></a><%}%></span>'/*</MFFormArrayItemTemplate>*/,
+        formDialogTemplate: /*<MFFormDialogTemplate>*/'<div class="form-dialog dialog" id="form-dialog"><div class="topbar clearfix"><span class="title"><%=title%></span><span class="buttons"><a class="form-icon form-icon-close close" href="javascript:;"></a></span></div><div class="form-dialog-content content"></div></div>'/*</MFFormDialogTemplate>*/
     };
 
     var util = (function() {
@@ -87,12 +87,63 @@
         return {
             formTemplate: template.formTemplate,
 
+            DEFAUTLBUTTONS: [{
+                "name": "提交",
+                "title": "提交表单",
+                "className": "primarybutton",
+                "submit": true
+            }, {
+                "name": "取消",
+                "title": "取消",
+                "className": "normalbutton"
+            }],
+
+            /**
+             * @method _setOptions
+             * @private
+             */
+            _setOptions: function(options) {
+                options = options || {};
+
+                //默认按钮
+                if (!options.buttons) {
+                    options.buttons = magicForm.DEFAUTLBUTTONS.concat();
+                }
+                options.status = options.status || "disabled";
+                options.functions = options.functions || ["editable"];
+
+                return options;
+            },
+
+
+            /**
+             * json2html -> init
+             * @method generate
+             * @param json 数据对象
+             * @param options
+             * @param options.status {String} 表单状态 "disabled","editable","new"
+             * @param options.functions {Array} 表单功能 ["editable"]
+             * @param options.buttons {Array} 按钮功能 [{name:"submit","title":"提交表单"},{name:"cancel",title:""},{name:"reset"}]
+             */
+
+            generate: function(form, json, options) {
+                form.innerHTML = this.json2html(json, options);
+                this.init(form, options);
+                return this;
+            },
+
             /**
              * json -> html
              * @method json2html
+             * @param json 数据对象
+             * @param options
+             * @param options.status {String} 表单状态 "disabled","editable","new"
+             * @param options.functions {Array} 表单功能 ["editable"]
+             * @param options.buttons {Array} 按钮功能 [{name:"submit","title":"提交表单"},{name:"cancel",title:""},{name:"reset"}]
              */
-            json2html: function(json) {
+            json2html: function(json, options) {
                 var orders = [];
+                options = this._setOptions(options);
                 //排序
                 for (var p in json) {
                     orders.push({
@@ -107,10 +158,13 @@
                     if (a.order > b.order) return true;
                     if (a.order < b.order) return false;
                 });
+
+
                 return util.tmpl(this.formTemplate, {
                     data: json,
                     order: orders,
                     util: util,
+                    options: options,
                     valueItemTemplate: template.formValueItemTemplate
                 });
             },
@@ -378,8 +432,9 @@
              * 初始化一些事件
              * @method init
              */
-            init: function(wrapper) {
+            init: function(wrapper, options) {
                 var self = this;
+                options = this._setOptions(options);
                 var initRemoveAnchor = function(removeAnchor) {
                     removeAnchor.addEventListener("click", function() {
                         var removeParent = this.parentNode.parentNode;
@@ -442,22 +497,13 @@
 
                         //填充内容
                         var content = dialog.querySelector(".form-dialog-content");
-                        content.innerHTML = self.json2html(JSON.parse(decodeURIComponent(con.getAttribute("data-mf-val"))));
+                        content.innerHTML = self.json2html(JSON.parse(decodeURIComponent(con.getAttribute("data-mf-val"))), options);
 
                         //绑定按钮事件
                         var closeButton = globalDialog.querySelector(".form-icon-close");
-                        var saveButton = globalDialog.querySelector(".form-button-save");
 
                         closeButton.onclick = function() {
                             wrapper.removeChild(globalDialog);
-                        };
-                        saveButton.onclick = function() {
-                            var dialogContent = globalDialog.querySelector(".form-dialog-content");
-                            if (dialogContent) {
-                                var json = self.html2json(dialogContent);
-                                con.setAttribute("data-mf-val", encodeURIComponent(JSON.stringify(json)));
-                                wrapper.removeChild(globalDialog);
-                            }
                         };
                     });
                 };
@@ -477,7 +523,8 @@
                                     var elems = util.createElementsWithTemplate(util.tmpl(template.formArrayItemTemplate, {
                                         valueItemTemplate: template.formValueItemTemplate,
                                         data: JSON.parse(decodeURIComponent(newtemplate)),
-                                        util: util
+                                        util: util,
+                                        options: options
                                     }));
                                     //插入元素
                                     var br = ul.querySelector("br");

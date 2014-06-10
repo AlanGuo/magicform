@@ -53,6 +53,7 @@ magicform支持多种类型的数据，根据不同类型来生成不同的html�
 - **fornew**
 - **key**
 - **validation**
+- **label**
 
 		
 ## 表单验证

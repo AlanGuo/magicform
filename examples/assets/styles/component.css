@@ -251,6 +251,9 @@ table {
 .confui.default .blackbg {
   background-color: #333333;
 }
+.confui.default .darkgraybg {
+  background-color: #555555;
+}
 .confui.default .whitebg {
   background-color: white;
 }
@@ -289,6 +292,9 @@ table {
 }
 .confui.default .grayborder {
   border-color: #dddddd;
+}
+.confui.default .blackborder {
+  border-color: #333333;
 }
 .confui.default .blueborder {
   border-color: #006db7;
@@ -398,6 +404,7 @@ table {
   color: #ffffff;
   text-decoration: none;
   cursor: pointer;
+  font-size: 100%;
 }
 .confui.default .primarybutton:hover {
   background: #3196db;
@@ -407,6 +414,29 @@ table {
 }
 .confui.default .primarybutton:disabled,
 .confui.default .primarybutton.disabled {
+  cursor: default;
+  background-color: #e2e2e2;
+  border-bottom-width: 1px;
+  border-color: #dddddd;
+}
+.confui.default .normalbutton {
+  border-style: solid;
+  padding: 0.3em 1.2em 0.3em 1.2em;
+  border-color: #333333;
+  background-color: #555555;
+  color: #ffffff;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 100%;
+}
+.confui.default .normalbutton:hover {
+  background: #666666;
+}
+.confui.default .normalbutton:active {
+  background: #333333;
+}
+.confui.default .normalbutton:disabled,
+.confui.default .normalbutton.disabled {
   cursor: default;
   background-color: #e2e2e2;
   border-bottom-width: 1px;
