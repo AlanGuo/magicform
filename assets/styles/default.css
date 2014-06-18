@@ -16,6 +16,9 @@
 .mf .ml10{
     margin-left: 10px;
 }
+.mf .ml15{
+    margin-left: 15px;
+}
 .mf .f32{
     font-size: 32px;
 }
@@ -44,13 +47,15 @@
 
 .mf .formitem-p{margin: 16px 0 0 0;}
 .mf .formitem-p:first-child{margin: 0;}
-.mf .formitem-label{ font-weight:normal;display:inline-block;margin-right:80px;width:100px;text-align: right;overflow: hidden;text-overflow:ellipsis;vertical-align: middle;}
+.mf .formitem-label{ font-weight:normal;display:inline-block;margin-right:80px;text-align: right;overflow: hidden;text-overflow:ellipsis;vertical-align: middle;}
 .mf .formitem-label.align-left{ font-weight:normal;display:inline-block;width: 150px;overflow: hidden;text-overflow:ellipsis;vertical-align: middle;text-align: left;margin-right: 0;}
 .mf .formitem-radio-label{margin: 0 10px;}
 .mf .formitem-checkbox-label{margin: 0 10px;}
 .mf .form-array-ul{display: inline-block;}
 .mf .form-array-li{display: inline-block;margin-top: 5px;}
+/*
 .mf .formitem-input,.mf .formitem-select{width: 150px;padding:3px;}
+*/
 .mf .form-item-remove{margin-left: 6px;visibility: hidden;}
 .mf .form-item-remove:hover{color: red;}
 .mf .form-item-add{padding-bottom: 5px;}

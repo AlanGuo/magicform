@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>register form</title>
+	<link rel="stylesheet" type="text/css" href="../assets/styles/default.css"></style>
+
+	<!--common style-->
+	<!--form style-->
+	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/component.css?max-age=0"></style>
+	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/form.css?max-age=0"></style>
+</head>
+<body class="confui default">
+	<form class="mf" id="form" style="width:600px;margin:100px auto 0 auto" action="javascript:;">
+	</form>
+	<script type="text/javascript" src="../release/magicform-0.0.1.js"></script>
+	<script type="text/javascript">
+		var form = document.getElementById("form");
+		var textarea = document.getElementById("jsonvalue");
+
+		//纯数据
+		var pureJson = {
+			email:"",
+			username:"",
+			password:"",
+			message:""
+		};
+
+		//attach数据
+		var jsonObj = {
+			email:{mf:1,control:"text",validation:"required pattern='.*@.*'"},
+			password:{mf:1,control:"password",validation:"minlength=6 required"},
+			username:{mf:1,validation:"required maxlength=10 minlength=4"},
+			message:{mf:1,placeholder:"leave a short message",control:"textarea"}
+		};
+		
+
+		function json2html(){
+			var json = pureJson;
+			try{
+				json = JSON.parse(textarea.value);
+			}
+			catch(e){}
+
+			magicform.generate(form,magicform.attach(json,jsonObj),{
+				status:"editable",
+				style:{
+					label:"width:15%",
+					control:"width:90%"
+				},
+				classname:{
+					label:"",control:""
+				}
+			});
+		}
+		function html2json(){
+			jsonvalue.value = JSON.stringify(magicform.detach(magicform.html2json(form),jsonObj));
+		}
+
+		json2html();
+	</script>
+</body>
+</html>

@@ -90,12 +90,12 @@
             DEFAUTLBUTTONS: [{
                 "name": "提交",
                 "title": "提交表单",
-                "className": "primarybutton",
+                "className": "primary",
                 "submit": true
             }, {
                 "name": "取消",
                 "title": "取消",
-                "className": "normalbutton"
+                "className": "normal"
             }],
 
             /**
@@ -111,6 +111,10 @@
                 }
                 options.status = options.status || "disabled";
                 options.functions = options.functions || ["editable"];
+                options.style = options.style || {
+                    label: "",
+                    control: ""
+                };
 
                 return options;
             },
