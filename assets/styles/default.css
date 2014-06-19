@@ -47,12 +47,55 @@
 
 .mf .formitem-p{margin: 16px 0 0 0;}
 .mf .formitem-p:first-child{margin: 0;}
-.mf .formitem-label{ font-weight:normal;display:inline-block;margin-right:80px;text-align: right;overflow: hidden;text-overflow:ellipsis;vertical-align: middle;}
-.mf .formitem-label.align-left{ font-weight:normal;display:inline-block;width: 150px;overflow: hidden;text-overflow:ellipsis;vertical-align: middle;text-align: left;margin-right: 0;}
+
+/*label预置样式*/
+.mf .formitem-label{display:inline-block;overflow: hidden;text-overflow:ellipsis}
+
+.mf .formitem-label.fb{font-weight:bold;}
+.mf .formitem-label.w10p{width: 10%;}
+.mf .formitem-label.w15p{width: 15%;}
+.mf .formitem-label.w20p{width: 20%;}
+.mf .formitem-label.w30p{width: 30%;}
+.mf .formitem-label.w40p{width: 40%;}
+.mf .formitem-label.w50p{width: 50%;}
+.mf .formitem-label.mr5p{margin-right:5%;}
+.mf .formitem-label.mr10p{margin-right:10%;}
+.mf .formitem-label.w100{width: 100px;}
+.mf .formitem-label.w150{width: 150px;}
+.mf .formitem-label.w300{width: 300px;}
+.mf .formitem-label.mr80{margin-right:80px;}
+.mf .formitem-label.mr100{margin-right:100px;}
+.mf .formitem-label.align-right{text-align: right;}
+.mf .formitem-label.align-left{text-align: left;}
+
+
+/*control预置样式*/
+.mf .formitem-control{display: inline-block;}
+.mf .formitem-control.w100p{width: 100%;}
+.mf .formitem-control.w85p{width: 83%;}
+.mf .formitem-control.w80p{width: 78%;}
+.mf .formitem-control.w75p{width: 73%;}
+.mf .formitem-control.w70p{width: 68%;}
+.mf .formitem-control.w65p{width: 63%;}
+.mf .formitem-control.w60p{width: 58%;}
+.mf .formitem-control.w55p{width: 53%;}
+.mf .formitem-control.w50p{width: 48%;}
+.mf .formitem-control.w45p{width: 43%;}
+.mf .formitem-control.w40p{width: 33%;}
+.mf .formitem-control.w150{width: 150px;}
+.mf .formitem-control.w200{width: 200px;}
+.mf .formitem-control.w300{width: 300px;}
+.mf .formitem-control.w400{width: 400px;}
+.mf .formitem-control.w500{width: 500px;}
+
+.mf .formitem-control.formitem-input[data-listitem=listitem]{width: 92%;}
+
+
+
 .mf .formitem-radio-label{margin: 0 10px;}
 .mf .formitem-checkbox-label{margin: 0 10px;}
-.mf .form-array-ul{display: inline-block;}
-.mf .form-array-li{display: inline-block;margin-top: 5px;}
+.mf .form-array-ul{}
+.mf .form-array-li{display: inline-block;margin-top: 5px;width:100%;}
 /*
 .mf .formitem-input,.mf .formitem-select{width: 150px;padding:3px;}
 */

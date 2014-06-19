@@ -115,6 +115,10 @@
                     label: "",
                     control: ""
                 };
+                options.classname = options.classname || {
+                    label: "formitem-label w20p align-right mr10p",
+                    control: "formitem-control w70p"
+                };
 
                 return options;
             },
