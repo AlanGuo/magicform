@@ -89,6 +89,12 @@
 .mf .formitem-control.w500{width: 500px;}
 
 .mf .formitem-control.formitem-input[data-listitem=listitem]{width: 92%;}
+.mf .formitem-control .form-array-li.w50p .formitem-input[data-listitem]{width: 84%;}
+.mf .formitem-control .form-array-li.w45p .formitem-input[data-listitem=listitem]{width: 100%;}
+
+
+.mf .form-array-li.w45p{width: 45%;margin-right: 5%;}
+.mf .form-array-li.w50p{width: 50%;}
 
 
 
@@ -102,7 +108,3 @@
 .mf .form-item-remove{margin-left: 6px;visibility: hidden;}
 .mf .form-item-remove:hover{color: red;}
 .mf .form-item-add{padding-bottom: 5px;}
-
-.mf .form-dialog{ position: absolute;background: gray;}
-.mf .form-dialog .form-dialog-content{padding:10px;margin: 20px 80px 20px 0;}
-.mf .form-dialog .form-dialog-buttons{padding:10px;margin: 0 80px 5px 0;}

@@ -136,7 +136,7 @@
 
             generate: function(form, json, options) {
                 form.innerHTML = this.json2html(json, options);
-                this.init(form, options);
+                this.init(form, json, options);
                 return this;
             },
 
@@ -440,7 +440,7 @@
              * 初始化一些事件
              * @method init
              */
-            init: function(wrapper, options) {
+            init: function(wrapper, json, options) {
                 var self = this;
                 options = this._setOptions(options);
                 var initRemoveAnchor = function(removeAnchor) {
@@ -478,42 +478,6 @@
                     if (removeAnchor) {
                         initRemoveAnchor(removeAnchor);
                     }
-                };
-
-                var initFormDetailItem = function(con) {
-                    con.addEventListener("click", function() {
-                        var dialog = util.createElementsWithTemplate(util.tmpl(template.formDialogTemplate, {
-                            title: "详细"
-                        }))[0];
-                        //只允许有一个dialog
-                        var globalDialog = document.getElementById("form-dialog");
-                        if (!globalDialog) {
-                            wrapper.appendChild(dialog);
-                            globalDialog = dialog;
-                        } else {
-                            globalDialog.innerHTML = dialog.innerHTML;
-                        }
-                        var w = dialog.clientWidth,
-                            h = dialog.clientHeight;
-                        //窗口尺寸
-                        var winWidth = document.documentElement.clientWidth;
-                        var winHeight = document.documentElement.clientHeight;
-
-                        //窗口居中
-                        dialog.style.left = (winWidth - w) / 2 + "px";
-                        dialog.style.top = (winHeight - h) / 2 + "px";
-
-                        //填充内容
-                        var content = dialog.querySelector(".form-dialog-content");
-                        content.innerHTML = self.json2html(JSON.parse(decodeURIComponent(con.getAttribute("data-mf-val"))), options);
-
-                        //绑定按钮事件
-                        var closeButton = globalDialog.querySelector(".form-icon-close");
-
-                        closeButton.onclick = function() {
-                            wrapper.removeChild(globalDialog);
-                        };
-                    });
                 };
 
                 /*jshint -W083 */
@@ -564,7 +528,13 @@
                 //初始化详情按钮
                 var details = wrapper.querySelectorAll(".form-item-detail");
                 for (i = 0; i < details.length; i++) {
-                    initFormDetailItem(details[i]);
+                    var key = details[i].getAttribute("for");
+                    var val = json[key];
+                    if (val.onclick) {
+                        details[i].addEventListener("click", function() {
+                            val.onclick.call(this, JSON.parse(decodeURIComponent(this.getAttribute("data-mf-val"))));
+                        });
+                    }
                 }
 
                 return this;

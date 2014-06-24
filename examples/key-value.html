@@ -10,8 +10,8 @@
 	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/form.css?max-age=0"></style>
 </head>
 <body class="confui default">
-	<form class="mf" style="width:600px;margin:100px auto 0 auto">
-		<fieldset class="">
+	<form class="mf" style="width:600px;margin:30px auto">
+		<fieldset class="mb30">
 			<legend>表单</legend>
 			<div id="form"></div>
 		</fieldset>
@@ -71,6 +71,11 @@
 				{val:"optgroup",text:"垃圾"},
 				{text:"深职院",val:3}
 			]},
+			学科:{
+				mf:1,isobject:true,onclick:function(json){
+					alert("对象");
+				}
+			},
 			数字:[{mf:1,control:"number",fornew:1},{mf:1,control:"checkbox",options:[{checked:"checked",label:"1"}],detaproc:function(prop,src){
 				return src.options.filter(function(item){if(item.checked=="checked") return item;})[0].label;	
 			}},2,3,4,5],
@@ -91,7 +96,7 @@
 			//form.innerHTML = magicform.json2html(magicform.attach(json,jsonObj));
 			//magicform.init(form);
 
-			magicform.generate(form,magicform.attach(json,jsonObj),{status:"editable"});
+			magicform.generate(form,magicform.attach(json,jsonObj),{status:"editable",hasbuttons:true});
 		}
 		function html2json(){
 			jsonvalue.value = JSON.stringify(magicform.detach(magicform.html2json(form),jsonObj));

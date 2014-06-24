@@ -11,11 +11,15 @@
 	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/form.css?max-age=0"></style>
 </head>
 <body class="confui default">
-	<form class="mf" id="form" style="width:600px;margin:100px auto 0 auto" action="javascript:;">
+	<form class="mf" style="width:600px;margin:10% auto;" action="javascript:;">
+		<fieldset class="lightgraybg2">
+			<legend>Register</legend>
+			<div id="form"></div>
+		</fieldset>
 	</form>
 	<script type="text/javascript" src="../release/magicform-0.0.1.js"></script>
 	<script type="text/javascript">
-		var form = document.getElementById("form");
+		
 		var textarea = document.getElementById("jsonvalue");
 
 		//纯数据
@@ -42,13 +46,16 @@
 			}
 			catch(e){}
 
+
+			var form = document.getElementById("form");
 			magicform.generate(form,magicform.attach(json,jsonObj),{
-				status:"editable"
+				status:"editable",
+				hasbuttons:true
 				/*
 				 * use default class
 				classname:{
-					label:"formitem-label w20p align-right mr10p",
-					control:"formitem-control w70p"
+					label:"w20p align-right mr10p",
+					control:"w70p"
 				}
 				*/
 			});
