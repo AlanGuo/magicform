@@ -11,8 +11,7 @@
     var template = {
         formTemplate: MFFormTemplate,
         formValueItemTemplate: MFFormValueItemTemplate,
-        formArrayItemTemplate: MFFormArrayItemTemplate,
-        formDialogTemplate: MFFormDialogTemplate
+        formArrayItemTemplate: MFFormArrayItemTemplate
     };
 
     var util = (function() {
