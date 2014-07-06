@@ -5,12 +5,156 @@
 	<meta name="keywords" content="魔法,表单">
 	<meta name="author" content="alan">
 	<meta name="description" content="魔法表单,表单的自动生成以及交互">
+	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/component.css?max-age=0">
+	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/form.css?max-age=0">
+	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/predefined.css?max-age=0">
+	<link rel="stylesheet" type="text/css" href="./assets/styles/default.css">
 	<title>MagicForm</title>
+	<style type="text/css">
+	.mainview{
+		width: 977px;
+	}
+	</style>
 </head>
-<body>
-	<div>
-		
-	</div>
+<body class="confui default">
+	<header>
+		<nav class="tc mt20">
+			<a class="blacklink p15 current" href="#main" title="主页">主页</a>
+			<a class="ml30 blacklink p15" href="#docs" title="文档">文档</a>
+			<a class="ml30 blacklink p15" href="https://github.com/AlanGuo/magicform" target="_blank" title="Github">Github</a>
+		</nav>
+	</header>
+	<section class="mt80">
+		<div class="tc">
+			<img src="./assets/logo/magicform.png" width="200">
+		</div>
+		<div class="mainview marginauto mt20 clearfix">
+			<div class="fl w600">
+				<form class="mf">
+					<fieldset class="lightgraybg2">
+						<legend>From</legend>
+						<div id="form"></div>
+					</fieldset>
+					<ul>
+						<li class="mt30">
+							<label class="fb">form样式</label>
+							<input class="ml50 pointer" type="radio" id="confui" name="formstyle" checked="checked">
+							<label class="ml10 pointer" for="confui">confui</label>
+							<input class="ml50 pointer" type="radio" id="darktheme" name="formstyle">
+							<label class="ml10 pointer" for="darktheme">darktheme</label>
+						</li>
+						<li class="mt30">
+							<label class="fb">label位置</label>
+							<input class="ml50 pointer" type="radio" id="left" name="labelpos" checked="checked" data-click-event="labelpos">
+							<label class="ml10 pointer" for="left">左侧</label>
+							<input class="ml50 pointer" type="radio" id="top" name="labelpos" data-click-event="labelpos">
+							<label class="ml10 pointer" for="top" >上方</label>
+						</li>
+					</ul>
+				</form>
+			</div>
+			<div class="fl mt30">
+				<div>
+					<button title="提取数据" data-click-event="html2json">-></button>
+				</div>
+				<div>
+					<button title="生成表单" data-click-event="json2html"><-</button>
+				</div>
+			</div>
+			<div class="fl">
+				<fieldset>
+					<legend>Code</legend>
+					<textarea class="w300" style="height:280px" id="jsonText"></textarea>
+				</fieldset>
+			</div>
+		</div>
+	</section>
+	<footer class="footer">
+		Alan © 2013/07/10
+	</footer>
+	<script type="text/javascript" src="./assets/scripts/speedframe-0.1.js"></script>
 	<script type="text/javascript" src="./release/magicform-0.0.1.js"></script>
+	<script type="text/javascript">
+		//纯数据
+		var pureJson = {
+			email:"ggddll123@qq.com",
+			username:"alan",
+			password:"1234567",
+			message:""
+		};
+
+		//attach数据
+		var jsonObj = {
+			email:{mf:1,control:"text",validation:"required pattern='.*@.*'"},
+			password:{mf:1,control:"password",validation:"minlength=6 required"},
+			username:{mf:1,validation:"required maxlength=10 minlength=4"},
+			message:{mf:1,placeholder:"leave a short message",control:"textarea"}
+		};
+
+		var g_options = {
+			status:"editable",
+			hasbuttons:false
+		};
+
+		var form = document.getElementById("form");
+		var jsonText = document.getElementById("jsonText");
+
+
+		jsonText.value = JSON.stringify(pureJson,undefined,2);
+
+		var json2html = function(options){
+			var json = pureJson;
+			try{
+				json = JSON.parse(jsonText.value);
+			}
+			catch(e){}
+
+			g_options = options || g_options;
+			magicform.generate(form,magicform.attach(json,jsonObj),g_options);
+		};
+
+		//初始化
+		json2html();
+
+		speedframe.event.register(document.body,"click",{
+			"html2json":function(evt){
+				jsonText.value = JSON.stringify(magicform.detach(magicform.html2json(form),jsonObj),undefined,2);
+			},
+			"json2html":function(evt){
+				json2html({
+					status:"editable",
+					hasbuttons:false
+					/*
+					 * use default class
+					classname:{
+						label:"w20p align-right mr10p",
+						control:"w70p"
+					}
+					*/
+				});
+			},
+			"labelpos":function(evt){
+				var target = evt.target;
+
+				var pos = target.id;
+				if(pos === "top"){
+					json2html({
+						status:"editable",
+						hasbuttons:false,
+						classname:{
+							label:"w20p align-left",
+							control:"w100p"
+						}
+					});
+				}
+				else if(pos === "left"){
+					json2html({
+						status:"editable",
+						hasbuttons:false
+					});
+				}
+			}
+		});
+	</script>
 </body>
 </html>

@@ -359,7 +359,7 @@
                                 }
                             }
                         }
-                    } else if (/select/i.test(control.tagName)) {
+                    } else if (/\bselect\b/i.test(control.tagName)) {
                         //select
                         var optionControls = control.querySelectorAll(".formitem-selectoption");
                         options = [];
@@ -389,13 +389,13 @@
                                 disabled: control.disabled ? "disabled" : ""
                             };
                         }
-                    } else if (/a/i.test(control.tagName)) {
+                    } else if (/\ba\b/i.test(control.tagName)) {
                         var value = control.getAttribute("data-mf-val");
                         if (value) {
                             value = decodeURIComponent(value);
                             json = JSON.parse(value);
                         }
-                    } else if (/input/i.test(control.tagName)) {
+                    } else if (/\binput\b/i.test(control.tagName) || (/\btextarea\b/i).test(control.tagName)) {
                         if (control.type) {
                             order = parseInt(control.getAttribute("data-order"), 10);
                             if (isNaN(order)) {
