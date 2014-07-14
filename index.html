@@ -5,8 +5,8 @@
 	<meta name="keywords" content="魔法,表单">
 	<meta name="author" content="alan">
 	<meta name="description" content="魔法表单,表单的自动生成以及交互">
-	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/component.css?max-age=0">
-	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/form.css?max-age=0">
+	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/default/component.css?max-age=0">
+	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/snowball/component.css?max-age=0">
 	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/predefined.css?max-age=0">
 	<link rel="stylesheet" type="text/css" href="./assets/styles/default.css">
 	<title>MagicForm</title>
@@ -19,9 +19,9 @@
 <body class="confui default">
 	<header>
 		<nav class="tc mt20">
-			<a class="blacklink p15 current" href="#main" title="主页">主页</a>
-			<a class="ml30 blacklink p15" href="#docs" title="文档">文档</a>
-			<a class="ml30 blacklink p15" href="https://github.com/AlanGuo/magicform" target="_blank" title="Github">Github</a>
+			<a class="listlink current" href="#main" title="主页">主页</a>
+			<a class="ml30 listlink p15" href="docs/index.html" target="_blank" title="文档">文档</a>
+			<a class="ml30 listlink p15" href="https://github.com/AlanGuo/magicform" target="_blank" title="Github">Github</a>
 		</nav>
 	</header>
 	<section class="mt80">
@@ -31,24 +31,26 @@
 		<div class="mainview marginauto mt20 clearfix">
 			<div class="fl w600">
 				<form class="mf">
-					<fieldset class="lightgraybg2">
+					<fieldset>
 						<legend>From</legend>
 						<div id="form"></div>
 					</fieldset>
 					<ul>
-						<li class="mt30">
+						<li class="mt30" data-click-event="formstyle">
 							<label class="fb">form样式</label>
-							<input class="ml50 pointer" type="radio" id="confui" name="formstyle" checked="checked">
-							<label class="ml10 pointer" for="confui">confui</label>
-							<input class="ml50 pointer" type="radio" id="darktheme" name="formstyle">
-							<label class="ml10 pointer" for="darktheme">darktheme</label>
+							<input class="ml50 pointer" type="radio" data-theme="default" id="default" name="formstyle" checked="checked">
+							<label class="ml10 pointer" data-theme="default" for="default">default</label>
+							<input class="ml50 pointer" type="radio" data-theme="snowball" id="snowball" name="formstyle">
+							<label class="ml10 pointer" data-theme="snowball" for="snowball">snowball</label>
 						</li>
-						<li class="mt30">
+						<li class="mt30" data-click-event="labelpos">
 							<label class="fb">label位置</label>
-							<input class="ml50 pointer" type="radio" id="left" name="labelpos" checked="checked" data-click-event="labelpos">
+							<input class="ml50 pointer" type="radio" id="left" name="labelpos" checked="checked" >
 							<label class="ml10 pointer" for="left">左侧</label>
-							<input class="ml50 pointer" type="radio" id="top" name="labelpos" data-click-event="labelpos">
+							<input class="ml50 pointer" type="radio" id="top" name="labelpos">
 							<label class="ml10 pointer" for="top" >上方</label>
+							<input class="ml50 pointer" type="radio" id="none" name="labelpos">
+							<label class="ml10 pointer" for="top" >无</label>
 						</li>
 					</ul>
 				</form>
@@ -85,10 +87,10 @@
 
 		//attach数据
 		var jsonObj = {
-			email:{mf:1,control:"text",validation:"required pattern='.*@.*'"},
-			password:{mf:1,control:"password",validation:"minlength=6 required"},
-			username:{mf:1,validation:"required maxlength=10 minlength=4"},
-			message:{mf:1,placeholder:"leave a short message",control:"textarea"}
+			email:{mf:1,control:"text",validation:"required pattern='.*@.*'",placeholder:"email"},
+			password:{mf:1,control:"password",validation:"minlength=6 required",placeholder:"password"},
+			username:{mf:1,validation:"required maxlength=10 minlength=4",placeholder:"username"},
+			message:{mf:1,placeholder:"leave a short message",control:"textarea",placeholder:"please enter a text"}
 		};
 
 		var g_options = {
@@ -121,21 +123,17 @@
 				jsonText.value = JSON.stringify(magicform.detach(magicform.html2json(form),jsonObj),undefined,2);
 			},
 			"json2html":function(evt){
-				json2html({
-					status:"editable",
-					hasbuttons:false
-					/*
-					 * use default class
-					classname:{
-						label:"w20p align-right mr10p",
-						control:"w70p"
-					}
-					*/
-				});
+				json2html(g_options);
+			},
+			"formstyle":function(evt){
+				var target = evt.target;
+				var theme = target.getAttribute("data-theme");
+				if(theme){
+					document.body.className = "confui "+theme;
+				}
 			},
 			"labelpos":function(evt){
 				var target = evt.target;
-
 				var pos = target.id;
 				if(pos === "top"){
 					json2html({
@@ -151,6 +149,16 @@
 					json2html({
 						status:"editable",
 						hasbuttons:false
+					});
+				}
+				else if(pos === "none" ){
+					json2html({
+						status:"editable",
+						hasbuttons:false,
+						classname:{
+							label:"none",
+							control:"w100p"
+						}
 					});
 				}
 			}

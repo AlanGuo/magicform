@@ -51,6 +51,7 @@
 /*label预置样式*/
 .mf .formitem-label{display:inline-block;overflow: hidden;text-overflow:ellipsis}
 
+.mf .formitem-label.none{display: none;}
 .mf .formitem-label.fb{font-weight:bold;}
 .mf .formitem-label.w10p{width: 10%;}
 .mf .formitem-label.w15p{width: 15%;}
