@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,12 +8,13 @@
 	<meta name="description" content="魔法表单,表单的自动生成以及交互">
 	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/default/component.css?max-age=0">
 	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/snowball/component.css?max-age=0">
+	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/blackworld/component.css?max-age=0">
 	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/predefined.css?max-age=0">
 	<link rel="stylesheet" type="text/css" href="./assets/styles/default.css">
 	<title>MagicForm</title>
 	<style type="text/css">
 	.mainview{
-		width: 977px;
+		width: 980px;
 	}
 	</style>
 </head>
@@ -20,7 +22,7 @@
 	<header>
 		<nav class="tc mt20">
 			<a class="listlink current" href="#main" title="主页">主页</a>
-			<a class="ml30 listlink p15" href="#docs" title="文档">文档</a>
+			<a class="ml30 listlink p15" href="docs/index.html" target="_blank" title="文档">文档</a>
 			<a class="ml30 listlink p15" href="https://github.com/AlanGuo/magicform" target="_blank" title="Github">Github</a>
 		</nav>
 	</header>
@@ -32,8 +34,8 @@
 			<div class="fl w600">
 				<form class="mf">
 					<fieldset>
-						<legend>From</legend>
-						<div id="form"></div>
+						<div class="legend">From</div>
+						<div class="content" id="form"></div>
 					</fieldset>
 					<ul>
 						<li class="mt30" data-click-event="formstyle">
@@ -42,15 +44,17 @@
 							<label class="ml10 pointer" data-theme="default" for="default">default</label>
 							<input class="ml50 pointer" type="radio" data-theme="snowball" id="snowball" name="formstyle">
 							<label class="ml10 pointer" data-theme="snowball" for="snowball">snowball</label>
+							<input class="ml50 pointer" type="radio" data-theme="blackworld" id="blackworld" name="formstyle">
+							<label class="ml10 pointer" type="radio" data-theme="blackworld" for="blackworld">blackworld</label>
 						</li>
 						<li class="mt30" data-click-event="labelpos">
 							<label class="fb">label位置</label>
-							<input class="ml50 pointer" type="radio" id="left" name="labelpos" checked="checked" >
+							<input class="ml50 pointer" type="radio" id="left" name="labelpos" checked="checked">
 							<label class="ml10 pointer" for="left">左侧</label>
 							<input class="ml50 pointer" type="radio" id="top" name="labelpos">
 							<label class="ml10 pointer" for="top" >上方</label>
 							<input class="ml50 pointer" type="radio" id="none" name="labelpos">
-							<label class="ml10 pointer" for="top" >无</label>
+							<label class="ml10 pointer" for="none" >无</label>
 						</li>
 					</ul>
 				</form>
