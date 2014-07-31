@@ -467,6 +467,10 @@
                     label: "formitem-label w20p align-right mr10p",
                     control: "formitem-control w70p"
                 };
+                options.template = options.template || {
+                    label: "{label}",
+                    control: "{control}"
+                };
 
                 return options;
             },

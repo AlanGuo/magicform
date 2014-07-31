@@ -9,8 +9,8 @@
 	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/default/component.css?max-age=0">
 	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/snowball/component.css?max-age=0">
 	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/blackworld/component.css?max-age=0">
-	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/predefined.css?max-age=0">
-	<link rel="stylesheet" type="text/css" href="./assets/styles/default.css">
+	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/predefined-common.css?max-age=0">
+	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/predefined-form.css?max-age=0">
 	<title>MagicForm</title>
 	<style type="text/css">
 	.mainview{
@@ -81,6 +81,7 @@
 	<script type="text/javascript" src="./assets/scripts/speedframe-0.1.js"></script>
 	<script type="text/javascript" src="./release/magicform-0.0.1.js"></script>
 	<script type="text/javascript">
+
 		//纯数据
 		var pureJson = {
 			email:"ggddll123@qq.com",
@@ -132,7 +133,13 @@
 			"formstyle":function(evt){
 				var target = evt.target;
 				var theme = target.getAttribute("data-theme");
+
 				if(theme){
+					var bootstrapLinks = Array.prototype.slice(document.head.querySelectorAll(".bootstrap"));
+					bootstrapLinks.forEach(function(item){
+						document.head.removeChild(item);
+					});
+					//confui
 					document.body.className = "confui "+theme;
 				}
 			},

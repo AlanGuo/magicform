@@ -3,22 +3,22 @@
 		if(!data[p].inline){%>
 			<%if(flag){%>
 				<%if(data[p].hash){%>
-					</p><p><label class="formitem-label <%=data[p].classname?data[p].classname.label:options.classname.label%>" style="<%=data[p].style?data[p].style.label:options.style.label%>" for="<%=p%>" data-key="<%=p%>"><%=p%></label><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true,options:options,listitem:""})%><span class="formitem-ml10"></span>
+					</div><div><label class="formitem-label <%=data[p].classname?data[p].classname.label:options.classname.label%>" style="<%=data[p].style?data[p].style.label:options.style.label%>" for="formitem-<%=p%>" data-key="formitem-<%=p%>"><%=p%></label><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true,options:options,listitem:"",p:p})%><span class="formitem-ml10"></span>
 				<%}else{%>
-					</p><p class="formitem-p"><label class="formitem-label <%=data[p].classname?data[p].classname.label:options.classname.label%>" style="<%=data[p].style?data[p].style.label:options.style.label%>" for="<%=p%>" data-key="<%=p%>"><%=data[p].label?data[p].label:p%></label>
+					</div><div class="formitem-p"><label class="formitem-label <%=data[p].classname?data[p].classname.label:options.classname.label%>" style="<%=data[p].style?data[p].style.label:options.style.label%>" for="formitem-<%=p%>" data-key="<%=p%>"><%=data[p].label?data[p].label:p%></label>
 				<%}%>
 			<%}else{flag=true;%>
 				<%if(data[p].hash){%>
-					<label class="formitem-label <%=data[p].classname?data[p].classname.label:options.classname.label%>" style="<%=data[p].style?data[p].style.label:options.style.label%>" for="<%=p%>" data-key="<%=p%>"><%=p%></label><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true,options:options,listitem:""})%><span class="formitem-ml10"></span>
+					<label class="formitem-label <%=data[p].classname?data[p].classname.label:options.classname.label%>" style="<%=data[p].style?data[p].style.label:options.style.label%>" for="formitem-<%=p%>" data-key="<%=p%>"><%=p%></label><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true,options:options,listitem:"",p:p})%><span class="formitem-ml10"></span>
 				<%}else{%>
-					<p class="formitem-p"><label class="formitem-label <%=data[p].classname?data[p].classname.label:options.classname.label%>" style="<%=data[p].style?data[p].style.label:options.style.label%>" for="<%=p%>" data-key="<%=p%>"><%=data[p].label?data[p].label:p%></label>
+					<div class="formitem-p"><label class="formitem-label <%=data[p].classname?data[p].classname.label:options.classname.label%>" style="<%=data[p].style?data[p].style.label:options.style.label%>" for="formitem-<%=p%>" data-key="<%=p%>"><%=data[p].label?data[p].label:p%></label>
 				<%}%>
 			<%}%>
 		<%}else if(data[p].hash){%>
-			<p><label class="formitem-label <%=data[p].classname?data[p].classname.label:options.classname.label%>" for="<%=p%>" style="<%=data[p].style?data[p].style.label:options.style.label%>" data-key="<%=p%>"><%=p%></label></p>
+			<div><label class="formitem-label <%=data[p].classname?data[p].classname.label:options.classname.label%>" for="formitem-<%=p%>" style="<%=data[p].style?data[p].style.label:options.style.label%>" data-key="<%=p%>"><%=p%></label></div>
 			<%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true,options:options})%><span class="formitem-ml10"></span>
 		<%}else{%>
-			<label class="formitem-label <%=data[p].classname?data[p].classname.label:options.classname.label%> formitem-ml50 " style="<%=data[p].style?data[p].style.label:options.style.label%>" for="<%=p%>" data-key="<%=p%>"><%=data[p].label?data[p].label:p%></label>
+			<label class="formitem-label <%=data[p].classname?data[p].classname.label:options.classname.label%> formitem-ml50 " style="<%=data[p].style?data[p].style.label:options.style.label%>" for="formitem-<%=p%>" data-key="<%=p%>"><%=data[p].label?data[p].label:p%></label>
 		<%}%>
 		<%if(/array/i.test(Object.prototype.toString.call(data[p]))){%>
 			<!--key-array-->
@@ -31,10 +31,10 @@
 						<%if(!data[p][i].fornew){%>
 							<br>
 							<%if(data[p][i].hash){%>
-								<span class="form-array-li w45p"><%=util.tmpl(valueItemTemplate,{data:data[p][i].key,flag:true,options:options,listitem:"listitem"})%></span>
-								<span class="form-array-li w50p"><%=util.tmpl(valueItemTemplate,{data:data[p][i],flag:true,options:options,listitem:""})%>
+								<span class="form-array-li w45p"><%=util.tmpl(valueItemTemplate,{data:data[p][i].key,flag:true,options:options,listitem:"listitem",p:p})%></span>
+								<span class="form-array-li w50p"><%=util.tmpl(valueItemTemplate,{data:data[p][i],flag:true,options:options,listitem:"",p:p})%>
 							<%}else{%>
-							<span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data[p][i],flag:true,options:options,listitem:"listitem"})%>
+							<span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data[p][i],flag:true,options:options,listitem:"listitem",p:p})%>
 							<%}%>
 							<%if(options.status == "editable" || options.status == "new"){%>
 								<a href="javascript:;" class="form-icon form-item-remove" title="移除"><i class="mf-iconfont">&#xf0153;</i></a>
@@ -46,14 +46,14 @@
 			</span>
 		<%}else if("[object Object]" === Object.prototype.toString.call(data[p]) && !data[p].mf || data[p].mf && data[p].isobject){%>
 			<!--key-object-->
-			<a href="javascript:;" class="form-icon form-item-detail formitem-control" for="<%=p%>" data-mf-val="<%=encodeURIComponent(JSON.stringify(data[p]))%>" title="详细设定"><i class="mf-iconfont">&#xf00e1;</i></a>
+			<a href="javascript:;" class="form-icon form-item-detail formitem-control" for="formitem-<%=p%>" data-mf-val="<%=encodeURIComponent(JSON.stringify(data[p]))%>" title="详细设定"><i class="mf-iconfont">&#xf00e1;</i></a>
 		<%}else{%>
 			<!--key-value-->
-			<%=util.tmpl(valueItemTemplate,{data:data[p],flag:true,options:options,listitem:""})%>
+			<%=util.tmpl(valueItemTemplate,{data:data[p],flag:true,options:options,listitem:"",p:p})%>
 		<%}%>
 	<%}%>
 	<%if(options.hasbuttons && (options.status == "editable" || options.status == "new")){%>
-		<p class="formpannel">
+		<div class="formpannel">
 			<label class="formitem-label <%=options.classname.label%>" style="<%=options.style.label%>"></label>
 			<%for(var i=0;i<options.buttons.length;i++){%>
 				<%if(options.buttons[i].submit){%>
@@ -62,7 +62,7 @@
 					<button class="ml15 <%=options.buttons[i].className%>" title="<%=options.buttons[i].title%>"><%=options.buttons[i].name%></button>
 				<%}%>
 			<%}%>
-		</p>
+		</div>
 	<%}%>
 </template>
 
@@ -81,7 +81,7 @@
 				<%}%>
 			</span>
 		<%}else if(data.control==="select"){var flag=false;%>
-			<select data-listitem="<%=listitem%>" class="formitem-control <%=data.classname?data.classname.control:options.classname.control%> formitem-select" style="<%=data.style?data.style.control:options.style.control%>" <%=options.status=="disabled" ? "disabled": ""%> data-flag="<%=flag%>" <%=data.validation%> <%=data.disabled%> data-order="<%=data.order%>">
+			<select data-listitem="<%=listitem%>" id="formitem-<%=p%>" class="formitem-control <%=data.classname?data.classname.control:options.classname.control%> formitem-select" style="<%=data.style?data.style.control:options.style.control%>" <%=options.status=="disabled" ? "disabled": ""%> data-flag="<%=flag%>" <%=data.validation%> <%=data.disabled%> data-order="<%=data.order%>">
 				<%for(var i=0;i<data.options.length;i++){%>
 					<%if(data.options[i].val==="optgroup"){%>
 						<%if(flag){%>
@@ -96,13 +96,13 @@
 				}%>
 			</select>
 		<%}else if(data.control === "textarea"){%>
-			<textarea data-listitem="<%=listitem%>" class="formitem-control <%=data.classname?data.classname.control:options.classname.control%> formitem-input" style="<%=data.style?data.style.control:options.style.control%>" <%=options.status=="disabled" ? "disabled": ""%> placeholder="<%=data.placeholder?data.placeholder:""%>" data-flag="<%=flag%>" <%=data.validation%> <%=data.disabled%> data-order="<%=data.order%>" type="<%=data.control%>"><%=options.status=="new" ? "" : data.value%></textarea>
+			<textarea data-listitem="<%=listitem%>" id="formitem-<%=p%>" class="formitem-control <%=data.classname?data.classname.control:options.classname.control%> formitem-input" style="<%=data.style?data.style.control:options.style.control%>" <%=options.status=="disabled" ? "disabled": ""%> placeholder="<%=data.placeholder?data.placeholder:""%>" data-flag="<%=flag%>" <%=data.validation%> <%=data.disabled%> data-order="<%=data.order%>" type="<%=data.control%>"><%=options.status=="new" ? "" : data.value%></textarea>
 		<%}else{%>
-			<input data-listitem="<%=listitem%>" class="formitem-control <%=data.classname?data.classname.control:options.classname.control%> formitem-input" style="<%=data.style?data.style.control:options.style.control%>" placeholder="<%=data.placeholder?data.placeholder:""%>" <%=options.status=="disabled" ? "disabled": ""%> data-flag="<%=flag%>" <%=data.validation%> <%=data.disabled%> data-order="<%=data.order%>" type="<%=data.control%>" value="<%=options.status=="new" ? "" : data.value%>">
+			<input data-listitem="<%=listitem%>" id="formitem-<%=p%>" class="formitem-control <%=data.classname?data.classname.control:options.classname.control%> formitem-input" style="<%=data.style?data.style.control:options.style.control%>" placeholder="<%=data.placeholder?data.placeholder:""%>" <%=options.status=="disabled" ? "disabled": ""%> data-flag="<%=flag%>" <%=data.validation%> <%=data.disabled%> data-order="<%=data.order%>" type="<%=data.control%>" value="<%=options.status=="new" ? "" : data.value%>">
 		<%}%>
 	<%}else{%>
 		<!--key-value-->
-		<input data-listitem="<%=listitem%>" class="formitem-control <%=data.classname?data.classname.control:options.classname.control%> formitem-input" style="<%=data.style?data.style.control:options.style.control%>" <%=options.status=="disabled" ? "disabled": ""%> data-flag="<%=flag%>" <%=data.validation%> value="<%=options.status=="new" ? "" : data%>">
+		<input data-listitem="<%=listitem%>" id="formitem-<%=p%>" class="formitem-control <%=data.classname?data.classname.control:options.classname.control%> formitem-input" style="<%=data.style?data.style.control:options.style.control%>" <%=options.status=="disabled" ? "disabled": ""%> data-flag="<%=flag%>" <%=data.validation%> value="<%=options.status=="new" ? "" : data%>">
 	<%}%>
 </template>
 
