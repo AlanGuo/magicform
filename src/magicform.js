@@ -353,6 +353,7 @@
 (function(exports) {
     var template = {
         formTemplate: MFFormTemplate,
+        formLabelItemTemplate: MFFormLabelItemTemplate,
         formValueItemTemplate: MFFormValueItemTemplate,
         formArrayItemTemplate: MFFormArrayItemTemplate
     };
@@ -461,16 +462,32 @@
                 options.functions = options.functions || ["editable"];
                 options.style = options.style || {
                     label: "",
-                    control: ""
+                    control: "",
+                    itemwrapper: ""
                 };
+                options.style.label = options.style.label || "";
+                options.style.control = options.style.control || "";
+                options.style.itemwrapper = options.style.itemwrapper || "";
+
+
                 options.classname = options.classname || {
                     label: "formitem-label w20p align-right mr10p",
-                    control: "formitem-control w70p"
+                    control: "formitem-control w70p",
+                    itemwrapper: "formitem-p"
                 };
+
+                options.classname.label = options.classname.label || "formitem-label w20p align-right mr10p";
+                options.classname.control = options.classname.control || "formitem-control w70p";
+                options.classname.itemwrapper = options.classname.itemwrapper || "formitem-p";
+
                 options.template = options.template || {
-                    label: "{label}",
-                    control: "{control}"
+                    label: "<%=label%>",
+                    control: "<%=control%>",
+                    /*暂不支持itemwrapper自定义样式*/
+                    itemwrapper: ""
                 };
+                options.template.label = options.template.label || "<%=label%>";
+                options.template.control = options.template.control || "<%=control%>";
 
                 return options;
             },
@@ -529,7 +546,13 @@
                     order: orders,
                     util: util,
                     options: options,
-                    valueItemTemplate: template.formValueItemTemplate
+                    valueItemTemplate: util.tmpl(options.template.control, {
+                        control: template.formValueItemTemplate
+                    }),
+                    /*标签——支持模板*/
+                    labelItemTemplate: util.tmpl(options.template.label, {
+                        label: template.formLabelItemTemplate
+                    })
                 });
             },
 
@@ -937,7 +960,7 @@
                 //初始化详情按钮
                 var details = wrapper.querySelectorAll(".form-item-detail");
                 for (i = 0; i < details.length; i++) {
-                    var key = details[i].getAttribute("for");
+                    var key = details[i].getAttribute("for").replace(/formitem-/, "");
                     var val = json[key];
                     if (val.onclick) {
                         details[i].addEventListener("click", function() {
