@@ -21,7 +21,7 @@
 		<%}%>
 		<%if(/array/i.test(Object.prototype.toString.call(data[p]))){%>
 			<!--key-array-->
-			<span class="form-array-ul formitem-control <%=data[p].classname?data[p].classname.control:options.classname.control%>" type="array">
+			<span class="form-array-ul <%=data[p].classname?data[p].classname.control:options.classname.control%>" type="array">
 				<%if(options.status == "editable" || options.status == "new"){%>
 				<a href="javascript:;" class="form-icon form-item-add" title="新增" data-newtemplate="<%=encodeURIComponent(JSON.stringify(data[p].filter(function(item){if(item.fornew) return item;})[0]))%>"><i class="mf-iconfont">&#xf0154;</i></a>
 				<%}%>
@@ -52,21 +52,12 @@
 		<%}%>
 	<%}%>
 	<%if(options.hasbuttons && (options.status == "editable" || options.status == "new")){%>
-		<div class="formpannel">
-			<label class="formitem-label <%=options.classname.label%>" style="<%=options.style.label%>"></label>
-			<%for(var i=0;i<options.buttons.length;i++){%>
-				<%if(options.buttons[i].submit){%>
-					<button class="<%=options.buttons[i].className%>" title="<%=options.buttons[i].title%>"><%=options.buttons[i].name%></button>
-				<%}else{%>
-					<button class="ml15 <%=options.buttons[i].className%>" title="<%=options.buttons[i].title%>"><%=options.buttons[i].name%></button>
-				<%}%>
-			<%}%>
-		</div>
+		<%=util.tmpl(formpanelTemplate,{options:options})%>
 	<%}%>
 </template>
 
 <template name="MFFormLabelItemTemplate">
-	<label class="formitem-label <%=data[p].classname?data[p].classname.label:options.classname.label%>" style="<%=data[p].style?data[p].style.label:options.style.label%>" for="formitem-<%=p%>" data-key="formitem-<%=p%>"><%=data[p].label?data[p].label:p%></label>
+	<label class="<%=data[p].classname?data[p].classname.label:options.classname.label%>" style="<%=data[p].style?data[p].style.label:options.style.label%>" for="formitem-<%=p%>" data-key="formitem-<%=p%>"><%=data[p].label?data[p].label:p%></label>
 </template>
 
 <template name="MFFormValueItemTemplate">
@@ -84,7 +75,7 @@
 				<%}%>
 			</span>
 		<%}else if(data.control==="select"){var flag=false;%>
-			<select data-listitem="<%=listitem%>" id="formitem-<%=p%>" class="formitem-control <%=data.classname?data.classname.control:options.classname.control%> formitem-select" style="<%=data.style?data.style.control:options.style.control%>" <%=options.status=="disabled" ? "disabled": ""%> data-flag="<%=flag%>" <%=data.validation%> <%=data.disabled%> data-order="<%=data.order%>">
+			<select data-listitem="<%=listitem%>" id="formitem-<%=p%>" class="<%=data.classname?data.classname.control:options.classname.control%> formitem-select" style="<%=data.style?data.style.control:options.style.control%>" <%=options.status=="disabled" ? "disabled": ""%> data-flag="<%=flag%>" <%=data.validation%> <%=data.disabled%> data-order="<%=data.order%>">
 				<%for(var i=0;i<data.options.length;i++){%>
 					<%if(data.options[i].val==="optgroup"){%>
 						<%if(flag){%>
@@ -99,14 +90,27 @@
 				}%>
 			</select>
 		<%}else if(data.control === "textarea"){%>
-			<textarea data-listitem="<%=listitem%>" id="formitem-<%=p%>" class="formitem-control <%=data.classname?data.classname.control:options.classname.control%> formitem-input" style="<%=data.style?data.style.control:options.style.control%>" <%=options.status=="disabled" ? "disabled": ""%> placeholder="<%=data.placeholder?data.placeholder:""%>" data-flag="<%=flag%>" <%=data.validation%> <%=data.disabled%> data-order="<%=data.order%>" type="<%=data.control%>"><%=options.status=="new" ? "" : data.value%></textarea>
+			<textarea data-listitem="<%=listitem%>" id="formitem-<%=p%>" class="<%=data.classname?data.classname.control:options.classname.control%> formitem-input" style="<%=data.style?data.style.control:options.style.control%>" <%=options.status=="disabled" ? "disabled": ""%> placeholder="<%=data.placeholder?data.placeholder:""%>" data-flag="<%=flag%>" <%=data.validation%> <%=data.disabled%> data-order="<%=data.order%>" type="<%=data.control%>"><%=options.status=="new" ? "" : data.value%></textarea>
 		<%}else{%>
-			<input data-listitem="<%=listitem%>" id="formitem-<%=p%>" class="formitem-control <%=data.classname?data.classname.control:options.classname.control%> formitem-input" style="<%=data.style?data.style.control:options.style.control%>" placeholder="<%=data.placeholder?data.placeholder:""%>" <%=options.status=="disabled" ? "disabled": ""%> data-flag="<%=flag%>" <%=data.validation%> <%=data.disabled%> data-order="<%=data.order%>" type="<%=data.control%>" value="<%=options.status=="new" ? "" : data.value%>">
+			<input data-listitem="<%=listitem%>" id="formitem-<%=p%>" class="<%=data.classname?data.classname.control:options.classname.control%> formitem-input" style="<%=data.style?data.style.control:options.style.control%>" placeholder="<%=data.placeholder?data.placeholder:""%>" <%=options.status=="disabled" ? "disabled": ""%> data-flag="<%=flag%>" <%=data.validation%> <%=data.disabled%> data-order="<%=data.order%>" type="<%=data.control%>" value="<%=options.status=="new" ? "" : data.value%>">
 		<%}%>
 	<%}else{%>
 		<!--key-value-->
-		<input data-listitem="<%=listitem%>" id="formitem-<%=p%>" class="formitem-control <%=data.classname?data.classname.control:options.classname.control%> formitem-input" style="<%=data.style?data.style.control:options.style.control%>" <%=options.status=="disabled" ? "disabled": ""%> data-flag="<%=flag%>" <%=data.validation%> value="<%=options.status=="new" ? "" : data%>">
+		<input data-listitem="<%=listitem%>" id="formitem-<%=p%>" class="<%=data.classname?data.classname.control:options.classname.control%> formitem-input" style="<%=data.style?data.style.control:options.style.control%>" <%=options.status=="disabled" ? "disabled": ""%> data-flag="<%=flag%>" <%=data.validation%> value="<%=options.status=="new" ? "" : data%>">
 	<%}%>
+</template>
+
+<template name="MFFormPanelTemplate">
+	<div class="<%=options.classname.formpanel%>">
+		<label class="<%=options.classname.label%>" style="<%=options.style.label%>"></label>
+		<%for(var i=0;i<options.buttons.length;i++){%>
+			<%if(options.buttons[i].submit){%>
+				<button class="<%=options.buttons[i].className%>" title="<%=options.buttons[i].title%>"><%=options.buttons[i].name%></button>
+			<%}else{%>
+				<button class="ml15 <%=options.buttons[i].className%>" title="<%=options.buttons[i].title%>"><%=options.buttons[i].name%></button>
+			<%}%>
+		<%}%>
+	</div>
 </template>
 
 <template name="MFFormArrayItemTemplate">

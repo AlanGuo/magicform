@@ -355,7 +355,8 @@
         formTemplate: MFFormTemplate,
         formLabelItemTemplate: MFFormLabelItemTemplate,
         formValueItemTemplate: MFFormValueItemTemplate,
-        formArrayItemTemplate: MFFormArrayItemTemplate
+        formArrayItemTemplate: MFFormArrayItemTemplate,
+        formpanelTemplate: MFFormPanelTemplate
     };
 
     var util = (function() {
@@ -473,21 +474,25 @@
                 options.classname = options.classname || {
                     label: "formitem-label w20p align-right mr10p",
                     control: "formitem-control w70p",
-                    itemwrapper: "formitem-p"
+                    itemwrapper: "formitem-p",
+                    formpanel: "formpanel mt30"
                 };
 
                 options.classname.label = options.classname.label || "formitem-label w20p align-right mr10p";
-                options.classname.control = options.classname.control || "formitem-control w70p";
+                options.classname.control = options.classname.control || "formitem-control";
                 options.classname.itemwrapper = options.classname.itemwrapper || "formitem-p";
+                options.classname.formpanel = options.classname.formpanel || "formpanel mt30";
 
                 options.template = options.template || {
                     label: "<%=label%>",
                     control: "<%=control%>",
+                    formpanel: "<%=formpanel%>",
                     /*暂不支持itemwrapper自定义样式*/
                     itemwrapper: ""
                 };
                 options.template.label = options.template.label || "<%=label%>";
                 options.template.control = options.template.control || "<%=control%>";
+                options.template.formpanel = options.template.formpanel || "<%=formpanel%>";
 
                 return options;
             },
@@ -552,6 +557,9 @@
                     /*标签——支持模板*/
                     labelItemTemplate: util.tmpl(options.template.label, {
                         label: template.formLabelItemTemplate
+                    }),
+                    formpanelTemplate: util.tmpl(options.template.formpanel, {
+                        formpanel: template.formpanelTemplate
                     })
                 });
             },
