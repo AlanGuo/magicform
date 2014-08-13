@@ -1,0 +1,10 @@
+{
+    "app": {
+        "name": "MagicForm"
+    },
+    "nav": {
+        "home": "Home",
+        "doc": "Doc",
+        "github": "Github"
+    }
+}

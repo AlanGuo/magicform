@@ -1,0 +1,10 @@
+{
+    "app": {
+        "name": "魔法表单"
+    },
+    "nav": {
+        "home": "首页",
+        "doc": "文档",
+        "github": "Github"
+    }
+}
