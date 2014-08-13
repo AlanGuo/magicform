@@ -181,7 +181,14 @@
 		});
 
 	function getCurrentLang(){
-		document.getElementById("languageSelector").value=/setLng=(.+)(&|$)/.exec(window.location.search)[1];
+		var lang = /setLng=(.+)(&|$)/.exec(window.location.search);
+		if(!lang || !lang[1]){
+			lang = i18n.detectLanguage();
+		}
+		else{
+			lang = lang[1];
+		}
+		document.getElementById("languageSelector").value=lang;
 	}
 	getCurrentLang();
 	//国际化
