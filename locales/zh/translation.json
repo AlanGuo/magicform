@@ -6,5 +6,29 @@
         "home": "首页",
         "doc": "文档",
         "github": "Github"
+    },
+    "form":{
+        "legend":"表单",
+        "email":"邮箱",
+        "password":"密码",
+        "username":"用户名",
+        "message":"留言",
+        "placeholder":{
+            "email":"邮箱",
+            "password":"密码",
+            "username":"用户名",
+            "message":"留言"
+        }
+    },
+    "options":{
+        "formstyle":"表单",
+        "labelpos":"标签",
+        "left":"左",
+        "top":"上",
+        "none":"无"
+    },
+    "buttons":{
+        "html2json":"提取数据",
+        "json2html":"生成表单"
     }
 }

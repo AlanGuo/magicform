@@ -6,5 +6,29 @@
         "home": "Home",
         "doc": "Doc",
         "github": "Github"
+    },
+    "form":{
+        "legend":"Form",
+        "email":"email",
+        "password":"password",
+        "username":"username",
+        "message":"message",
+        "placeholder":{
+            "email":"email",
+            "password":"password",
+            "username":"username",
+            "message":"leave a message"
+        }
+    },
+    "options":{
+        "formstyle":"Form",
+        "labelpos":"Label",
+        "left":"Left",
+        "top":"Top",
+        "none":"None"
+    },
+    "buttons":{
+        "html2json":"html to json",
+        "json2html":"json to html"
     }
 }

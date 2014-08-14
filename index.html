@@ -3,9 +3,9 @@
 <html lang="zh-CN">
 <head>
 	<meta charset="utf-8">
-	<meta name="keywords" content="魔法,表单">
+	<meta name="keywords" content="魔法,表单,magic,form">
 	<meta name="author" content="alan">
-	<meta name="description" content="魔法表单,表单的自动生成以及交互">
+	<meta name="description" content="魔法表单,表单的自动生成以及交互,magic form">
 	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/default/component.css?max-age=0">
 	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/snowball/component.css?max-age=0">
 	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/blackworld/component.css?max-age=0">
@@ -20,14 +20,14 @@
 </head>
 <body class="confui default">
 	<header>
-		<select class="mr20 w100 fr" onchange="location.href='?setLng='+this.value" id="languageSelector">
-			<option value="zh-CN">中文</option>
-			<option value="en-US">English</option>
-		</select>
 		<nav class="tc mt20">
-			<a class="listlink current" href="#main" title="主页" data-i18n="nav.home"></a>
-			<a class="ml30 listlink p15" href="docs/index.html" target="_blank" title="文档" data-i18n="nav.doc"></a>
-			<a class="ml30 listlink p15" href="https://github.com/AlanGuo/magicform" target="_blank" title="Github" data-i18n="nav.github"></a>
+			<a class="listlink current" href="#main" title="Home" data-i18n="[title]nav.home;nav.home">Home</a>
+			<a class="ml30 listlink p15" href="docs/index.html" target="_blank" title="Doc" data-i18n="[title]nav.doc;nav.doc">Doc</a>
+			<a class="ml30 listlink p15" href="https://github.com/AlanGuo/magicform" target="_blank" title="Github" data-i18n="[title]nav.github;nav.github">Github</a>
+			<select class="w100 ml30" onchange="location.href='?setLng='+this.value" id="languageSelector">
+				<option value="zh-CN">中文</option>
+				<option value="en-US">English</option>
+			</select>
 		</nav>
 	</header>
 	<section class="mt80">
@@ -38,12 +38,12 @@
 			<div class="fl w600">
 				<form class="mf">
 					<fieldset>
-						<div class="legend">From</div>
+						<div class="legend" data-i18n="form.legend">Form</div>
 						<div class="content" id="form"></div>
 					</fieldset>
 					<ul>
 						<li class="mt30" data-click-event="formstyle">
-							<label class="fb">form样式</label>
+							<label class="fb" data-i18n="options.formstyle">Form Style</label>
 							<input class="ml50 pointer" type="radio" data-theme="default" id="default" name="formstyle" checked="checked">
 							<label class="ml10 pointer" data-theme="default" for="default">default</label>
 							<input class="ml50 pointer" type="radio" data-theme="snowball" id="snowball" name="formstyle">
@@ -52,23 +52,23 @@
 							<label class="ml10 pointer" type="radio" data-theme="blackworld" for="blackworld">blackworld</label>
 						</li>
 						<li class="mt30" data-click-event="labelpos">
-							<label class="fb">label位置</label>
+							<label class="fb" data-i18n="options.labelpos">Label Position</label>
 							<input class="ml50 pointer" type="radio" id="left" name="labelpos" checked="checked">
-							<label class="ml10 pointer" for="left">左侧</label>
+							<label class="ml10 pointer" for="left" data-i18n="options.left">Left</label>
 							<input class="ml50 pointer" type="radio" id="top" name="labelpos">
-							<label class="ml10 pointer" for="top" >上方</label>
+							<label class="ml10 pointer" for="top" data-i18n="options.top">Top</label>
 							<input class="ml50 pointer" type="radio" id="none" name="labelpos">
-							<label class="ml10 pointer" for="none" >无</label>
+							<label class="ml10 pointer" for="none" data-i18n="options.none">None</label>
 						</li>
 					</ul>
 				</form>
 			</div>
 			<div class="fl mt30">
 				<div>
-					<button title="提取数据" data-click-event="html2json">-></button>
+					<button title="html to json" data-i18n="[title]buttons.html2json" data-click-event="html2json">-></button>
 				</div>
 				<div>
-					<button title="生成表单" data-click-event="json2html"><-</button>
+					<button title="json to html" data-i18n="[title]buttons.json2html" data-click-event="json2html"><-</button>
 				</div>
 			</div>
 			<div class="fl">
@@ -84,8 +84,13 @@
 	</footer>
 	<script type="text/javascript" src="./assets/scripts/speedframe-0.1.js"></script>
 	<script type="text/javascript" src="./release/magicform-0.0.1.js"></script>
-	<script type="text/javascript" src="./assets/scripts/i18next-latest.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<!--
+	<script type="text/javascript" src="./assets/scripts/i18next-1.7.3.min.js"></script>
+	-->
+	<script type="text/javascript" src="./assets/scripts/i18next.withoutJQuery-latest.js"></script>
 	<script type="text/javascript">
+	var supportedlangs = ["en-US","zh-CN"];
 
 		//纯数据
 		var pureJson = {
@@ -97,10 +102,10 @@
 
 		//attach数据
 		var jsonObj = {
-			email:{mf:1,control:"text",validation:"required pattern='.*@.*'",placeholder:"email"},
-			password:{mf:1,control:"password",validation:"minlength=6 required",placeholder:"password"},
-			username:{mf:1,validation:"required maxlength=10 minlength=4",placeholder:"username"},
-			message:{mf:1,placeholder:"leave a short message",control:"textarea",placeholder:"please enter a text"}
+			email:{mf:1,control:"text",validation:"required pattern='.*@.*'",placeholder:"email",attr:"data-i18n='[placeholder]form.placeholder.email'",label:{attr:"data-i18n='form.email'"}},
+			password:{mf:1,control:"password",validation:"minlength=6 required",placeholder:"password",attr:"data-i18n='[placeholder]form.placeholder.password'",label:{attr:"data-i18n='form.password'"}},
+			username:{mf:1,validation:"required maxlength=10 minlength=4",placeholder:"username",attr:"data-i18n='[placeholder]form.placeholder.username'",label:{attr:"data-i18n='form.username'"}},
+			message:{mf:1,placeholder:"leave a short message",control:"textarea",placeholder:"please enter a text",attr:"data-i18n='[placeholder]form.placeholder.message'",label:{attr:"data-i18n='form.message'"}}
 		};
 
 		var g_options = {
@@ -184,6 +189,9 @@
 		var lang = /setLng=(.+)(&|$)/.exec(window.location.search);
 		if(!lang || !lang[1]){
 			lang = i18n.detectLanguage();
+			if(supportedlangs.indexOf(lang)===-1){
+				lang = supportedlangs[0];
+			}
 		}
 		else{
 			lang = lang[1];
@@ -194,7 +202,8 @@
 	//国际化
 	i18n.init(function(t) {
 	  // translate nav
-	  i18n.localizeElems(document.body.querySelector("nav"));
+	  i18n.localizeElems(document.body);
+	  //$("body").i18n();
 	});
 	</script>
 </body>

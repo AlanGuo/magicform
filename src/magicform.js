@@ -580,7 +580,10 @@
              * @param attr.fornew {Number} 这个字段为1表示这个配置是用来新增数据时用的
              * @param attr.key {Object} 用于hash类型数据，填写一个对象用来配置hash类型中key的属性，配置的格式和本节介绍的配置字段相同
              * @param attr.validation {String} 数据验证的规则，比如：password:{mf:1,control:"password",validation:"minlength=6 required"}，email:{mf:1,control:"text",validation:"required pattern='.*@.*'"}
-             * @param attr.label {String} 标签文本
+             * @param attr.attr {String} 自定义属性
+             * @param attr.label {Object} 定义标签的属性
+             *  @param attr.label.title {String} 标签标题
+             *  @param attr.label.attr {String} 标签自定义属性
              * @param attr.placeholder {String} 占位符
              * @param attr.attaproc {Function} 自定义属性显示方法
              *  @param attr.attaproc.atta {String} 附加对象
@@ -630,6 +633,9 @@
                         var index = 0;
                         if (/array/i.test(util._typeof(attr[p]))) {
                             for (var i = 0; i < attr[p].length; i++) {
+                                //处理某些属性
+                                attr[p][i].label = attr[p][i].label || {};
+                                
                                 if (!attr[p][i].fornew) {
                                     defproc(attr[p][i], p, i - index);
                                 } else {
@@ -639,6 +645,9 @@
                                 }
                             }
                         } else {
+                            //label
+                            attr[p].label = attr[p].label || {};
+                            //过程函数
                             defproc(attr[p], p);
                         }
                     }
@@ -663,7 +672,10 @@
              * @param attr.fornew {Number} 这个字段为1表示这个配置是用来新增数据时用的
              * @param attr.key {Object} 用于hash类型数据，填写一个对象用来配置hash类型中key的属性，配置的格式和本节介绍的配置字段相同
              * @param attr.validation {String} 数据验证的规则，比如：password:{mf:1,control:"password",validation:"minlength=6 required"}，email:{mf:1,control:"text",validation:"required pattern='.*@.*'"}
-             * @param attr.label {String} 标签文本
+             * @param attr.attr {String} 自定义属性
+             * @param attr.label {Object} 定义标签的属性
+             *  @param attr.label.title {String} 标签标题
+             *  @param attr.label.attr {String} 标签自定义属性
              * @param attr.placeholder {String} 占位符
              * @param attr.attaproc {Function} 自定义属性显示方法
              *  @param attr.attaproc.atta {String} 附加对象
