@@ -2,14 +2,23 @@
 
 -----
 
-## 使用方法
+## 如何使用
 
 首先假设已经在html页面中拥有一个form表单，假设结构如下：
-
-	<form class="mf" style="width:600px;margin:10% auto;" action="javascript:;">
-		<fieldset class="lightgraybg2">
-			<legend>Register</legend>
-			<div id="form"></div>
+	
+	<!--预置一些基础样式，如果需要使用自定义样式，可无需引入此样式-->
+	<link rel="stylesheet" type="text/css" href="../assets/styles/default.css">
+	
+	......
+	
+	<script type="text/javascript" src="./release/magicform-0.0.1.js"></script>
+	
+	......
+	
+	<form class="mf">
+		<fieldset>
+			<div class="legend" data-i18n="form.legend">Form</div>
+			<div class="content" id="form"></div>
 		</fieldset>
 	</form>
 
@@ -30,15 +39,18 @@
 	});
 		
 
-## 设置
+## 高级设置
 
 在生成表单的时候，你可以进行简单的设置，就像这样
 
 	magicform.generate(form,datajson,{
-		status:"editable"
+		//状态，editable/disabled
+		status:"editable",
+		//是否有提交,取消等按钮
+		hasbuttons:false
 	});
 	
-这里简单说明一下每个字段的含义和取值
+常用的配置字段有
 
 - **status**
 
@@ -47,6 +59,19 @@
 - **style**
 
 	给表单设置自定义样式
+	
+	例如：
+	
+		style:{
+			//标签
+			label:"width:100px",
+			//控件
+			control:"float:right",
+			//标签控件的包裹元素
+			itemwrapper:"",
+			//按钮区域
+			formpanel:""
+		}
 
 - **classname**
 
@@ -58,18 +83,58 @@
 		
 			//label是文本标签的样式名，control是控件的样式，magicform内置了许多classname来组合出各种风格的表单
 			//当然你可以自己重写这些样式
-			
+			//标签
 			label:"w20p align-right mr10p",
-			control:"w70p"
+			//控件
+			control:"w70p",
+			//标签控件的包裹元素
+			itemwrapper:"",
+			//按钮区域
+			formpanel:""
 		}
 	
 	
-- **functions**
+- **template**
+
+	自定义模板
+	
+	例如：
+	
+		template:{
+		
+			//标签
+			label:"<label>",
+			//控件
+			control:"<div class=\"col-sm-9\"><%=control%></div>",
+			//标签控件的包裹元素
+			itemwrapper:"",
+			//暂时不支持按钮区域自定义
+			formpanel:""
+		}
+
+- **attr**
+
+	自定义属性
+	
+	例如：
+	
+		attr:{
+		
+			//标签
+			label:"",
+			//控件
+			control:"",
+			//标签控件的包裹元素
+			itemwrapper:"",
+			//按钮区域
+			formpanel:""
+		}
 
 
 
-## 数据结构和生成表单的格式说明
-magicform支持多种类型的数据，根据不同类型来生成不同的html结构，满足多种需求，json数据分为两种
+## 数据结构和生成表单的格式
+magicform根据数据结构来生成表单，支持多种数据类型，并且根据不同类型来选择不同的展示结构，满足多种情形，那么magicform对用来生成表单的数据有什么要求呢？
+我们先来看看下面的两种结构：
 	
 	{a:1}
 	{a:{mf:1,value:1}}
@@ -150,10 +215,22 @@ magicform允许对生成的表单元素进行丰富的定制，比如
 	
 		password:{mf:1,control:"password",validation:"minlength=6 required"}
 		email:{mf:1,control:"text",validation:"required pattern='.*@.*'"}
+		
+- **attr**
+
+	自定义属性
 
 - **label**
 
+	对标签进行控制
+	
+- **label.title** 
+
 	标签文本
+	
+- **label.attr** 
+
+	标签的自定义属性
 
 - **placeholder**
 
@@ -191,7 +268,7 @@ magicform允许对生成的表单元素进行丰富的定制，比如
 		}
 
 
-## 数据和配置分离
+## 数据和配置的分离
 	
 有的时候我们需要将单纯的数据存储在后台，然后显示的时候再赋予更多样式和效果，以及一些校验规则，这个时候我们就需要用到数据和配置分离了。magicform支持数据和配置分离，这样结构更加清晰，方便你移植以前的老表单。
 

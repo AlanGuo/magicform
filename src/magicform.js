@@ -494,6 +494,8 @@
                 options.template.control = options.template.control || "<%=control%>";
                 options.template.formpanel = options.template.formpanel || "<%=formpanel%>";
 
+                options.attr = options.attr || {};
+
                 return options;
             },
 
@@ -532,6 +534,12 @@
                 options = this._setOptions(options);
                 //排序
                 for (var p in json) {
+                    //预处理一些属性
+                    if(typeof json[p] !== "object"){
+                        json[p] = {value:json[p]};
+                    }
+                    json[p].label = json[p].label || {};
+
                     orders.push({
                         p: p,
                         order: json[p].order
@@ -633,9 +641,6 @@
                         var index = 0;
                         if (/array/i.test(util._typeof(attr[p]))) {
                             for (var i = 0; i < attr[p].length; i++) {
-                                //处理某些属性
-                                attr[p][i].label = attr[p][i].label || {};
-                                
                                 if (!attr[p][i].fornew) {
                                     defproc(attr[p][i], p, i - index);
                                 } else {
@@ -645,8 +650,6 @@
                                 }
                             }
                         } else {
-                            //label
-                            attr[p].label = attr[p].label || {};
                             //过程函数
                             defproc(attr[p], p);
                         }

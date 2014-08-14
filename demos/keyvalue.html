@@ -7,7 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/default/component.css?max-age=0"></style>
 	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/predefined-common.css?max-age=0">
 	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/predefined-form.css?max-age=0">
-	<link rel="stylesheet" type="text/css" href="../assets/styles/default.css">
+	<link rel="stylesheet" type="text/css" href="../styles/default.css">
 </head>
 <body class="confui default">
 	<form class="mf" style="width:600px;margin:30px auto">
@@ -55,12 +55,12 @@
 		}
 		//attach数据
 		var jsonObj = {
-			name:{mf:1,control:"text",validation:"required maxlength=10 minlength=4",label:"姓名"},
-			学历:{mf:1,order:2,control:"radio",name:"graduate",options:[{label:"初中",checked:"checked"},{label:"高中"}],
+			name:{mf:1,control:"text",validation:"required maxlength=10 minlength=4",label:{title:"姓名"}},
+			学历:{mf:1,order:2,control:"radio",name:"graduate",options:[{label:"初中",checked:"checked"},{label:{title:"高中"}}],
 			detaproc:function(prop,src){
 				return src.options.filter(function(item){if(item.checked=="checked") return item;})[0].label;	
 			}},
-			不喜欢上课:{mf:1,order:0,control:"checkbox",options:[{checked:"checked",label:"十分"},{checked:"checked",label:"非常"}]},
+			不喜欢上课:{mf:1,order:0,control:"checkbox",options:[{checked:"checked",label:{title:"十分"}},{checked:"checked",label:{title:"非常"}}]},
 			密码:{mf:1,control:"password"},
 			出生日期:{mf:1,control:"date"},
 			毕业院校:{mf:1,control:"select",options:[
@@ -76,8 +76,8 @@
 					alert("对象");
 				}
 			},
-			数字:[{mf:1,control:"number",fornew:1},{mf:1,control:"checkbox",options:[{checked:"checked",label:"1"}],detaproc:function(prop,src){
-				return src.options.filter(function(item){if(item.checked=="checked") return item;})[0].label;	
+			数字:[{mf:1,control:"number",fornew:1},{mf:1,control:"checkbox",options:[{checked:"checked",label:{title:"1"}}],detaproc:function(prop,src){
+				return src.options.filter(function(item){if(item.checked=="checked") return item;})[0].label.title;	
 			}},2,3,4,5],
 			返回码:[
 				{mf:1,hash:1,fornew:1,control:"text",key:{mf:1,control:"text"}},
