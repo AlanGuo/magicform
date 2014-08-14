@@ -88,7 +88,7 @@
 	<!--
 	<script type="text/javascript" src="./assets/scripts/i18next-1.7.3.min.js"></script>
 	-->
-	<script type="text/javascript" src="./assets/scripts/i18next.withoutJQuery-latest.js"></script>
+	<script type="text/javascript" src="./assets/scripts/i18next.withoutJQuery-1.7.3.min.js"></script>
 	<script type="text/javascript">
 	var supportedlangs = ["en-US","zh-CN"];
 
@@ -197,10 +197,11 @@
 			lang = lang[1];
 		}
 		document.getElementById("languageSelector").value=lang;
+		return lang;
 	}
-	getCurrentLang();
+	
 	//国际化
-	i18n.init(function(t) {
+	i18n.init({lng:getCurrentLang()},function(t) {
 	  // translate nav
 	  i18n.localizeElems(document.body);
 	  //$("body").i18n();
