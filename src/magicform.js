@@ -485,15 +485,15 @@
 
 
                 options.classname = options.classname || {
-                    label: "formitem-label w20p align-right mr10p",
-                    control: "formitem-control w70p",
-                    itemwrapper: "formitem-p",
+                    label: "w20p align-right mr10p",
+                    control: "w70p",
+                    itemwrapper: "",
                     formpanel: "formpanel mt30"
                 };
 
-                options.classname.label = options.classname.label || "formitem-label w20p align-right mr10p";
-                options.classname.control = options.classname.control || "formitem-control";
-                options.classname.itemwrapper = options.classname.itemwrapper || "formitem-p";
+                options.classname.label = options.classname.label || "w20p align-right mr10p";
+                options.classname.control = options.classname.control || "";
+                options.classname.itemwrapper = options.classname.itemwrapper || "";
                 options.classname.formpanel = options.classname.formpanel || "formpanel mt30";
 
                 options.template = options.template || {
@@ -889,7 +889,7 @@
              */
             html2json: function(form, options) {
                 options = options || {};
-                var items = form.querySelectorAll(".formitem-p");
+                var items = form.querySelectorAll(".form-group");
                 var json = {};
                 for (var i = 0; i < items.length; i++) {
                     var key = items[i].querySelector(".formitem-label").getAttribute("data-key");
