@@ -63,13 +63,13 @@
 <template name="MFFormValueItemTemplate">
 	<%if(data.mf){%>
 		<%if(data.control === "radio"){%>
-			<span class="formitem-radio" type="radio" data-order="<%=data.order%>">
+			<span class="<%=data.classname?data.classname.control:options.classname.control%> formitem-radio" type="radio" data-order="<%=data.order%>">
 				<%for(var i=0;i<data.options.length;i++){%>
 					<input data-listitem="<%=listitem%>" class="formitem-radio" <%=options.status=="disabled" ? "disabled": ""%> placeholder="<%=data.options[i].placeholder?data.options[i].placeholder:""%>" data-flag="<%=flag%>" <%=data.options[i].validation%> <%=data.options[i].disabled%> <%=data.options[i].attr%> type="radio" <%=options.status=="new" ? "" : data.options[i].checked%> data-order="<%=data.order%>" name="<%=data.name%>" id="formitem-radio-<%=data.options[i].label%>"><label class="formitem-radio-label" for="formitem-radio-<%=data.options[i].label.title%>" <%=data.options[i].label.attr%>><%=data.options[i].label.title%></label>
 				<%}%>
 			</span>
 		<%}else if(data.control === "checkbox"){%>
-			<span class="formitem-checkbox" type="checkbox" data-order="<%=data.order%>">
+			<span class="<%=data.classname?data.classname.control:options.classname.control%> formitem-checkbox" type="checkbox" data-order="<%=data.order%>">
 				<%for(var i=0;i<data.options.length;i++){%>
 					<input data-listitem="<%=listitem%>" class="formitem-checkbox" placeholder="<%=data.options[i].placeholder?data.options[i].placeholder:""%>" <%=options.status=="disabled" ? "disabled": ""%> <%=data.options[i].disabled%> <%=data.options[i].validation%> <%=data.options[i].attr%> data-flag="<%=flag%>" type="checkbox" <%=options.status=="new" ? "" : data.options[i].checked%> id="formitem-radio-<%=data.options[i].label%>"><label for="formitem-radio-<%=data.options[i].label.title%>" class="formitem-checkbox-label" <%=data.options[i].label.attr%>><%=data.options[i].label.title%></label>
 				<%}%>

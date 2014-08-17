@@ -7,11 +7,20 @@
  * @support ie,chrome,firefox
  * @howto
  * 首先假设已经在html页面中拥有一个form表单，假设结构如下：
-
-        <form class="mf" style="width:600px;margin:10% auto;" action="javascript:;">
-            <fieldset class="lightgraybg2">
-                <legend>Register</legend>
-                <div id="form"></div>
+        
+        <!--预置一些基础样式，如果需要使用自定义样式，可无需引入此样式-->
+        <link rel="stylesheet" type="text/css" href="../assets/styles/default.css">
+        
+        ......
+        
+        <script type="text/javascript" src="./release/magicform-0.0.1.js"></script>
+        
+        ......
+        
+        <form class="mf">
+            <fieldset>
+                <div class="legend" data-i18n="form.legend">Form</div>
+                <div class="content" id="form"></div>
             </fieldset>
         </form>
 
@@ -32,15 +41,18 @@
         });
             
 
-    ## 设置
+## 高级设置
 
     在生成表单的时候，你可以进行简单的设置，就像这样
 
         magicform.generate(form,datajson,{
-            status:"editable"
+            //状态，editable/disabled
+            status:"editable",
+            //是否有提交,取消等按钮
+            hasbuttons:false
         });
         
-    这里简单说明一下每个字段的含义和取值
+    常用的配置字段有
 
     - **status**
 
@@ -49,6 +61,19 @@
     - **style**
 
         给表单设置自定义样式
+        
+        例如：
+        
+            style:{
+                //标签
+                label:"width:100px",
+                //控件
+                control:"float:right",
+                //标签控件的包裹元素
+                itemwrapper:"",
+                //按钮区域
+                formpanel:""
+            }
 
     - **classname**
 
@@ -60,18 +85,59 @@
             
                 //label是文本标签的样式名，control是控件的样式，magicform内置了许多classname来组合出各种风格的表单
                 //当然你可以自己重写这些样式
-                
+                //标签
                 label:"w20p align-right mr10p",
-                control:"w70p"
+                //控件
+                control:"w70p",
+                //标签控件的包裹元素
+                itemwrapper:"",
+                //按钮区域
+                formpanel:""
             }
         
         
-    - **functions**
+    - **template**
+
+        自定义模板
+        
+        例如：
+        
+            template:{
+            
+                //标签
+                label:"<label>",
+                //控件
+                control:"<div class=\"col-sm-9\"><%=control%></div>",
+                //标签控件的包裹元素
+                itemwrapper:"",
+                //暂时不支持按钮区域自定义
+                formpanel:""
+            }
+
+    - **attr**
+
+        自定义属性
+        
+        例如：
+        
+            attr:{
+            
+                //标签
+                label:"",
+                //控件
+                control:"",
+                //标签控件的包裹元素
+                itemwrapper:"",
+                //按钮区域
+                formpanel:""
+            }
 
 
 
-    ## 数据结构和生成表单的格式说明
-    magicform支持多种类型的数据，根据不同类型来生成不同的html结构，满足多种需求，json数据分为两种
+## 数据结构和生成表单的格式
+
+    magicform根据数据结构来生成表单，支持多种数据类型，并且根据不同类型来选择不同的展示结构，满足多种情形，那么magicform对用来生成表单的数据有什么要求呢？
+    我们先来看看下面的两种结构：
         
         {a:1}
         {a:{mf:1,value:1}}
@@ -95,7 +161,7 @@
             <p><lable>a</lable><input data-mf-exp="this.value*2"/></p>
             
             
-    ## 配置字段说明
+## 配置字段说明
 
     magicform允许对生成的表单元素进行丰富的定制，比如
 
@@ -152,10 +218,22 @@
         
             password:{mf:1,control:"password",validation:"minlength=6 required"}
             email:{mf:1,control:"text",validation:"required pattern='.*@.*'"}
+            
+    - **attr**
+
+        自定义属性
 
     - **label**
 
+        对标签进行控制
+        
+    - **label.title** 
+
         标签文本
+        
+    - **label.attr** 
+
+        标签的自定义属性
 
     - **placeholder**
 
@@ -193,99 +271,59 @@
             }
 
 
-    ## 数据和配置分离
+## 数据和配置的分离
         
     有的时候我们需要将单纯的数据存储在后台，然后显示的时候再赋予更多样式和效果，以及一些校验规则，这个时候我们就需要用到数据和配置分离了。magicform支持数据和配置分离，这样结构更加清晰，方便你移植以前的老表单。
 
     例如：
 
-         //纯数据
-        var pureJson = {
-            email: "",
-            username: "",
-            password: "",
-            message: ""
-        };
+            //纯数据
+            var pureJson = {
+                email:"",
+                username:"",
+                password:"",
+                message:""
+            };
 
-         //attach数据
-        var jsonObj = {
-            email: {
-                mf: 1,
-                control: "text",
-                validation: "required pattern='.*@.*'"
-            },
-            password: {
-                mf: 1,
-                control: "password",
-                validation: "minlength=6 required"
-            },
-            username: {
-                mf: 1,
-                validation: "required maxlength=10 minlength=4"
-            },
-            message: {
-                mf: 1,
-                placeholder: "leave a short message",
-                control: "textarea"
-            }
-        };
-
-        magicform.generate(form, magicform.attach(pureJson, jsonObj), {
-            status: "editable",
-            hasbuttons: true
-        });
+            //attach数据
+            var jsonObj = {
+                email:{mf:1,control:"text",validation:"required pattern='.*@.*'"},
+                password:{mf:1,control:"password",validation:"minlength=6 required"},
+                username:{mf:1,validation:"required maxlength=10 minlength=4"},
+                message:{mf:1,placeholder:"leave a short message",control:"textarea"}
+            };
+            
+            magicform.generate(form,magicform.attach(pureJson,jsonObj),{
+                status:"editable",
+                hasbuttons:true
+            });
             
     magicform.attach把数据pureJson和jsonObj和在一起返回一个新的结构用来生成表单，默认的合并方法仅仅是将数据的值，给到配置字段的value，如果你的机构有些复杂，也可以自定义一个attaproc
 
     例如：
 
-         //hashattachProc
-         //atta是属性的配置，prop是属性名，src是源数据，index是数组的下标（如果是数组的话)
-        var hashAttachProc = function(atta, prop, src, index) {
+        //hashattachProc
+        //atta是属性的配置，prop是属性名，src是源数据，index是数组的下标（如果是数组的话)
+        var hashAttachProc = function(atta,prop,src,index){
             atta.value = src[prop][index].value;
             atta.key.value = src[prop][index].key;
 
             return atta;
         };
-
-         //配置摘要
-         {
-                ...
-            返回码: [{
-                mf: 1,
-                hash: 1,
-                fornew: 1,
-                control: "text",
-                key: {
-                    mf: 1,
-                    control: "text"
-                }
-            }, {
-                mf: 1,
-                hash: 1,
-                control: "text",
-                key: {
-                    mf: 1,
-                    control: "text"
-                },
-                attaproc: hashAttachProc,
-                detaproc: hashDetachProc
-            }, {
-                mf: 1,
-                hash: 1,
-                control: "text",
-                key: {
-                    mf: 1,
-                    control: "text"
-                },
-                attaproc: hashAttachProc,
-                detaproc: hashDetachProc
-            }]
-                ...
+        
+        //配置摘要
+        {
+        ...
+        返回码:[
+            {mf:1,hash:1,fornew:1,control:"text",key:{mf:1,control:"text"}},
+            {mf:1,hash:1,control:"text",key:{mf:1,control:"text"},attaproc:hashAttachProc,detaproc:hashDetachProc},
+            {mf:1,hash:1,control:"text",key:{mf:1,control:"text"},attaproc:hashAttachProc,detaproc:hashDetachProc}
+        ]
+        ...
         }
-
-
-        magicform.generate(form, magicform.attach(pureJson, jsonObj));
+        
+        
+        magicform.generate(form,magicform.attach(pureJson,jsonObj));
         
     同样，你也可以在表单填写完成的时候把数据分离成单纯的数据文件用来持久化，这个时候你需要用到方法
 
@@ -293,53 +331,28 @@
 
     例如：
         
-         //hashdetachProc
-        var hashDetachProc = function(prop, src) {
+        //hashdetachProc
+        var hashDetachProc = function(prop,src){
             var obj = {};
             obj.value = src.value;
             obj.key = src.key.value;
 
             return obj;
         }
-
-         //配置摘要
-         {
-                ...
-            返回码: [{
-                mf: 1,
-                hash: 1,
-                fornew: 1,
-                control: "text",
-                key: {
-                    mf: 1,
-                    control: "text"
-                }
-            }, {
-                mf: 1,
-                hash: 1,
-                control: "text",
-                key: {
-                    mf: 1,
-                    control: "text"
-                },
-                attaproc: hashAttachProc,
-                detaproc: hashDetachProc
-            }, {
-                mf: 1,
-                hash: 1,
-                control: "text",
-                key: {
-                    mf: 1,
-                    control: "text"
-                },
-                attaproc: hashAttachProc,
-                detaproc: hashDetachProc
-            }]
-                ...
+        
+        //配置摘要
+        {
+        ... 
+        返回码:[
+            {mf:1,hash:1,fornew:1,control:"text",key:{mf:1,control:"text"}},
+            {mf:1,hash:1,control:"text",key:{mf:1,control:"text"},attaproc:hashAttachProc,detaproc:hashDetachProc},
+            {mf:1,hash:1,control:"text",key:{mf:1,control:"text"},attaproc:hashAttachProc,detaproc:hashDetachProc}
+        ]
+        ...
         }
-
-         //jsonObj是字段配置对象    
-        JSON.stringify(magicform.detach(magicform.html2json(form), jsonObj));
+            
+        //jsonObj是字段配置对象    
+        JSON.stringify(magicform.detach(magicform.html2json(form),jsonObj));
  *
  *
  *
@@ -354,7 +367,7 @@
     var template = {
         formTemplate: /*<MFFormTemplate>*/'<%var flag=false;for(var i in order){var p = order[i].p;if(!data[p].inline){%><%if(flag){%><%if(data[p].hash){%></div><div><%=util.tmpl(labelItemTemplate,{data:data,options:options,p:p})%><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true,options:options,listitem:"",p:p})%><span class="formitem-ml10"></span><%}else{%></div><div class="<%=options.classname.itemwrapper%>" style="<%=options.style.itemwrapper%>"><%=util.tmpl(labelItemTemplate,{data:data,options:options,p:p})%><%}%><%}else{flag=true;%><%if(data[p].hash){%><%=util.tmpl(labelItemTemplate,{data:data,options:options,p:p})%><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true,options:options,listitem:"",p:p})%><span class="formitem-ml10"></span><%}else{%><div class="<%=options.classname.itemwrapper%>" style="<%=options.style.itemwrapper%>"><%=util.tmpl(labelItemTemplate,{data:data,options:options,p:p})%><%}%><%}%><%}else if(data[p].hash){%><div><%=util.tmpl(labelItemTemplate,{data:data,options:options,p:p})%></div><%=util.tmpl(valueItemTemplate,{data:data[p].key,flag:true,options:options})%><span class="formitem-ml10"></span><%}else{%><%=util.tmpl(labelItemTemplate,{data:data,options:options,p:p})%><%}%><%if(/array/i.test(Object.prototype.toString.call(data[p]))){%><!--key-array--><span class="form-array-ul <%=data[p].classname?data[p].classname.control:options.classname.control%>" type="array"><%if(options.status == "editable" || options.status == "new"){%><a href="javascript:;" class="form-icon form-item-add" title="新增" data-newtemplate="<%=encodeURIComponent(JSON.stringify(data[p].filter(function(item){if(item.fornew) return item;})[0]))%>"><i class="mf-iconfont">&#xf0154;</i></a><%}%><%if(options.status != "new"){%><%for(var i=data[p].length-1;i>=0;i--){%><%if(!data[p][i].fornew){%><br><%if(data[p][i].hash){%><span class="form-array-li w45p"><%=util.tmpl(valueItemTemplate,{data:data[p][i].key,flag:true,options:options,listitem:"listitem",p:p})%></span><span class="form-array-li w50p"><%=util.tmpl(valueItemTemplate,{data:data[p][i],flag:true,options:options,listitem:"",p:p})%><%}else{%><span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data[p][i],flag:true,options:options,listitem:"listitem",p:p})%><%}%><%if(options.status == "editable" || options.status == "new"){%><a href="javascript:;" class="form-icon form-item-remove" title="移除"><i class="mf-iconfont">&#xf0153;</i></a><%}%></span><%}%><%}%><%}%></span><%}else if("[object Object]" === Object.prototype.toString.call(data[p]) && !data[p].mf || data[p].mf && data[p].isobject){%><!--key-object--><a href="javascript:;" class="form-icon form-item-detail formitem-control" for="formitem-<%=p%>" data-mf-val="<%=encodeURIComponent(JSON.stringify(data[p]))%>" title="详细设定"><i class="mf-iconfont">&#xf00e1;</i></a><%}else{%><!--key-value--><%=util.tmpl(valueItemTemplate,{data:data[p],flag:true,options:options,listitem:"",p:p})%><%}%><%}%><%if(options.hasbuttons && (options.status === "editable" || options.status === "new")){%><%=util.tmpl(formpanelTemplate,{options:options})%><%}%>'/*</MFFormTemplate>*/,
         formLabelItemTemplate: /*<MFFormLabelItemTemplate>*/'<label class="<%=data[p].classname?data[p].classname.label:options.classname.label%>" style="<%=data[p].style?data[p].style.label:options.style.label%>" for="formitem-<%=p%>" data-key="<%=p%>" <%=data[p].label.attr%>><%=data[p].label.title?data[p].label.title:p%></label>'/*</MFFormLabelItemTemplate>*/,
-        formValueItemTemplate: /*<MFFormValueItemTemplate>*/'<%if(data.mf){%><%if(data.control === "radio"){%><span class="formitem-radio" type="radio" data-order="<%=data.order%>"><%for(var i=0;i<data.options.length;i++){%><input data-listitem="<%=listitem%>" class="formitem-radio" <%=options.status=="disabled" ? "disabled": ""%> placeholder="<%=data.options[i].placeholder?data.options[i].placeholder:""%>" data-flag="<%=flag%>" <%=data.options[i].validation%> <%=data.options[i].disabled%> <%=data.options[i].attr%> type="radio" <%=options.status=="new" ? "" : data.options[i].checked%> data-order="<%=data.order%>" name="<%=data.name%>" id="formitem-radio-<%=data.options[i].label%>"><label class="formitem-radio-label" for="formitem-radio-<%=data.options[i].label.title%>" <%=data.options[i].label.attr%>><%=data.options[i].label.title%></label><%}%></span><%}else if(data.control === "checkbox"){%><span class="formitem-checkbox" type="checkbox" data-order="<%=data.order%>"><%for(var i=0;i<data.options.length;i++){%><input data-listitem="<%=listitem%>" class="formitem-checkbox" placeholder="<%=data.options[i].placeholder?data.options[i].placeholder:""%>" <%=options.status=="disabled" ? "disabled": ""%> <%=data.options[i].disabled%> <%=data.options[i].validation%> <%=data.options[i].attr%> data-flag="<%=flag%>" type="checkbox" <%=options.status=="new" ? "" : data.options[i].checked%> id="formitem-radio-<%=data.options[i].label%>"><label for="formitem-radio-<%=data.options[i].label.title%>" class="formitem-checkbox-label" <%=data.options[i].label.attr%>><%=data.options[i].label.title%></label><%}%></span><%}else if(data.control==="select"){var flag=false;%><select data-listitem="<%=listitem%>" id="formitem-<%=p%>" class="<%=data.classname?data.classname.control:options.classname.control%> formitem-select" style="<%=data.style?data.style.control:options.style.control%>" <%=options.status=="disabled" ? "disabled": ""%> data-flag="<%=flag%>" <%=data.validation%> <%=data.disabled%> <%=data.attr%> data-order="<%=data.order%>"><%for(var i=0;i<data.options.length;i++){%><%if(data.options[i].val==="optgroup"){%><%if(flag){%></optgroup><optgroup label="<%=data.options[i].text%>" class="formitem-selectoption formitem-selectoptiongroup"><%}else{flag=true;%><optgroup label="<%=data.options[i].text%>" class="formitem-selectoption formitem-selectoptiongroup"><%}%><%}else{%><option value="<%=data.options[i].val%>" class="formitem-selectoption" <%=data.options[i].attr%>><%=data.options[i].text%></option><%}}%></select><%}else if(data.control === "textarea"){%><textarea data-listitem="<%=listitem%>" id="formitem-<%=p%>" class="<%=data.classname?data.classname.control:options.classname.control%> formitem-input" style="<%=data.style?data.style.control:options.style.control%>" <%=options.status=="disabled" ? "disabled": ""%> placeholder="<%=data.placeholder?data.placeholder:""%>" data-flag="<%=flag%>" <%=data.validation%> <%=data.disabled%> <%=data.attr%> data-order="<%=data.order%>" type="<%=data.control%>"><%=options.status=="new" ? "" : data.value%></textarea><%}else{%><input data-listitem="<%=listitem%>" id="formitem-<%=p%>" class="<%=data.classname?data.classname.control:options.classname.control%> formitem-input" style="<%=data.style?data.style.control:options.style.control%>" placeholder="<%=data.placeholder?data.placeholder:""%>" <%=options.status=="disabled" ? "disabled": ""%> data-flag="<%=flag%>" <%=data.validation%> <%=data.disabled%> <%=data.attr%> data-order="<%=data.order%>" type="<%=data.control%>" value="<%=options.status=="new" ? "" : data.value%>"><%}%><%}else{%><!--key-value--><input data-listitem="<%=listitem%>" id="formitem-<%=p%>" class="<%=data.classname?data.classname.control:options.classname.control%> formitem-input" style="<%=data.style?data.style.control:options.style.control%>" <%=options.status=="disabled" ? "disabled": ""%> data-flag="<%=flag%>" <%=data.validation%> <%=data.attr%> value="<%=options.status=="new" ? "" : data%>"><%}%>'/*</MFFormValueItemTemplate>*/,
+        formValueItemTemplate: /*<MFFormValueItemTemplate>*/'<%if(data.mf){%><%if(data.control === "radio"){%><span class="<%=data.classname?data.classname.control:options.classname.control%> formitem-radio" type="radio" data-order="<%=data.order%>"><%for(var i=0;i<data.options.length;i++){%><input data-listitem="<%=listitem%>" class="formitem-radio" <%=options.status=="disabled" ? "disabled": ""%> placeholder="<%=data.options[i].placeholder?data.options[i].placeholder:""%>" data-flag="<%=flag%>" <%=data.options[i].validation%> <%=data.options[i].disabled%> <%=data.options[i].attr%> type="radio" <%=options.status=="new" ? "" : data.options[i].checked%> data-order="<%=data.order%>" name="<%=data.name%>" id="formitem-radio-<%=data.options[i].label%>"><label class="formitem-radio-label" for="formitem-radio-<%=data.options[i].label.title%>" <%=data.options[i].label.attr%>><%=data.options[i].label.title%></label><%}%></span><%}else if(data.control === "checkbox"){%><span class="<%=data.classname?data.classname.control:options.classname.control%> formitem-checkbox" type="checkbox" data-order="<%=data.order%>"><%for(var i=0;i<data.options.length;i++){%><input data-listitem="<%=listitem%>" class="formitem-checkbox" placeholder="<%=data.options[i].placeholder?data.options[i].placeholder:""%>" <%=options.status=="disabled" ? "disabled": ""%> <%=data.options[i].disabled%> <%=data.options[i].validation%> <%=data.options[i].attr%> data-flag="<%=flag%>" type="checkbox" <%=options.status=="new" ? "" : data.options[i].checked%> id="formitem-radio-<%=data.options[i].label%>"><label for="formitem-radio-<%=data.options[i].label.title%>" class="formitem-checkbox-label" <%=data.options[i].label.attr%>><%=data.options[i].label.title%></label><%}%></span><%}else if(data.control==="select"){var flag=false;%><select data-listitem="<%=listitem%>" id="formitem-<%=p%>" class="<%=data.classname?data.classname.control:options.classname.control%> formitem-select" style="<%=data.style?data.style.control:options.style.control%>" <%=options.status=="disabled" ? "disabled": ""%> data-flag="<%=flag%>" <%=data.validation%> <%=data.disabled%> <%=data.attr%> data-order="<%=data.order%>"><%for(var i=0;i<data.options.length;i++){%><%if(data.options[i].val==="optgroup"){%><%if(flag){%></optgroup><optgroup label="<%=data.options[i].text%>" class="formitem-selectoption formitem-selectoptiongroup"><%}else{flag=true;%><optgroup label="<%=data.options[i].text%>" class="formitem-selectoption formitem-selectoptiongroup"><%}%><%}else{%><option value="<%=data.options[i].val%>" class="formitem-selectoption" <%=data.options[i].attr%>><%=data.options[i].text%></option><%}}%></select><%}else if(data.control === "textarea"){%><textarea data-listitem="<%=listitem%>" id="formitem-<%=p%>" class="<%=data.classname?data.classname.control:options.classname.control%> formitem-input" style="<%=data.style?data.style.control:options.style.control%>" <%=options.status=="disabled" ? "disabled": ""%> placeholder="<%=data.placeholder?data.placeholder:""%>" data-flag="<%=flag%>" <%=data.validation%> <%=data.disabled%> <%=data.attr%> data-order="<%=data.order%>" type="<%=data.control%>"><%=options.status=="new" ? "" : data.value%></textarea><%}else{%><input data-listitem="<%=listitem%>" id="formitem-<%=p%>" class="<%=data.classname?data.classname.control:options.classname.control%> formitem-input" style="<%=data.style?data.style.control:options.style.control%>" placeholder="<%=data.placeholder?data.placeholder:""%>" <%=options.status=="disabled" ? "disabled": ""%> data-flag="<%=flag%>" <%=data.validation%> <%=data.disabled%> <%=data.attr%> data-order="<%=data.order%>" type="<%=data.control%>" value="<%=options.status=="new" ? "" : data.value%>"><%}%><%}else{%><!--key-value--><input data-listitem="<%=listitem%>" id="formitem-<%=p%>" class="<%=data.classname?data.classname.control:options.classname.control%> formitem-input" style="<%=data.style?data.style.control:options.style.control%>" <%=options.status=="disabled" ? "disabled": ""%> data-flag="<%=flag%>" <%=data.validation%> <%=data.attr%> value="<%=options.status=="new" ? "" : data%>"><%}%>'/*</MFFormValueItemTemplate>*/,
         formArrayItemTemplate: /*<MFFormArrayItemTemplate>*/'<br><%if(data.hash){%><span class="form-array-li w45p"><%=util.tmpl(valueItemTemplate,{data:data.key,flag:true,options:options,listitem:"listitem",p:data.p})%></span><span class="form-array-li w50p"><%=util.tmpl(valueItemTemplate,{data:data,flag:false,options:options,listitem:"",p:data.p})%><%if(options.status == "editable" || options.status == "new"){%><a href="javascript:;" class="form-icon form-item-remove" title="移除"><i class="mf-iconfont">&#xf0153;</i></a><%}%></span><%}else{%><span class="form-array-li"><%=util.tmpl(valueItemTemplate,{data:data,flag:false,options:options,listitem:"listitem",p:data.p})%><%if(options.status == "editable" || options.status == "new"){%><a href="javascript:;" class="form-icon form-item-remove" title="移除"><i class="mf-iconfont">&#xf0153;</i></a><%}%></span><%}%>'/*</MFFormArrayItemTemplate>*/,
         formpanelTemplate: /*<MFFormPanelTemplate>*/'<div class="<%=options.classname.formpanel%>"><label class="<%=options.classname.label%>" style="<%=options.style.label%>" <%=options.attr.label%>></label><%for(var i=0;i<options.buttons.length;i++){%><%if(options.buttons[i].submit){%><button class="<%=options.buttons[i].className%>" title="<%=options.buttons[i].title%>"><%=options.buttons[i].name%></button><%}else{%><button class="ml15 <%=options.buttons[i].className%>" title="<%=options.buttons[i].title%>"><%=options.buttons[i].name%></button><%}%><%}%></div>'/*</MFFormPanelTemplate>*/
     };
