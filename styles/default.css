@@ -45,8 +45,8 @@
 .mf .formitem-ml50{margin-left: 50px;}
 
 
-.mf .formitem-p{margin: 16px 0 0 0;}
-.mf .formitem-p:first-child{margin: 0;}
+.mf .form-group{margin: 16px 0 0 0;}
+.mf .form-group:first-child{margin: 0;}
 
 /*label预置样式*/
 .mf .formitem-label{display:inline-block;overflow: hidden;text-overflow:ellipsis}
