@@ -64,11 +64,11 @@
 			密码:{mf:1,control:"password"},
 			出生日期:{mf:1,control:"date"},
 			毕业院校:{mf:1,control:"select",options:[
-				{val:"optgroup",text:"母校"},
+				{group:true,text:"母校"},
 				{text:"武昌理工学院",val:1},
-				{val:"optgroup",text:"名牌"},
+				{group:true,text:"名牌"},
 				{text:"清华大学",val:2},
-				{val:"optgroup",text:"垃圾"},
+				{group:true,text:"垃圾"},
 				{text:"深职院",val:3}
 			]},
 			学科:{
@@ -77,7 +77,7 @@
 				}
 			},
 			数字:[{mf:1,control:"number",fornew:1},{mf:1,control:"checkbox",options:[{checked:"checked",label:{title:"1"}}],detaproc:function(prop,src){
-				return src.options.filter(function(item){if(item.checked=="checked") return item;})[0].label.title;	
+				return src.options.filter(function(item){if(item.checked==="checked") return item;})[0].label.title;	
 			}},2,3,4,5],
 			返回码:[
 				{mf:1,hash:1,fornew:1,control:"text",key:{mf:1,control:"text"}},

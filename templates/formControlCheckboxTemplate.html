@@ -1,0 +1,5 @@
+<span class="formitem-control {{data.classname}} formitem-checkbox" type="checkbox" data-order="{{data.order}}">
+	{{each data.options as op}}
+		<input data-listitem="{{listitem}}" class="formitem-checkbox" placeholder="{{op.placeholder}}" {{op.disabled}} {{op.validation}} {{op.attr}} {{op.flag}} checked="{{op.checked}}" {{op.status}} type="checkbox" id="formitem-radio-{{op.label.title}}"><label class="formitem-checkbox-label" for="formitem-radio-{{op.label.title}}" {{op.label.attr}}>{{op.label.title}}</label>
+	{{/each}}
+</span>

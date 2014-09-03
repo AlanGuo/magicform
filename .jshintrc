@@ -8,7 +8,7 @@
   "noarg": true,
   "sub": true,
   "undef": true,
-  "predef": [ "window","document","MFFormTemplate","MFFormLabelItemTemplate","MFFormValueItemTemplate","MFFormArrayItemTemplate","MFFormPanelTemplate","magicform"],
+  "predef": [ "window","document","MFFormTemplate","MFFormLabelItemTemplate","MFFormValueItemTemplate","MFFormArrayItemTemplate","MFFormPanelTemplate","magicform","template"],
   "unused": true,
   "boss": true,
   "eqnull": true,

@@ -83,7 +83,7 @@
 		Alan © 2013/07/10
 	</footer>
 	<script type="text/javascript" src="./assets/scripts/speedframe-0.1.js"></script>
-	<script type="text/javascript" src="./assets/scripts/i18next.withoutJQuery-1.7.3.min.js"></script>
+	<script type="text/javascript" src="./assets/scripts/i18next.withoutJQuery-latest.js"></script>
 	<script type="text/javascript" src="../dist/magicform-1.0.js"></script>
 	<script type="text/javascript">
 	var supportedlangs = ["en-US","zh-CN"];
@@ -101,11 +101,11 @@
 			email:{
 				mf:1,
 				control:"text",
-				validation:"required pattern='.*@.*'",
+				validation:"required pattern=.*@.*",
 				placeholder:"email",
-				attr:"data-i18n='[placeholder]form.placeholder.email'",
+				attr:"data-i18n=[placeholder]form.placeholder.email",
 				label:{
-					attr:"data-i18n='form.email'"
+					attr:"data-i18n=form.email"
 				}
 			},
 			password:{
@@ -113,18 +113,18 @@
 				control:"password",
 				validation:"minlength=6 required",
 				placeholder:"password",
-				attr:"data-i18n='[placeholder]form.placeholder.password'",
+				attr:"data-i18n=[placeholder]form.placeholder.password",
 				label:{
-					attr:"data-i18n='form.password'"
+					attr:"data-i18n=form.password"
 				}
 			},
 			username:{
 				mf:1,
 				validation:"required maxlength=10 minlength=4",
 				placeholder:"username",
-				attr:"data-i18n='[placeholder]form.placeholder.username'",
+				attr:"data-i18n=[placeholder]form.placeholder.username",
 				label:{
-					attr:"data-i18n='form.username'"
+					attr:"data-i18n=form.username"
 				}
 			},
 			message:{
@@ -132,9 +132,9 @@
 				placeholder:"leave a short message",
 				control:"textarea",
 				placeholder:"please enter a text",
-				attr:"data-i18n='[placeholder]form.placeholder.message'",
+				attr:"data-i18n=[placeholder]form.placeholder.message",
 				label:{
-					attr:"data-i18n='form.message'"
+					attr:"data-i18n=form.message"
 				}
 			}
 		};

@@ -1,0 +1,41 @@
+/*TMODJS:{"version":6,"md5":"911d03ed691023e26e05f94479d6dbbf"}*/
+template('formControlRadioTemplate',function($data,$filename) {
+'use strict';var $utils=this,$helpers=$utils.$helpers,$escape=$utils.$escape,data=$data.data,$each=$utils.$each,op=$data.op,$index=$data.$index,listitem=$data.listitem,$out='';$out+='<span class="formitem-control ';
+$out+=$escape(data.classname);
+$out+=' formitem-radio" type="radio" data-order="';
+$out+=$escape(data.order);
+$out+='"> ';
+$each(data.options,function(op,$index){
+$out+=' <input type="radio" class="formitem-radio" data-listitem="';
+$out+=$escape(listitem);
+$out+='" placeholder="';
+$out+=$escape(op.placeholder);
+$out+='" data-flag="';
+$out+=$escape(op.flag);
+$out+='" ';
+$out+=$escape(op.validation);
+$out+=' ';
+$out+=$escape(op.disabled);
+$out+=' ';
+$out+=$escape(op.attr);
+$out+=' ';
+$out+=$escape(op.checked);
+$out+=' ';
+$out+=$escape(op.status);
+$out+=' data-order="';
+$out+=$escape(data.order);
+$out+='" name="';
+$out+=$escape(data.name);
+$out+='" id="formitem-radio-';
+$out+=$escape(op.label.title);
+$out+='"><label class="formitem-radio-label" for="formitem-radio-';
+$out+=$escape(op.label.title);
+$out+='" ';
+$out+=$escape(op.label.attr);
+$out+='>';
+$out+=$escape(op.label.title);
+$out+='</label> ';
+});
+$out+=' </span>';
+return new String($out);
+});

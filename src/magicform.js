@@ -107,7 +107,7 @@
                 //标签
                 label:"<label>",
                 //控件
-                control:"<div class=\"col-sm-9\"><%=control%></div>",
+                control:"<div class=\"col-sm-9\">{{{control}}}</div>",
                 //标签控件的包裹元素
                 itemwrapper:"",
                 //暂时不支持按钮区域自定义
@@ -364,14 +364,6 @@
 
 
 (function(exports) {
-    var template = {
-        formTemplate: MFFormTemplate,
-        formLabelItemTemplate: MFFormLabelItemTemplate,
-        formValueItemTemplate: MFFormValueItemTemplate,
-        formArrayItemTemplate: MFFormArrayItemTemplate,
-        formpanelTemplate: MFFormPanelTemplate
-    };
-
     var util = (function() {
         return {
             extend: function(objA, objB) {
@@ -402,52 +394,18 @@
                 var div = document.createElement("div");
                 div.innerHTML = template;
                 return div.children;
-            },
-            /*jshint quotmark: false */
-            tmpl: (function() {
-                var cache = {};
-
-                function _getTmplStr(rawStr, mixinTmpl) {
-                    if (mixinTmpl) {
-                        for (var p in mixinTmpl) {
-                            var r = new RegExp('<%#' + p + '%>', 'g');
-                            rawStr = rawStr.replace(r, mixinTmpl[p]);
-                        }
-                    }
-                    return rawStr;
-                }
-                /* jshint -W054 */
-                return function tmpl(str, data, opt) {
-                    opt = opt || {};
-                    var key = opt.key,
-                        mixinTmpl = opt.mixinTmpl,
-                        strIsKey = opt.strIsKey !== null ? opt.strIsKey : !/\W/.test(str);
-                    key = key || (strIsKey ? str : null);
-                    var fn = key ? cache[key] = cache[key] || tmpl(_getTmplStr(strIsKey ? document.getElementById(str).innerHTML : str, mixinTmpl)) :
-                        new Function("obj", "var _p_=[],print=function(){_p_.push.apply(_p_,arguments);};with(obj){_p_.push('" + str
-                            .replace(/[\r\t\n]/g, " ")
-                            .split("\\'").join("\\\\'")
-                            .split("'").join("\\'")
-                            .split("<%").join("\t")
-                            .replace(/\t=(.*?)%>/g, "',$1,'")
-                            .split("\t").join("');")
-                            .split("%>").join("_p_.push('") + "');}return _p_.join('');");
-                    return data ? fn(data) : fn;
-                };
-            })()
+            }
         };
     })();
 
 
-    /* exported magicForm */
+    /* exported magicform */
     /**
      * 魔法表单主类
-     * @class magicForm
+     * @class magicform
      */
-    var magicForm = (function() {
+    var mf = (function() {
         return {
-            formTemplate: template.formTemplate,
-
             DEFAUTLBUTTONS: [{
                 "name": "提交",
                 "title": "提交表单",
@@ -462,7 +420,7 @@
             /**
              * @method _setOptions
              * @private
-             * @for magicForm
+             * @for magicform
              * @support: ie:>=10,chrome:all,firefox:all
              */
             _setOptions: function(options) {
@@ -470,42 +428,31 @@
 
                 //默认按钮
                 if (!options.buttons) {
-                    options.buttons = magicForm.DEFAUTLBUTTONS.concat();
+                    options.buttons = magicform.DEFAUTLBUTTONS.concat();
                 }
-                options.status = options.status || "disabled";
-                options.functions = options.functions || ["editable"];
-                options.style = options.style || {
-                    label: "",
-                    control: "",
-                    itemwrapper: ""
-                };
-                options.style.label = options.style.label || "";
-                options.style.control = options.style.control || "";
-                options.style.itemwrapper = options.style.itemwrapper || "";
+                options.status = options.status || 'disabled';
+                options.functions = options.functions || ['editable'];
+                options.style = options.style || '';
+                options.classname = options.classname || 'w70p';
 
+                //label
+                options.label = options.label || {};
+                options.label.style = options.label.style || '';
+                options.label.classname = options.label.classname || 'w20p align-right mr10p';
 
-                options.classname = options.classname || {
-                    label: "w20p align-right mr10p",
-                    control: "w70p",
-                    itemwrapper: "",
-                    formpanel: "formpanel mt30"
-                };
+                //itemwrapper
+                options.itemwrapper = options.itemwrapper || {};
+                options.itemwrapper.style = options.itemwrapper.style || '';
+                options.itemwrapper.classname = options.itemwrapper.classname || '';
+                //不支持template
 
-                options.classname.label = options.classname.label || "w20p align-right mr10p";
-                options.classname.control = options.classname.control || "";
-                options.classname.itemwrapper = options.classname.itemwrapper || "";
-                options.classname.formpanel = options.classname.formpanel || "formpanel mt30";
+                //formpanel
+                options.formpanel = options.formpanel || {};
+                options.formpanel.style = options.formpanel.style || '';
+                options.formpanel.classname = options.formpanel.classname || 'formpanel mt30';
 
-                options.template = options.template || {
-                    label: "<%=label%>",
-                    control: "<%=control%>",
-                    formpanel: "<%=formpanel%>",
-                    /*暂不支持itemwrapper自定义样式*/
-                    itemwrapper: ""
-                };
-                options.template.label = options.template.label || "<%=label%>";
-                options.template.control = options.template.control || "<%=control%>";
-                options.template.formpanel = options.template.formpanel || "<%=formpanel%>";
+                //array
+                options.array = options.array || {};
 
                 options.attr = options.attr || {};
 
@@ -514,9 +461,181 @@
 
 
             /**
+             * @private
+             * @method _predefineValue
+             */
+            _predefineValue:function(data,p,options){
+                var Object_proto_toString = Object.prototype.toString;
+
+                data.label = data.label || {};
+                data.label.title = data.label.title || p;
+                data.label.classname = data.label.classname || options.label.classname || 'w20p align-right mr10p';
+                data.label.style = data.label.style || options.label.style ||'';
+
+                data.classname = data.classname || options.classname || 'w70p';
+                data.style = data.style || options.style || '';
+                data.placeholder = data.placeholder || options.placeholder || '';
+
+                if(/array/i.test(Object_proto_toString.call(data))){
+                    for(var i=0;i<data.length;i++){
+                        if(!/object/i.test(typeof data[i])){
+                            data[i] = {value:data[i]};
+
+                            data[i].classname = data.classname || options.array.classname || 'w70p';
+                            data[i].style = data.style || options.array.style ||'';
+                            data[i].placeholder = data.placeholder || options.array.placeholder ||'';
+                            data[i].mf = 1;
+                        }
+                    }
+                }
+
+                return data;
+            },
+
+            /**
+             * @private
+             * @method _translateLabel
+             */
+            _translateLabel:function(valin,hasCloseTag,p,options){
+                var generatedHtml = '';
+                var labelTemplate = '';
+                labelTemplate = template('formLabelTemplate')({data:valin,p:p});
+
+                if(options.label.tmplprocess){
+                    labelTemplate = options.label.tmplprocess(labelTemplate);
+                }
+
+                generatedHtml = template('formControlTemplate')({data:valin,
+                    hasCloseTag:hasCloseTag,
+                    options:options,
+                    labelTemplate:labelTemplate});
+
+                return generatedHtml;
+            },
+
+            /**
+             * @private
+             * @method _translateLabel
+             */
+            _translateControl:function(valin,hasCloseTag,p,options,additionnal){
+                var Object_proto_toString = Object.prototype.toString;
+                var generatedHtml = '';
+                var controlTemplate = '';
+
+                var controlTypeMap = {
+                    'text':'Input',
+                    'checkbox':'Checkbox',
+                    'radio':'Radio',
+                    'select':'Select',
+                    'textarea':'Textarea'
+                };
+                var type = controlTypeMap[valin.control] || 'Input';
+                //判断字段类型
+                 //hash值
+                if(valin.hash){
+                    controlTemplate = template('formControl'+type+'Template')({data:valin,p:p,options:options,listitem:'listitem'});
+                    if(options.tmplprocess){
+                        controlTemplate = options.tmplprocess(controlTemplate);
+                    }
+
+                    generatedHtml = template('formControlHashTemplate')({
+                        keyControlTemplate:this._translateControl(valin.key,hasCloseTag,p,options,'listitem'),
+                        controlTemplate: controlTemplate
+                    });
+                }
+                else if(/array/i.test(Object_proto_toString.call(valin))){
+
+                    var editable = (options.status === 'editable' || options.status === 'new');
+                    var notNew = options.status !== 'new';
+                    var newTemplate = encodeURIComponent(JSON.stringify(valin.filter(function(item){if(item.fornew) {return item;}})[0]));
+
+                    var arrayHtml = '';
+                    //过滤掉新增的模板
+                    var filteredValin = valin.filter(function(item){
+                        if(!item.fornew){
+                            return item;
+                        }
+                    });
+                    for(var j=filteredValin.length-1;j>=0;j--){
+                        arrayHtml += template('formArrayControlItemTemplate')({
+                            controlTemplate:this._translateControl(filteredValin[j],hasCloseTag,p,options,'listitem'),
+                            editable:editable
+                        });
+                    }
+                    generatedHtml = template('formArrayTemplate')({
+                        data:valin,
+                        editable : editable,
+                        notNew : notNew,
+                        newTemplate : newTemplate,
+                        arrayTemplate : arrayHtml,
+                        p:p
+                    });
+                }
+                else if('[object Object]' === Object_proto_toString.call(valin) && !valin.mf || valin && valin.isobject){
+                    //key-object
+                    generatedHtml =  template('formControlObjectTemplate')({
+                        p:p,
+                        stringifyVal:encodeURIComponent(JSON.stringify(valin))
+                    });
+                }
+                else{
+                    //key-value
+                    controlTemplate = template('formControl'+type+'Template')({data:valin,p:p,options:options,listitem:additionnal});
+                    if(options.tmplprocess){
+                        controlTemplate = options.tmplprocess(controlTemplate);
+                    }
+                    generatedHtml = controlTemplate;
+                }
+
+                return generatedHtml;
+            },
+
+            /**
+             * @private
+             * @method _translateJson
+             */
+            _translateJson:function(json, orders, options){
+                
+                var html = '',
+                    panelTemplate = '',
+                    i = 0;
+
+                for(var op in orders){
+                    var p = orders[op].p,
+                        val = json[p];
+                    var hasCloseTag = false;
+
+                    //inline的元素没有closeTag
+                    //非inline且不是第一个的元素有closeTag
+                    if(i===0){
+                        hasCloseTag = false;
+                    }
+                    else if(!val.inline){
+                        hasCloseTag = true;
+                    }
+                    //控件类型
+                    html += this._translateLabel(val,hasCloseTag,p,options);
+                    html += this._translateControl(val,hasCloseTag,p,options);
+                    i++;
+                }
+
+                panelTemplate = template('formPanelTemplate')({options:options});
+                if(options.formpanel.tmplprocess){
+                    panelTemplate = options.formpanel.tmplprocess(panelTemplate);
+                }
+                //form panel
+                if(options.hasbuttons && (options.status === "editable" || options.status === "new")){
+                    html += panelTemplate;
+                }
+
+                return html;
+            },
+
+
+            /**
              * json2html -> init
              * @method generate
-             * @for magicForm
+             * @for magicform
              * @param json {Object} 数据对象
              * @param options {Object}
              * @param options.status {String} 表单状态 "disabled","editable","new"
@@ -534,7 +653,7 @@
             /**
              * json -> html json对象转换成html表单，提供配置，可以配置样式和状态
              * @method json2html
-             * @for magicForm
+             * @for magicform
              * @param json {Object} 数据对象
              * @param options {Object} 配置
              * @param options.status {String} 表单状态 "disabled","editable","new"
@@ -544,21 +663,23 @@
              */
             json2html: function(json, options) {
                 var orders = [];
+                var p = null;
                 options = this._setOptions(options);
                 //排序
-                for (var p in json) {
+                for (p in json) {
                     //预处理一些属性
                     if(typeof json[p] !== "object"){
-                        json[p] = {value:json[p]};
+                        json[p] = {value:json[p],mf:1};
                     }
-                    json[p].label = json[p].label || {};
+                    //初始化数值
+                    this._predefineValue(json[p],p,options);
 
                     orders.push({
                         p: p,
                         order: json[p].order
                     });
                 }
-
+                //按照order排序
                 orders = orders.sort(function(a, b) {
                     if (a.order === null || a.order === undefined || a.order === "") {a.order = 100;}
                     if (b.order === null || b.order === undefined || b.order === "") {b.order = 100;}
@@ -566,29 +687,15 @@
                     if (a.order < b.order) {return false;}
                 });
 
-
-                return util.tmpl(this.formTemplate, {
-                    data: json,
-                    order: orders,
-                    util: util,
-                    options: options,
-                    valueItemTemplate: util.tmpl(options.template.control, {
-                        control: template.formValueItemTemplate
-                    }),
-                    /*标签——支持模板*/
-                    labelItemTemplate: util.tmpl(options.template.label, {
-                        label: template.formLabelItemTemplate
-                    }),
-                    formpanelTemplate: util.tmpl(options.template.formpanel, {
-                        formpanel: template.formpanelTemplate
-                    })
-                });
+                var html = this._translateJson(json,orders,options);
+                
+                return html;
             },
 
             /**
              * 把显示属性，附加上去，此方法可以保持数据对象的纯净
              * @method attach
-             * @for magicForm
+             * @for magicform
              * @param json {Object} 数据
              * @param attr {Object} 属性
              * @param attr.mf {Number} 这个字段一直为1，标明这个object是mf的配置结构
@@ -675,7 +782,7 @@
             /**
              * 把显示属性，剥离出来，此方法可以保持数据对象的纯净
              * @method detach
-             * @for magicForm
+             * @for magicform
              * @param json {Object} 数据
              * @param attr {Object} 属性
              * @param attr.mf {Number} 这个字段一直为1，标明这个object是mf的配置结构
@@ -748,7 +855,7 @@
             /**
              * html2value
              * @method _html2value
-             * @for magicForm
+             * @for magicform
              * @private
              * @support: ie:>=10,chrome:all,firefox:all
              */
@@ -833,7 +940,7 @@
                             } else {
                                 options.push({
                                     val: optionControls[j].value,
-                                    text: optionControls[j].innerHTML,
+                                    text: optionControls[j].innerHTML
                                 });
                             }
 
@@ -882,7 +989,7 @@
             /**
              * html -> json 从html表单中提取数据对象
              * @method html2json
-             * @for magicForm
+             * @for magicform
              * @param form {HTMLElement} 表单元素
              * @param options {Object} 设置选项
              * @support: ie:>=10,chrome:all,firefox:all
@@ -903,7 +1010,7 @@
             /**
              * 初始化一些事件
              * @method init
-             * @for magicForm
+             * @for magicform
              * @param wrapper {HTMLElement} 表单元素，一般是from，但也可以是div等其他元素
              * @param json {Object} 数据对象
              * @param options {Object} 设置
@@ -911,6 +1018,7 @@
              */
             init: function(wrapper, json, options) {
                 options = this._setOptions(options);
+                var self = this;
                 var initRemoveAnchor = function(removeAnchor) {
                     removeAnchor.addEventListener("click", function() {
                         var removeParent = this.parentNode.parentNode;
@@ -958,14 +1066,18 @@
                         (function(anchor, ul) {
                             anchor.addEventListener("click", function() {
                                 var newtemplate = anchor.getAttribute("data-newtemplate") === "undefined" ? null : anchor.getAttribute("data-newtemplate");
-
+                                var p = anchor.getAttribute("data-p");
                                 if (newtemplate) {
-                                    var elems = util.createElementsWithTemplate(util.tmpl(template.formArrayItemTemplate, {
-                                        valueItemTemplate: template.formValueItemTemplate,
-                                        data: JSON.parse(decodeURIComponent(newtemplate)),
-                                        util: util,
-                                        options: options
-                                    }));
+                                    var elems = util.createElementsWithTemplate(
+                                        template('formArrayControlItemTemplate')({
+                                            editable:true,
+                                            controlTemplate:self._translateControl(JSON.parse(decodeURIComponent(newtemplate)),
+                                            false,
+                                            p,
+                                            options,
+                                            'listitem')
+                                        }));
+
                                     //插入元素
                                     var br = ul.querySelector("br");
                                     var last = null;
@@ -1010,5 +1122,5 @@
         };
     })();
 
-    exports.magicform = magicForm;
+    exports.magicform = mf;
 })(window);

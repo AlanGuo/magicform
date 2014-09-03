@@ -1,0 +1,31 @@
+/*TMODJS:{"version":4,"md5":"b40a7a69d5b5a4d4600522c6d3bead7c"}*/
+template('formControlInputConfigTemplate',function($data,$filename) {
+'use strict';var $utils=this,$helpers=$utils.$helpers,$escape=$utils.$escape,listitem=$data.listitem,p=$data.p,data=$data.data,options=$data.options,flag=$data.flag,$out='';$out+='<input data-listitem="';
+$out+=$escape(listitem);
+$out+='" id="formitem-';
+$out+=$escape(p);
+$out+='" class="formitem-control formitem-input ';
+$out+=$escape(data.classname.control);
+$out+='" style="';
+$out+=$escape(data.style.control);
+$out+='" placeholder="';
+$out+=$escape(data.placeholder);
+$out+='" ';
+$out+=$escape(options.status);
+$out+=' ';
+$out+=$escape(data.validation);
+$out+=' data-flag="';
+$out+=$escape(flag);
+$out+='" ';
+$out+=$escape(data.disabled);
+$out+=' ';
+$out+=$escape(data.attr);
+$out+=' data-order="';
+$out+=$escape(data.order);
+$out+='" type="';
+$out+=$escape(data.control);
+$out+='" value="';
+$out+=$escape(data.value);
+$out+='">';
+return new String($out);
+});

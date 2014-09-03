@@ -91,12 +91,12 @@
 	<div class="footer">
 	  <div class="footer-inner">
 	    <div class="footer-content">
-	       Alan © 2013/07/10
+	       Alan © 2014/07/10
 	    </div>
 	  </div>
 	</div>
 	<script type="text/javascript" src="./assets/scripts/speedframe-0.1.js"></script>
-	<script type="text/javascript" src="../release/magicform-0.0.1.js"></script>
+	<script type="text/javascript" src="../dist/magicform-1.0.js"></script>
 	<script type="text/javascript">
 
 		//纯数据
@@ -118,14 +118,11 @@
 		var g_options = {
 			status:"editable",
 			hasbuttons:false,
-			template:{
-				control:"<div class=\"col-sm-9\"><%=control%></div>"
+			tmplprocess:function(tmpl){
+				return "<div class=\"col-sm-9\">" +tmpl+ "</div>";
 			},
-			classname:{
-				label:"col-sm-3",
-				control:"",
-				itemwrapper:""
-			}
+			label:{classname:"col-sm-3 form-label"},
+			classname:"form-control"
 		};
 
 		var form = document.getElementById("form");

@@ -32,7 +32,7 @@ module.exports = function(grunt) {
           server: {
             baseDir: "./"
           },
-          startPath: "./demos/index-handlebars.html",
+          startPath: "./demos/index.html",
           watchTask: true
         }
       }
@@ -45,15 +45,15 @@ module.exports = function(grunt) {
       },
       source: {
         files: '<%= jshint.source.src %>',
-        tasks: ['jshint:source'/*, 'nodeunit'*/,'concat']
+        tasks: ['jshint:source'/*, 'nodeunit'*/,'concat','closureCompiler']
       },
       template:{
-        files:'templates/**/*.hbs',
-        tasks:['handlebars','concat']
+        files:'templates/**/*.html',
+        tasks:['tmod','concat','closureCompiler']
       },
       lib:{
         files:'lib/**/*.js',
-        tasks:['concat']
+        tasks:['concat','closureCompiler']
       },
       test: {
         files: '<%= jshint.test.src %>',
@@ -62,17 +62,13 @@ module.exports = function(grunt) {
     },
 
 
-    handlebars: {
-      compile: {
+    tmod: {
+      template: {
+        src: './templates/**/*.html',
+        dest: './templates/compiled/template.js',
         options: {
-          namespace: "magicform.template",
-          processName: function(filePath) {
-              return filePath.replace(/^templates\//, '').replace(/\-handlebars\.hbs$/, '');
-          }
-        },
-        files: {
-          "templates/compiled/template-handlebars.js": "templates/**/*.hbs"
-        }
+            base: './templates'
+        } 
       }
     },
 
@@ -80,17 +76,81 @@ module.exports = function(grunt) {
       dist: {
         options: {
           // Replace all 'use strict' statements in the code with a single one at the top
-          banner: "'use strict';\n",
-          process: function(src, filepath) {
-            return '// Source: ' + filepath + '\n' +
-              src.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
-          },
+          //banner: "'use strict';\n",
+          //process: function(src, filepath) {
+            //return '// Source: ' + filepath + '\n' +
+            //  src.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
+          //},
         },
         files: {
-          'dist/magicform-1.0.handlebars.js': 
-          ['src/magicform-handlebars.js','lib/handlebars.runtime-v1.3.0.js','templates/compiled/template-handlebars.js'],
+          'dist/magicform-1.0.js': 
+          ['templates/compiled/template.js','src/magicform.js'],
         },
       },
+    },
+
+    closureCompiler: {
+        options: {
+        // [REQUIRED] Path to closure compiler
+        compilerFile: 'tools/compiler.jar',
+
+        // [OPTIONAL] set to true if you want to check if files were modified
+        // before starting compilation (can save some time in large sourcebases)
+        checkModified: true,
+
+        // [OPTIONAL] Set Closure Compiler Directives here
+        compilerOpts: {
+          /**
+           * Keys will be used as directives for the compiler
+           * values can be strings or arrays.
+           * If no value is required use null
+           *
+           * The directive 'externs' is treated as a special case
+           * allowing a grunt file syntax (<config:...>, *)
+           *
+           * Following are some directive samples...
+           */
+           compilation_level: 'ADVANCED_OPTIMIZATIONS'
+        },
+        // [OPTIONAL] Set exec method options
+        execOpts: {
+           /**
+            * Set maxBuffer if you got message "Error: maxBuffer exceeded."
+            * Node default: 200*1024
+            */
+           maxBuffer: 999999 * 1024
+        },
+        // [OPTIONAL] Java VM optimization options
+        // see https://code.google.com/p/closure-compiler/wiki/FAQ#What_are_the_recommended_Java_VM_command-line_options?
+        // Setting one of these to 'true' is strongly recommended,
+        // and can reduce compile times by 50-80% depending on compilation size
+        // and hardware.
+        // On server-class hardware, such as with Github's Travis hook,
+        // TieredCompilation should be used; on standard developer hardware,
+        // d32 may be better. Set as appropriate for your environment.
+        // Default for both is 'false'; do not set both to 'true'.
+        d32: false, // will use 'java -client -d32 -jar compiler.jar'
+        TieredCompilation: true // will use 'java -server -XX:+TieredCompilation -jar compiler.jar'
+      },
+
+      // any name that describes your task
+      targetName: {
+
+        /**
+         *[OPTIONAL] Here you can add new or override previous option of the Closure Compiler Directives.
+         * IMPORTANT! The feature is enabled as a temporary solution to [#738](https://github.com/gruntjs/grunt/issues/738).
+         * As soon as issue will be fixed this feature will be removed.
+         */
+        TEMPcompilerOpts: {
+        },
+
+        // [OPTIONAL] Target files to compile. Can be a string, an array of strings
+        // or grunt file syntax (<config:...>, *)
+        src: 'dist/magicform-1.0.js',
+
+        // [OPTIONAL] set an output file
+        dest: 'dist/magicform-1.0.min.js'
+      }
     }
 
   });
@@ -101,11 +161,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-express-server');
   grunt.loadNpmTasks('grunt-browser-sync');
-  grunt.loadNpmTasks('grunt-contrib-handlebars');
+  grunt.loadNpmTasks('grunt-tmod');
   grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.registerTask('web','launch webserver and watch tasks',['express:web']);
+  grunt.loadNpmTasks('grunt-closure-tools');
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'handlebars','concat', 'browserSync', 'watch']);
+  grunt.registerTask('default', ['jshint', 'tmod','concat','closureCompiler', 'browserSync', 'watch']);
 
 };
