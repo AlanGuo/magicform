@@ -1,7 +1,9 @@
 <select data-listitem="{{listitem}}" id="formitem-{{p}}" class="formitem-control formitem-select {{data.classname}}" style="{{data.style}}" {{data.validation}} {{options.status}} {{data.disabled}} {{data.attr}} data-order="{{data.order}}">
 	{{each data.options as op}}
 		{{if op.group }}
-			</optgroup>
+			{{if !op.firstgroup}}
+				</optgroup>
+			{{/if}}
 			<optgroup label="{{op.text}}" class="formitem-selectoption formitem-selectoptiongroup">
 		{{else}}
 			<option value="{{op.val}}" class="formitem-selectoption" {{op.attr}}>{{op.text}}</option>

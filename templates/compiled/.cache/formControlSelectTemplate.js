@@ -1,4 +1,4 @@
-/*TMODJS:{"version":8,"md5":"370c50bdc13c00666febeca175b0068c"}*/
+/*TMODJS:{"version":11,"md5":"522967c26bfeefa4bc2a22dab39b401f"}*/
 template('formControlSelectTemplate',function($data,$filename) {
 'use strict';var $utils=this,$helpers=$utils.$helpers,$escape=$utils.$escape,listitem=$data.listitem,p=$data.p,data=$data.data,options=$data.options,$each=$utils.$each,op=$data.op,$index=$data.$index,$out='';$out+='<select data-listitem="';
 $out+=$escape(listitem);
@@ -22,7 +22,11 @@ $out+='"> ';
 $each(data.options,function(op,$index){
 $out+=' ';
 if(op.group ){
-$out+=' </optgroup> <optgroup label="';
+$out+=' ';
+if(!op.firstgroup){
+$out+=' </optgroup> ';
+}
+$out+=' <optgroup label="';
 $out+=$escape(op.text);
 $out+='" class="formitem-selectoption formitem-selectoptiongroup"> ';
 }else{

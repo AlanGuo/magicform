@@ -11,7 +11,7 @@
 	
 	......
 	
-	<script type="text/javascript" src="./release/magicform-0.0.1.js"></script>
+	<script type="text/javascript" src="./release/magicform-1.0.js"></script>
 	
 	......
 	
@@ -55,6 +55,12 @@
 - **status**
 
 	表单的状态，取值可以是 "disabled"——只读的,"editable"——允许变更的
+	
+- **functions**
+
+	表单的功能，目前只支持
+	
+	['editable']
 
 - **style**
 
@@ -62,16 +68,7 @@
 	
 	例如：
 	
-		style:{
-			//标签
-			label:"width:100px",
-			//控件
-			control:"float:right",
-			//标签控件的包裹元素
-			itemwrapper:"",
-			//按钮区域
-			formpanel:""
-		}
+		style:'color:red'
 
 - **classname**
 
@@ -79,38 +76,18 @@
 	
 	例如：
 	
-		classname:{
-		
-			//label是文本标签的样式名，control是控件的样式，magicform内置了许多classname来组合出各种风格的表单
-			//当然你可以自己重写这些样式
-			//标签
-			label:"w20p align-right mr10p",
-			//控件
-			control:"w70p",
-			//标签控件的包裹元素
-			itemwrapper:"",
-			//按钮区域
-			formpanel:""
-		}
+		classname:'w70p'
 	
 	
-- **template**
+- **tmplprocess**
 
 	自定义模板
 	
 	例如：
 	
-		template:{
-		
-			//标签
-			label:"<label>",
-			//控件
-			control:"<div class=\"col-sm-9\"><%=control%></div>",
-			//标签控件的包裹元素
-			itemwrapper:"",
-			//暂时不支持按钮区域自定义
-			formpanel:""
-		}
+		tmplprocess:function(tmpl){
+			return "<div class=\"col-sm-9\">" +tmpl+ "</div>";
+		},
 
 - **attr**
 
@@ -118,17 +95,47 @@
 	
 	例如：
 	
-		attr:{
+		attr:'checked=checked'
 		
-			//标签
-			label:"",
-			//控件
-			control:"",
-			//标签控件的包裹元素
-			itemwrapper:"",
-			//按钮区域
-			formpanel:""
+- **label**
+
+	配置label的样式
+	
+	例如：
+	
+		label:{
+			classname:'',
+			style:'',
+			attr:'',
+			tmplprocess:function(tmpl){},
 		}
+
+- **itemwrapper**
+
+	配置表单项包裹元素的样式
+	
+	例如：
+	
+		itemwrapper:{
+			classname:'',
+			style:'',
+			attr:'',
+			tmplprocess:function(tmpl){},
+		}
+
+- **formpanel**
+
+	配置表单面板的样式	
+	
+	例如：
+	
+		formpanel:{
+			classname:'',
+			style:'',
+			attr:'',
+			tmplprocess:function(tmpl){},
+		}
+
 
 
 
@@ -150,12 +157,12 @@ magicform根据数据结构来生成表单，支持多种数据类型，并且�
 	
 		<!--省略部分class-->
 		
-		<p><lable>a</lable><input/></p>
-		<p><lable>b</lable><input/></p>
+		<div><lable>a</lable><input/></div>
+		<div><lable>b</lable><input/></div>
 		
 		<!--value是input string，转换成json时会有特殊处理-->
 		<!--this表示元素自己-->
-		<p><lable>a</lable><input data-mf-exp="this.value*2"/></p>
+		<div><lable>a</lable><input data-mf-exp="this.value*2"/></div>
 		
 		
 ## 配置字段说明
@@ -257,6 +264,7 @@ magicform允许对生成的表单元素进行丰富的定制，比如
 - **isobject**
 
 	这个字段为1表示该字段为一个对象
+		
 	
 - **onclick**
 

@@ -110,7 +110,7 @@ module.exports = function(grunt) {
            *
            * Following are some directive samples...
            */
-           compilation_level: 'ADVANCED_OPTIMIZATIONS'
+           //compilation_level: 'ADVANCED_OPTIMIZATIONS'
         },
         // [OPTIONAL] Set exec method options
         execOpts: {

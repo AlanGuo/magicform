@@ -7,8 +7,8 @@ a("formControlHashTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.
 a("formControlInputConfigTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escape),d=a.listitem,e=a.p,f=a.data,g=a.options,h=a.flag,i="";return i+='<input data-listitem="',i+=c(d),i+='" id="formitem-',i+=c(e),i+='" class="formitem-control formitem-input ',i+=c(f.classname.control),i+='" style="',i+=c(f.style.control),i+='" placeholder="',i+=c(f.placeholder),i+='" ',i+=c(g.status),i+=" ",i+=c(f.validation),i+=' data-flag="',i+=c(h),i+='" ',i+=c(f.disabled),i+=" ",i+=c(f.attr),i+=' data-order="',i+=c(f.order),i+='" type="',i+=c(f.control),i+='" value="',i+=c(f.value),i+='">',new k(i)}),/*v:4*/
 a("formControlInputTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escape),d=a.listitem,e=a.p,f=a.data,g=a.options,h=a.flag,i="";return i+='<input data-listitem="',i+=c(d),i+='" id="formitem-',i+=c(e),i+='" class="formitem-control formitem-input ',i+=c(f.classname),i+='" style="',i+=c(f.style),i+='" ',i+=c(g.status),i+=' data-flag="',i+=c(h),i+='" placeholder="',i+=c(f.placeholder),i+='" ',i+=c(f.validation),i+=" ",i+=c(f.attr),i+=' value="',i+=c(f.value),i+='" type="',i+=c(f.control),i+='">',new k(i)}),/*v:4*/
 a("formControlObjectTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escape),d=a.p,e=a.stringifyVal,f="";return f+='<a href="javascript:;" class="form-icon form-item-detail formitem-control" for="formitem-',f+=c(d),f+='" data-mf-val="',f+=c(e),f+='" title="\u8be6\u7ec6\u8bbe\u5b9a"><i class="mf-iconfont">&#xf00e1;</i></a>',new k(f)}),/*v:6*/
-a("formControlRadioTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escape),d=a.data,e=b.$each,f=(a.op,a.$index,a.listitem),g="";return g+='<span class="formitem-control ',g+=c(d.classname),g+=' formitem-radio" type="radio" data-order="',g+=c(d.order),g+='"> ',e(d.options,function(a){g+=' <input type="radio" class="formitem-radio" data-listitem="',g+=c(f),g+='" placeholder="',g+=c(a.placeholder),g+='" data-flag="',g+=c(a.flag),g+='" ',g+=c(a.validation),g+=" ",g+=c(a.disabled),g+=" ",g+=c(a.attr),g+=" ",g+=c(a.checked),g+=" ",g+=c(a.status),g+=' data-order="',g+=c(d.order),g+='" name="',g+=c(d.name),g+='" id="formitem-radio-',g+=c(a.label.title),g+='"><label class="formitem-radio-label" for="formitem-radio-',g+=c(a.label.title),g+='" ',g+=c(a.label.attr),g+=">",g+=c(a.label.title),g+="</label> "}),g+=" </span>",new k(g)}),/*v:8*/
-a("formControlSelectTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escape),d=a.listitem,e=a.p,f=a.data,g=a.options,h=b.$each,i=(a.op,a.$index,"");return i+='<select data-listitem="',i+=c(d),i+='" id="formitem-',i+=c(e),i+='" class="formitem-control formitem-select ',i+=c(f.classname),i+='" style="',i+=c(f.style),i+='" ',i+=c(f.validation),i+=" ",i+=c(g.status),i+=" ",i+=c(f.disabled),i+=" ",i+=c(f.attr),i+=' data-order="',i+=c(f.order),i+='"> ',h(f.options,function(a){i+=" ",a.group?(i+=' </optgroup> <optgroup label="',i+=c(a.text),i+='" class="formitem-selectoption formitem-selectoptiongroup"> '):(i+=' <option value="',i+=c(a.val),i+='" class="formitem-selectoption" ',i+=c(a.attr),i+=">",i+=c(a.text),i+="</option> "),i+=" "}),i+=" </select>",new k(i)}),/*v:4*/
+a("formControlRadioTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escape),d=a.data,e=b.$each,f=(a.op,a.$index,a.listitem),g="";return g+='<span class="formitem-control ',g+=c(d.classname),g+=' formitem-radio" type="radio" data-order="',g+=c(d.order),g+='"> ',e(d.options,function(a){g+=' <input type="radio" class="formitem-radio" data-listitem="',g+=c(f),g+='" placeholder="',g+=c(a.placeholder),g+='" data-flag="',g+=c(a.flag),g+='" ',g+=c(a.validation),g+=" ",g+=c(a.disabled),g+=" ",g+=c(a.attr),g+=" ",g+=c(a.checked),g+=" ",g+=c(a.status),g+=' data-order="',g+=c(d.order),g+='" name="',g+=c(d.name),g+='" id="formitem-radio-',g+=c(a.label.title),g+='"><label class="formitem-radio-label" for="formitem-radio-',g+=c(a.label.title),g+='" ',g+=c(a.label.attr),g+=">",g+=c(a.label.title),g+="</label> "}),g+=" </span>",new k(g)}),/*v:11*/
+a("formControlSelectTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escape),d=a.listitem,e=a.p,f=a.data,g=a.options,h=b.$each,i=(a.op,a.$index,"");return i+='<select data-listitem="',i+=c(d),i+='" id="formitem-',i+=c(e),i+='" class="formitem-control formitem-select ',i+=c(f.classname),i+='" style="',i+=c(f.style),i+='" ',i+=c(f.validation),i+=" ",i+=c(g.status),i+=" ",i+=c(f.disabled),i+=" ",i+=c(f.attr),i+=' data-order="',i+=c(f.order),i+='"> ',h(f.options,function(a){i+=" ",a.group?(i+=" ",a.firstgroup||(i+=" </optgroup> "),i+=' <optgroup label="',i+=c(a.text),i+='" class="formitem-selectoption formitem-selectoptiongroup"> '):(i+=' <option value="',i+=c(a.val),i+='" class="formitem-selectoption" ',i+=c(a.attr),i+=">",i+=c(a.text),i+="</option> "),i+=" "}),i+=" </select>",new k(i)}),/*v:4*/
 a("formControlTemplate",function(a){"use strict";var b=this,c=(b.$helpers,a.hasCloseTag),d=b.$escape,e=a.options,f=b.$string,g=a.labelTemplate,h="";return c&&(h+=" </div> "),h+=' <div class="form-group ',h+=d(e.classname.itemwrapper),h+='" style="',h+=d(e.style.itemwrapper),h+='"> ',h+=f(g),new k(h)}),/*v:4*/
 a("formControlTextareaTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escape),d=a.listitem,e=a.p,f=a.data,g=a.options,h=a.flag,i="";return i+='<textarea data-listitem="',i+=c(d),i+='" id="formitem-',i+=c(e),i+='" class="formitem-control formitem-input ',i+=c(f.classname),i+='" style="',i+=c(f.style),i+='" ',i+=c(g.status),i+=' placeholder="',i+=c(f.placeholder),i+='" data-flag="',i+=c(h),i+='" ',i+=c(f.validation),i+=" ",i+=c(f.disabled),i+=" ",i+=c(f.attr),i+=' data-order="',i+=c(f.order),i+='" type="',i+=c(f.control),i+='">',i+=c(f.value),i+="</textarea>",new k(i)}),/*v:4*/
 a("formLabelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escape),d=a.data,e=a.p,f="";return f+='<label class="formitem-label ',f+=c(d.label.classname),f+='" style="',f+=c(d.label.style),f+='" for="formitem-',f+=c(e),f+='" data-key="',f+=c(e),f+='" ',f+=c(d.label.attr),f+=">",f+=c(d.label.title),f+="</label>",new k(f)}),/*v:8*/
@@ -17,18 +17,18 @@ a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escap
  * 魔法表单，让表单从此轻松
  * @project
  * @name MagicFrom
- * @subtitle v0.0.1
+ * @subtitle v1.0
  * @download http://115.29.195.88:92/release/magicform-0.0.1.js
  * @support ie,chrome,firefox
  * @howto
  * 首先假设已经在html页面中拥有一个form表单，假设结构如下：
-        
+    
         <!--预置一些基础样式，如果需要使用自定义样式，可无需引入此样式-->
         <link rel="stylesheet" type="text/css" href="../assets/styles/default.css">
         
         ......
         
-        <script type="text/javascript" src="./release/magicform-0.0.1.js"></script>
+        <script type="text/javascript" src="./release/magicform-1.0.js"></script>
         
         ......
         
@@ -56,7 +56,7 @@ a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escap
         });
             
 
-## 高级设置
+    ## 高级设置
 
     在生成表单的时候，你可以进行简单的设置，就像这样
 
@@ -72,6 +72,12 @@ a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escap
     - **status**
 
         表单的状态，取值可以是 "disabled"——只读的,"editable"——允许变更的
+        
+    - **functions**
+
+        表单的功能，目前只支持
+        
+        ['editable']
 
     - **style**
 
@@ -79,16 +85,7 @@ a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escap
         
         例如：
         
-            style:{
-                //标签
-                label:"width:100px",
-                //控件
-                control:"float:right",
-                //标签控件的包裹元素
-                itemwrapper:"",
-                //按钮区域
-                formpanel:""
-            }
+            style:'color:red'
 
     - **classname**
 
@@ -96,38 +93,18 @@ a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escap
         
         例如：
         
-            classname:{
-            
-                //label是文本标签的样式名，control是控件的样式，magicform内置了许多classname来组合出各种风格的表单
-                //当然你可以自己重写这些样式
-                //标签
-                label:"w20p align-right mr10p",
-                //控件
-                control:"w70p",
-                //标签控件的包裹元素
-                itemwrapper:"",
-                //按钮区域
-                formpanel:""
-            }
+            classname:'w70p'
         
         
-    - **template**
+    - **tmplprocess**
 
         自定义模板
         
         例如：
         
-            template:{
-            
-                //标签
-                label:"<label>",
-                //控件
-                control:"<div class=\"col-sm-9\">{{{control}}}</div>",
-                //标签控件的包裹元素
-                itemwrapper:"",
-                //暂时不支持按钮区域自定义
-                formpanel:""
-            }
+            tmplprocess:function(tmpl){
+                return "<div class=\"col-sm-9\">" +tmpl+ "</div>";
+            },
 
     - **attr**
 
@@ -135,17 +112,47 @@ a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escap
         
         例如：
         
-            attr:{
+            attr:'checked=checked'
             
-                //标签
-                label:"",
-                //控件
-                control:"",
-                //标签控件的包裹元素
-                itemwrapper:"",
-                //按钮区域
-                formpanel:""
+    - **label**
+
+        配置label的样式
+        
+        例如：
+        
+            label:{
+                classname:'',
+                style:'',
+                attr:'',
+                tmplprocess:function(tmpl){},
             }
+
+    - **itemwrapper**
+
+        配置表单项包裹元素的样式
+        
+        例如：
+        
+            itemwrapper:{
+                classname:'',
+                style:'',
+                attr:'',
+                tmplprocess:function(tmpl){},
+            }
+
+    - **formpanel**
+
+        配置表单面板的样式   
+        
+        例如：
+        
+            formpanel:{
+                classname:'',
+                style:'',
+                attr:'',
+                tmplprocess:function(tmpl){},
+            }
+
 
 
 
@@ -160,20 +167,20 @@ a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escap
     第一种结构只有json的key值和value值，这种结构将直接生成input标签并且类型是string，最通用的形式，但如果你想要对表单控件样式加以控制，就需要用到第二种结构，第二种结构json的key值a对应的是一个object，这个object中有个mf:1，表示这是个包含mf配置数据的结构，magicform将会读取配置信息对form控件的样式进行控制，object中的value字段才是真正的值，关于配置字段的详解参见第三节。下面是一个最简单的数据类型和他对应生成的html结构的对照表。
 
 
-        ** json **
+    - ** json **
 
             {a:1,b:2}
 
-        ** html **
+    - ** html **
         
             <!--省略部分class-->
             
-            <p><lable>a</lable><input/></p>
-            <p><lable>b</lable><input/></p>
+            <div><lable>a</lable><input/></div>
+            <div><lable>b</lable><input/></div>
             
             <!--value是input string，转换成json时会有特殊处理-->
             <!--this表示元素自己-->
-            <p><lable>a</lable><input data-mf-exp="this.value*2"/></p>
+            <div><lable>a</lable><input data-mf-exp="this.value*2"/></div>
             
             
 ## 配置字段说明
@@ -275,6 +282,7 @@ a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escap
     - **isobject**
 
         这个字段为1表示该字段为一个对象
+            
         
     - **onclick**
 
@@ -449,22 +457,26 @@ a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escap
                 options.functions = options.functions || ['editable'];
                 options.style = options.style || '';
                 options.classname = options.classname || 'w70p';
+                options.attr = options.attr || '';
 
                 //label
                 options.label = options.label || {};
                 options.label.style = options.label.style || '';
                 options.label.classname = options.label.classname || 'w20p align-right mr10p';
+                options.label.attr = options.label.attr || '';
 
                 //itemwrapper
                 options.itemwrapper = options.itemwrapper || {};
                 options.itemwrapper.style = options.itemwrapper.style || '';
                 options.itemwrapper.classname = options.itemwrapper.classname || '';
+                options.itemwrapper.attr = options.itemwrapper.attr || '';
                 //不支持template
 
                 //formpanel
                 options.formpanel = options.formpanel || {};
                 options.formpanel.style = options.formpanel.style || '';
                 options.formpanel.classname = options.formpanel.classname || 'formpanel mt30';
+                options.formpanel.attr = options.formpanel.attr || '';
 
                 //array
                 options.array = options.array || {};
@@ -481,6 +493,7 @@ a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escap
              */
             _predefineValue:function(data,p,options){
                 var Object_proto_toString = Object.prototype.toString;
+                var i = 0;
 
                 data.label = data.label || {};
                 data.label.title = data.label.title || p;
@@ -491,15 +504,23 @@ a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escap
                 data.style = data.style || options.style || '';
                 data.placeholder = data.placeholder || options.placeholder || '';
 
-                if(/array/i.test(Object_proto_toString.call(data))){
-                    for(var i=0;i<data.length;i++){
-                        if(!/object/i.test(typeof data[i])){
-                            data[i] = {value:data[i]};
+                //处理options
+                if(data.options){
+                    var firstgroup = false;
+                    for(i=0;i<data.options.length;i++){
+                        //找出firstgroup
+                        if(!firstgroup && data.options[i].group){
+                            data.options[i].firstgroup = true;
+                            firstgroup = true;
+                        }
+                    }
+                }
 
-                            data[i].classname = data.classname || options.array.classname || 'w70p';
-                            data[i].style = data.style || options.array.style ||'';
-                            data[i].placeholder = data.placeholder || options.array.placeholder ||'';
-                            data[i].mf = 1;
+                if(/array/i.test(Object_proto_toString.call(data))){
+                    for(i=0;i<data.length;i++){
+                        if(!/object/i.test(typeof data[i])){
+                            data[i] = {value:data[i],mf:1};
+                            this._predefineValue(data[i],p,options);
                         }
                     }
                 }
@@ -717,7 +738,10 @@ a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escap
              * @param attr.control {String} 配置控件的类型，取值可以是text,password,checkbox,radio,date,week等值
              * @param attr.value {Object} 字段的值
              * @param attr.order {Number} 字段显示顺序
-             * @param attr.options {Array} 用于select的选项，数组形式，例如：options:[{label:"初中",checked:"checked"},{label:"高中"}]
+             * @param attr.options {Array} 用于select的选项，数组形式，例如：options:[{label:{title:"初中"},checked:"checked"},{label:{title:"高中"}}]
+             * @param attr.options.group {Boolean} 创建一个新的optgroup
+             * @param attr.options.text {String} optgroup 或者是 option显示的值
+             * @param attr.options.val {String} option的值
              * @param attr.name {String} 用于checkbox或radio中的配对
              * @param attr.hash {Number} 这个为1表示这是一个hash类型的数据
              * @param attr.fornew {Number} 这个字段为1表示这个配置是用来新增数据时用的
@@ -795,8 +819,8 @@ a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escap
 
 
             /**
-             * 把显示属性，剥离出来，此方法可以保持数据对象的纯净
-             * @method detach
+             * 把显示属性，附加上去，此方法可以保持数据对象的纯净
+             * @method attach
              * @for magicform
              * @param json {Object} 数据
              * @param attr {Object} 属性
@@ -804,7 +828,10 @@ a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escap
              * @param attr.control {String} 配置控件的类型，取值可以是text,password,checkbox,radio,date,week等值
              * @param attr.value {Object} 字段的值
              * @param attr.order {Number} 字段显示顺序
-             * @param attr.options {Array} 用于select的选项，数组形式，例如：options:[{label:"初中",checked:"checked"},{label:"高中"}]
+             * @param attr.options {Array} 用于select的选项，数组形式，例如：options:[{label:{title:"初中"},checked:"checked"},{label:{title:"高中"}}]
+             * @param attr.options.group {Boolean} 创建一个新的optgroup
+             * @param attr.options.text {String} optgroup 或者是 option显示的值
+             * @param attr.options.val {String} option的值
              * @param attr.name {String} 用于checkbox或radio中的配对
              * @param attr.hash {Number} 这个为1表示这是一个hash类型的数据
              * @param attr.fornew {Number} 这个字段为1表示这个配置是用来新增数据时用的
@@ -825,7 +852,6 @@ a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escap
              *  @param attr.detaproc.src {String} 源数据
              * @param attr.isobject {Number} 这个字段为1表示该字段为一个对象
              * @param attr.onclick {Function} 当字段为一个对象时，onclick可以传入一个function决定当点击对象详情icon时的行为例如：function(json){}
-             * @support: ie:>=10,chrome:all,firefox:all
              */
 
             detach: function(json, attr) {

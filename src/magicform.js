@@ -434,22 +434,26 @@
                 options.functions = options.functions || ['editable'];
                 options.style = options.style || '';
                 options.classname = options.classname || 'w70p';
+                options.attr = options.attr || '';
 
                 //label
                 options.label = options.label || {};
                 options.label.style = options.label.style || '';
                 options.label.classname = options.label.classname || 'w20p align-right mr10p';
+                options.label.attr = options.label.attr || '';
 
                 //itemwrapper
                 options.itemwrapper = options.itemwrapper || {};
                 options.itemwrapper.style = options.itemwrapper.style || '';
                 options.itemwrapper.classname = options.itemwrapper.classname || '';
+                options.itemwrapper.attr = options.itemwrapper.attr || '';
                 //不支持template
 
                 //formpanel
                 options.formpanel = options.formpanel || {};
                 options.formpanel.style = options.formpanel.style || '';
                 options.formpanel.classname = options.formpanel.classname || 'formpanel mt30';
+                options.formpanel.attr = options.formpanel.attr || '';
 
                 //array
                 options.array = options.array || {};
