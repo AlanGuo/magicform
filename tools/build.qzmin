@@ -2,9 +2,9 @@
 	projects: [	
 			{
 				name :  "magicform.js",
-				target : "../release/magicform-0.0.1.js",
+				target : "../dist/magicform-1.0.js",
 				template:[
-					"../src/template.html"
+					"../templates/template.html"
 				],
 				include : [
 					"../src/magicform.js"

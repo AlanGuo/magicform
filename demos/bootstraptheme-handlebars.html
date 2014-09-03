@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="keywords" content="魔法,表单">
+	<meta name="author" content="alan">
+	<meta name="description" content="魔法表单,表单的自动生成以及交互">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<!-- bootstrap 主题-->
+	<link rel="stylesheet" type="text/css" href="./assets/styles/ace/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="./assets/styles/ace/ace.css">
+	<link rel="stylesheet" type="text/css" href="./assets/styles/ace/ace-fonts.css">
+	<link rel="stylesheet" type="text/css" href="./assets/styles/ace/font-awesome.css">
+	<!-- bootstrap 主题-->
+	
+	<title>MagicForm</title>
+</head>
+<body class="no-skin skin-3">
+	<header>
+		 <nav role="navigation" class="navbar">
+		  <ul class="nav navbar-nav pull-right">
+		    <li>
+		      <a href="#main" title="主页">
+		        主页
+		      </a>
+		    </li>
+		    <li>
+		      <a href="../docs/index.html" target="_blank" title="文档">
+		        文档
+		      </a>
+		    </li>
+		    <li>
+		      <a href="https://github.com/AlanGuo/magicform" title="Github" target="_blank" title="Github">
+		        Github
+		      </a>
+		    </li>
+		  </ul>
+		  <!-- you can also have a form here -->
+		 </nav>
+	</header>
+	<div class="container main-container" id="main-container">
+		<div class="main-content">
+			<div class="page-content">
+				<section>
+					<h1 class="text-center">
+						<img src="./assets/logo/magicform.png" width="200">
+					</h1>
+					<div class="row">
+						<div class="">
+							<form class="form-horizontal" role="form">
+								<fieldset>
+									<legend>From</legend>
+									<div id="form"></div>
+								</fieldset>
+								<h3 class="header smaller lighter blue">标签</h3>
+								<div class="control-group">
+									<div class="radio">
+										<label>
+											<input name="form-field-radio" type="radio" class="ace" name="labelpos" checked="checked">
+											<span class="lbl"> 左侧</span>
+										</label>
+										<label>
+											<input name="form-field-radio" type="radio" class="ace" name="labelpos">
+											<span class="lbl"> 上方</span>
+										</label>
+										<label>
+											<input name="form-field-radio" type="radio" class="ace" name="labelpos">
+											<span class="lbl"> 无</span>
+										</label>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div style="margin:0 auto;width:200px">
+							<button type="button" class="btn btn-sm btn-purple" title="提取数据" data-click-event="html2json">html -> json</button>
+							<button title="生成表单" class="btn btn-sm btn-purple" data-click-event="json2html">json -> html</button>
+						</div>
+						<div class="">
+							<fieldset>
+								<legend>Code</legend>
+								<textarea class="col-xs-12" style="height:280px" id="jsonText"></textarea>
+							</fieldset>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	</div>
+	<div class="footer">
+	  <div class="footer-inner">
+	    <div class="footer-content">
+	       Alan © 2013/07/10
+	    </div>
+	  </div>
+	</div>
+	<script type="text/javascript" src="./assets/scripts/speedframe-0.1.js"></script>
+	<script type="text/javascript" src="../dist/magicform-1.0.handlebars.js"></script>
+	<script type="text/javascript">
+
+		//纯数据
+		var pureJson = {
+			email:"ggddll123@qq.com",
+			username:"alan",
+			password:"1234567",
+			message:""
+		};
+
+		//attach数据
+		var jsonObj = {
+			email:{mf:1,control:"text",validation:"required pattern='.*@.*'",placeholder:"email"},
+			password:{mf:1,control:"password",validation:"minlength=6 required",placeholder:"password"},
+			username:{mf:1,validation:"required maxlength=10 minlength=4",placeholder:"username"},
+			message:{mf:1,placeholder:"leave a short message",control:"textarea",placeholder:"please enter a text"}
+		};
+
+		var g_options = {
+			status:"editable",
+			hasbuttons:false,
+			template:{
+				control:"<div class=\"col-sm-9\">{{{control}}}</div>"
+			},
+			classname:{
+				label:"col-sm-3",
+				control:"",
+				itemwrapper:""
+			}
+		};
+
+		var form = document.getElementById("form");
+		var jsonText = document.getElementById("jsonText");
+
+
+		jsonText.value = JSON.stringify(pureJson,undefined,2);
+
+		var json2html = function(options){
+			var json = pureJson;
+			try{
+				json = JSON.parse(jsonText.value);
+			}
+			catch(e){}
+
+			g_options = options || g_options;
+			magicform.generate(form,magicform.attach(json,jsonObj),g_options);
+		};
+
+		//初始化
+		json2html();
+
+		speedframe.event.register(document.body,"click",{
+			"html2json":function(evt){
+				jsonText.value = JSON.stringify(magicform.detach(magicform.html2json(form),jsonObj),undefined,2);
+			},
+			"json2html":function(evt){
+				json2html(g_options);
+			},
+			"formstyle":function(evt){
+				var target = evt.target;
+				var theme = target.getAttribute("data-theme");
+
+				if(theme.indexOf("bootstrap")>-1){
+					//bootstrap主题拥有不同的处理方式
+					var linkArray = bootstrap[theme];
+					for(var i=0;i<linkArray.length;i++){
+						var link = document.createElement("link");
+						link.rel = "stylesheet";
+						link.href = linkArray[i];
+						link.className = "bootstrap";
+
+						document.head.appendChild(link);
+					}
+				}
+				else if(theme){
+					var bootstrapLinks = Array.prototype.slice(document.head.querySelectorAll(".bootstrap"));
+					bootstrapLinks.forEach(function(item){
+						document.head.removeChild(item);
+					});
+					//confui
+					document.body.className = "confui "+theme;
+				}
+			},
+			"labelpos":function(evt){
+				var target = evt.target;
+				var pos = target.id;
+				if(pos === "top"){
+					json2html({
+						status:"editable",
+						hasbuttons:false,
+						classname:{
+							label:"",
+							control:""
+						}
+					});
+				}
+				else if(pos === "left"){
+					json2html({
+						status:"editable",
+						hasbuttons:false
+					});
+				}
+				else if(pos === "none" ){
+					json2html({
+						status:"editable",
+						hasbuttons:false,
+						classname:{
+							label:"",
+							control:""
+						}
+					});
+				}
+			}
+		});
+	</script>
+</body>
+</html>

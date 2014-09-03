@@ -381,8 +381,8 @@
                 return objA;
             },
             getElementsByClassName: function(className, tag, root) {
-                if (!root) root = document;
-                if (!tag) tag = "*";
+                if (!root) {root = document;}
+                if (!tag) {tag = "*";}
                 var result = [];
                 var tags = root.getElementsByTagName(tag);
                 var reg = new RegExp("(^|\\s+)" + className + "(\\s+|$)", "g");
@@ -396,7 +396,7 @@
                 return result;
             },
             _typeof: function(data) {
-                return /\[object\s(\w*)\]/i.exec(Object.prototype.toString.call(data))[1];
+                return (/\[object\s(\w*)\]/i).exec(Object.prototype.toString.call(data))[1];
             },
             createElementsWithTemplate: function(template) {
                 var div = document.createElement("div");
@@ -404,7 +404,7 @@
                 return div.children;
             },
             /*jshint quotmark: false */
-            tmpl: function() {
+            tmpl: (function() {
                 var cache = {};
 
                 function _getTmplStr(rawStr, mixinTmpl) {
@@ -434,7 +434,7 @@
                             .split("%>").join("_p_.push('") + "');}return _p_.join('');");
                     return data ? fn(data) : fn;
                 };
-            }()
+            })()
         };
     })();
 
@@ -558,12 +558,12 @@
                         order: json[p].order
                     });
                 }
-                /*jshint eqnull:true */
+
                 orders = orders.sort(function(a, b) {
-                    if (a.order == null || a.order === "") a.order = 100;
-                    if (b.order == null || b.order === "") b.order = 100;
-                    if (a.order > b.order) return true;
-                    if (a.order < b.order) return false;
+                    if (a.order === null || a.order === undefined || a.order === "") {a.order = 100;}
+                    if (b.order === null || b.order === undefined || b.order === "") {b.order = 100;}
+                    if (a.order > b.order) {return true;}
+                    if (a.order < b.order) {return false;}
                 });
 
 
@@ -761,7 +761,7 @@
                     //判断控件类型
                     if (/span/i.test(control.tagName)) {
                         var type = control.getAttribute("type");
-                        if (type == "checkbox" || type == "radio") {
+                        if (type === "checkbox" || type === "radio") {
                             var inputs = control.querySelectorAll("input");
                             var labels = control.querySelectorAll("label");
                             options = [];
@@ -793,7 +793,7 @@
                             for (var i = controls.length - 1; i >= 0; i--) {
                                 var con = controls[i];
                                 var con2 = controls[i - 1];
-                                if (con2 && con2.getAttribute("data-flag") == "true") {
+                                if (con2 && con2.getAttribute("data-flag") === "true") {
                                     var key = this._html2value(con2);
                                     var val = this._html2value(con);
                                     if (/string/i.test(typeof val)) {
@@ -934,11 +934,11 @@
                 var initFormArrayItem = function(con) {
                     con.addEventListener("mouseover", function() {
                         var remove = this.querySelector(".form-item-remove");
-                        if (remove) remove.style.visibility = "visible";
+                        if (remove) {remove.style.visibility = "visible";}
                     });
                     con.addEventListener("mouseout", function() {
                         var remove = this.querySelector(".form-item-remove");
-                        if (remove) remove.style.visibility = "hidden";
+                        if (remove) {remove.style.visibility = "hidden";}
                     });
 
                     var removeAnchor = con.querySelector(".form-item-remove");
@@ -957,7 +957,7 @@
                         //绑定新增事件
                         (function(anchor, ul) {
                             anchor.addEventListener("click", function() {
-                                var newtemplate = anchor.getAttribute("data-newtemplate") == "undefined" ? null : anchor.getAttribute("data-newtemplate");
+                                var newtemplate = anchor.getAttribute("data-newtemplate") === "undefined" ? null : anchor.getAttribute("data-newtemplate");
 
                                 if (newtemplate) {
                                     var elems = util.createElementsWithTemplate(util.tmpl(template.formArrayItemTemplate, {
@@ -972,7 +972,7 @@
                                     var focusElem = null;
                                     while (elems.length) {
                                         last = elems[0];
-                                        if (!focusElem) focusElem = last.querySelector("input");
+                                        if (!focusElem) {focusElem = last.querySelector("input");}
                                         ul.insertBefore(elems[0], br);
                                     }
                                     //焦点元素

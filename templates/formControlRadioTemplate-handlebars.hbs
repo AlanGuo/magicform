@@ -1,0 +1,5 @@
+<span class="formitem-control {{data.classname}} formitem-radio" type="radio" data-order="{{data.order}}">
+	{{#each data.options}}
+		<input type="radio" class="formitem-radio"  data-listitem="{{listitem}}" placeholder="{{placeholder}}" data-flag="{{flag}}" {{validation}} {{disabled}} {{attr}} {{checked}} {{status}}  data-order="{{data.order}}" name="{{data.name}}" id="formitem-radio-{{label.title}}"><label class="formitem-radio-label" for="formitem-radio-{{label.title}}" {{label.attr}}>{{label.title}}</label>
+	{{/each}}
+</span>

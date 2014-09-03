@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>key-value</title>
+	<!--common style-->
+	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/default/component.css?max-age=0"></style>
+	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/predefined-common.css?max-age=0">
+	<link rel="stylesheet" type="text/css" href="http://115.29.195.88:93/css/predefined-form.css?max-age=0">
+	<link rel="stylesheet" type="text/css" href="../styles/default.css">
+</head>
+<body class="confui default">
+	<form class="mf" style="width:600px;margin:30px auto">
+		<fieldset class="mb30">
+			<legend>表单</legend>
+			<div id="form"></div>
+		</fieldset>
+	</form>
+	<script type="text/javascript" src="../dist/magicform-1.0.handlebars.js"></script>
+	<script type="text/javascript">
+		var form = document.getElementById("form");
+		var textarea = document.getElementById("jsonvalue");
+
+		//纯数据
+		var pureJson = {
+			name:1,
+			sex:2,
+			学历:"",
+			不喜欢上课:"",
+			密码:"siemenlon",
+			出生日期:"1988",
+			毕业院校:"武昌理工学院",
+			学科:{语文:1,数学:2},
+			数字:[1,2,3,4,5],
+			返回码:[
+				{value:"value",key:"key"},
+				{value:"value2",key:"key2"}
+			]
+		};
+
+		//hashattachProc
+		var hashAttachProc = function(atta,prop,src,index){
+			atta.value = src[prop][index].value;
+			atta.key.value = src[prop][index].key;
+
+			return atta;
+		};
+		//hashdetachProc
+		var hashDetachProc = function(prop,src){
+			var obj = {};
+			obj.value = src.value;
+			obj.key = src.key.value;
+
+			return obj;
+		}
+		//attach数据
+		var jsonObj = {
+			name:{mf:1,control:"text",validation:"required maxlength=10 minlength=4",label:{title:"姓名"}},
+			学历:{mf:1,order:2,control:"radio",name:"graduate",options:[{label:{title:"初中"},checked:"checked"},{label:{title:"高中"}}],
+			detaproc:function(prop,src){
+				return src.options.filter(function(item){if(item.checked=="checked") return item;})[0].label;	
+			}},
+			不喜欢上课:{mf:1,order:0,control:"checkbox",options:[{checked:"checked",label:{title:"十分"}},{checked:"checked",label:{title:"非常"}}]},
+			密码:{mf:1,control:"password"},
+			出生日期:{mf:1,control:"date"},
+			毕业院校:{mf:1,control:"select",options:[
+				{optgroup:true,text:"母校"},
+				{text:"武昌理工学院",val:1},
+				{optgroup:true,text:"名牌"},
+				{text:"清华大学",val:2},
+				{optgroup:true,text:"垃圾"},
+				{text:"深职院",val:3}
+			]},
+			学科:{
+				mf:1,isobject:true,onclick:function(json){
+					alert("对象");
+				}
+			},
+			数字:[{mf:1,control:"number",fornew:1},{mf:1,control:"checkbox",options:[{checked:"checked",label:{title:"1"}}],detaproc:function(prop,src){
+				return src.options.filter(function(item){if(item.checked==="checked") return item;})[0].label.title;	
+			}},2,3,4,5],
+			返回码:[
+				{mf:1,hash:1,fornew:1,control:"text",key:{mf:1,control:"text"}},
+				{mf:1,hash:1,control:"text",key:{mf:1,control:"text"},attaproc:hashAttachProc,detaproc:hashDetachProc},
+				{mf:1,hash:1,control:"text",key:{mf:1,control:"text"},attaproc:hashAttachProc,detaproc:hashDetachProc}
+			]
+		};
+		
+
+		function json2html(){
+			var json = pureJson;
+			try{
+				json = JSON.parse(textarea.value);
+			}
+			catch(e){}
+			//form.innerHTML = magicform.json2html(magicform.attach(json,jsonObj));
+			//magicform.init(form);
+
+			magicform.generate(form,magicform.attach(json,jsonObj),{status:"editable",hasbuttons:true});
+		}
+		function html2json(){
+			jsonvalue.value = JSON.stringify(magicform.detach(magicform.html2json(form),jsonObj));
+		}
+
+		json2html();
+	</script>
+</body>
+</html>
