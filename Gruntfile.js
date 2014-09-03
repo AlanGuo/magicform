@@ -111,6 +111,7 @@ module.exports = function(grunt) {
            * Following are some directive samples...
            */
            //compilation_level: 'ADVANCED_OPTIMIZATIONS'
+           output_wrapper: '"/*magicform*/%output%"'
         },
         // [OPTIONAL] Set exec method options
         execOpts: {
