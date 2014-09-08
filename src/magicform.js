@@ -460,7 +460,7 @@
                 //formpanel
                 options.formpanel = options.formpanel || {};
                 options.formpanel.style = options.formpanel.style || '';
-                options.formpanel.classname = options.formpanel.classname || 'formpanel mt30';
+                options.formpanel.classname = options.formpanel.classname || 'form-panel mt30';
                 options.formpanel.attr = options.formpanel.attr || '';
 
                 //array

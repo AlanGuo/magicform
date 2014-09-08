@@ -1,6 +1,6 @@
-/*TMODJS:{"version":8,"md5":"3273290230ff8c0985cf09d194ab99c8"}*/
+/*TMODJS:{"version":9,"md5":"f7400ef4c2cf7f922d24756921c5ff2b"}*/
 template('formPanelTemplate',function($data,$filename) {
-'use strict';var $utils=this,$helpers=$utils.$helpers,$escape=$utils.$escape,options=$data.options,$each=$utils.$each,op=$data.op,$index=$data.$index,$out='';$out+='<div class="';
+'use strict';var $utils=this,$helpers=$utils.$helpers,$escape=$utils.$escape,options=$data.options,$each=$utils.$each,op=$data.op,$index=$data.$index,$out='';$out+='</div> <div class="';
 $out+=$escape(options.formpanel.classname);
 $out+='"> <label class="formitem-label ';
 $out+=$escape(options.label.classname);
