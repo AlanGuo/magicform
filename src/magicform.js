@@ -3,7 +3,8 @@
  * @project
  * @name MagicFrom
  * @subtitle v1.0
- * @download http://115.29.195.88:92/release/magicform-0.0.1.js
+ * @uncompressdownload http://115.29.195.88:92/dist/magicform-1.0.js
+ * @download http://115.29.195.88:92/dist/magicform-1.0.min.js
  * @support ie,chrome,firefox
  * @howto
  * 首先假设已经在html页面中拥有一个form表单，假设结构如下：
@@ -13,7 +14,7 @@
         
         ......
         
-        <script type="text/javascript" src="./release/magicform-1.0.js"></script>
+        <script type="text/javascript" src="./dist/magicform-1.0.js"></script>
         
         ......
         
@@ -417,12 +418,12 @@
             DEFAUTLBUTTONS: [{
                 "name": "提交",
                 "title": "提交表单",
-                "className": "primary",
+                "classname": "primary",
                 "submit": true
             }, {
                 "name": "取消",
                 "title": "取消",
-                "className": "normal"
+                "classname": "normal"
             }],
 
             /**
@@ -660,8 +661,14 @@
              * @param json {Object} 数据对象
              * @param options {Object}
              * @param options.status {String} 表单状态 "disabled","editable","new"
+             * @param options.action {String} 表单提交地址
              * @param options.functions {Array} 表单功能 ["editable"]
-             * @param options.buttons {Array} 按钮功能 [{name:"submit","title":"提交表单"},{name:"cancel",title:""},{name:"reset"}]
+             * @param options.buttons {Array} 按钮功能 [{name:"submit","classname":"primary","title":"提交表单","onclick":function(evt){},"attr":""},{name:"cancel",title:""},{name:"reset"}]
+             *  @param options.buttons.name {String} 按钮文本
+             *  @param options.buttons.classname {String} 类名
+             *  @param options.buttons.title {String} 标题
+             *  @param options.buttons.onclick {Function} 事件处理方法
+             *  @param options.buttons.attr {String} 自定义属性
              * @support: ie:>=10,chrome:all,firefox:all
              */
 
@@ -805,7 +812,7 @@
 
             /**
              * 把显示属性，附加上去，此方法可以保持数据对象的纯净
-             * @method attach
+             * @method detach
              * @for magicform
              * @param json {Object} 数据
              * @param attr {Object} 属性
@@ -827,7 +834,7 @@
              *  @param attr.label.title {String} 标签标题
              *  @param attr.label.attr {String} 标签自定义属性
              * @param attr.placeholder {String} 占位符
-             * @param attr.attaproc {Function} 自定义属性显示方法
+             * @param attr.detaproc {Function} 自定义属性显示方法
              *  @param attr.attaproc.atta {String} 附加对象
              *  @param attr.attaproc.prop {String} 属性
              *  @param attr.attaproc.src {String} 源数据
@@ -980,6 +987,7 @@
                                 control: "select",
                                 options: options,
                                 order: order,
+                                value:control.value,
                                 disabled: control.disabled ? "disabled" : ""
                             };
                         }
@@ -1043,7 +1051,7 @@
              * @support: ie:>=10,chrome:all,firefox:all
              */
             init: function(wrapper, json, options) {
-                options = this._setOptions(options);
+                this.options = options = this._setOptions(options);
                 var self = this;
                 var initRemoveAnchor = function(removeAnchor) {
                     removeAnchor.addEventListener("click", function() {
@@ -1110,7 +1118,7 @@
                                     var focusElem = null;
                                     while (elems.length) {
                                         last = elems[0];
-                                        if (!focusElem) {focusElem = last.querySelector("input");}
+                                        if (!focusElem) {focusElem = last.querySelector('input');}
                                         ul.insertBefore(elems[0], br);
                                     }
                                     //焦点元素
@@ -1127,22 +1135,30 @@
                 }
 
                 //初始化表单数组
-                var controls = wrapper.querySelectorAll(".form-array-li");
+                var controls = wrapper.querySelectorAll('.form-array-li');
                 for (i = 0; i < controls.length; i++) {
                     initFormArrayItem(controls[i]);
                 }
                 //初始化详情按钮
-                var details = wrapper.querySelectorAll(".form-item-detail");
+                var details = wrapper.querySelectorAll('.form-item-detail');
                 for (i = 0; i < details.length; i++) {
-                    var key = details[i].getAttribute("for").replace(/formitem-/, "");
+                    var key = details[i].getAttribute('for').replace(/formitem-/, '');
                     var val = json[key];
                     if (val.onclick) {
-                        details[i].addEventListener("click", function() {
-                            val.onclick.call(this, JSON.parse(decodeURIComponent(this.getAttribute("data-mf-val"))));
+                        details[i].addEventListener('click', function() {
+                            val.onclick.call(this, JSON.parse(decodeURIComponent(this.getAttribute('data-mf-val'))));
                         });
                     }
                 }
 
+                //初始化面板按钮
+                var buttons = wrapper.querySelectorAll('.form-panel button');
+                for(i=0;i<buttons.length;i++){
+                    var b = buttons[i];
+                    if(options.buttons[i].onclick){
+                        b.addEventListener('click',options.buttons[i].onclick);
+                    }
+                }
                 return this;
             }
         };

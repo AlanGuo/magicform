@@ -96,7 +96,37 @@
 			//form.innerHTML = magicform.json2html(magicform.attach(json,jsonObj));
 			//magicform.init(form);
 
-			magicform.generate(form,magicform.attach(json,jsonObj),{status:"editable",hasbuttons:true});
+			magicform.generate(form,magicform.attach(json,jsonObj),{status:"editable",hasbuttons:true,buttons:[{
+                "name": "提交",
+                "title": "提交表单",
+                "classname": "primary",
+                "attr":"ng-click",
+                "submit": true,
+                "onclick":function(evt){
+                	//提交表单
+                	alert("提交");
+                	evt.preventDefault();
+                	return false;
+                }
+            }, {
+                "name": "取消",
+                "title": "取消",
+                "classname": "normal",
+                "onclick":function(evt){
+                	alert("取消");
+                	evt.preventDefault();
+                	return false;
+                }
+            },{
+            	"name": "重置",
+                "title": "重置",
+                "classname": "normal",
+                "onclick":function(evt){
+                	alert("重置");
+                	evt.preventDefault();
+                	return false;
+                }
+            }]});
 		}
 		function html2json(){
 			jsonvalue.value = JSON.stringify(magicform.detach(magicform.html2json(form),jsonObj));

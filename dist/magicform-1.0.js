@@ -11,14 +11,15 @@ a("formControlRadioTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b
 a("formControlSelectTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escape),d=a.listitem,e=a.p,f=a.data,g=a.options,h=b.$each,i=(a.op,a.$index,"");return i+='<select data-listitem="',i+=c(d),i+='" id="formitem-',i+=c(e),i+='" class="formitem-control formitem-select ',i+=c(f.classname),i+='" style="',i+=c(f.style),i+='" ',i+=c(f.validation),i+=" ",i+=c(g.status),i+=" ",i+=c(f.disabled),i+=" ",i+=c(f.attr),i+=' data-order="',i+=c(f.order),i+='"> ',h(f.options,function(a){i+=" ",a.group?(i+=" ",a.firstgroup||(i+=" </optgroup> "),i+=' <optgroup label="',i+=c(a.text),i+='" class="formitem-selectoption formitem-selectoptiongroup"> '):(i+=' <option value="',i+=c(a.val),i+='" class="formitem-selectoption" ',i+=c(a.attr),i+=">",i+=c(a.text),i+="</option> "),i+=" "}),i+=" </select>",new k(i)}),/*v:4*/
 a("formControlTemplate",function(a){"use strict";var b=this,c=(b.$helpers,a.hasCloseTag),d=b.$escape,e=a.options,f=b.$string,g=a.labelTemplate,h="";return c&&(h+=" </div> "),h+=' <div class="form-group ',h+=d(e.classname.itemwrapper),h+='" style="',h+=d(e.style.itemwrapper),h+='"> ',h+=f(g),new k(h)}),/*v:4*/
 a("formControlTextareaTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escape),d=a.listitem,e=a.p,f=a.data,g=a.options,h=a.flag,i="";return i+='<textarea data-listitem="',i+=c(d),i+='" id="formitem-',i+=c(e),i+='" class="formitem-control formitem-input ',i+=c(f.classname),i+='" style="',i+=c(f.style),i+='" ',i+=c(g.status),i+=' placeholder="',i+=c(f.placeholder),i+='" data-flag="',i+=c(h),i+='" ',i+=c(f.validation),i+=" ",i+=c(f.disabled),i+=" ",i+=c(f.attr),i+=' data-order="',i+=c(f.order),i+='" type="',i+=c(f.control),i+='">',i+=c(f.value),i+="</textarea>",new k(i)}),/*v:4*/
-a("formLabelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escape),d=a.data,e=a.p,f="";return f+='<label class="formitem-label ',f+=c(d.label.classname),f+='" style="',f+=c(d.label.style),f+='" for="formitem-',f+=c(e),f+='" data-key="',f+=c(e),f+='" ',f+=c(d.label.attr),f+=">",f+=c(d.label.title),f+="</label>",new k(f)}),/*v:9*/
-a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escape),d=a.options,e=b.$each,f=(a.op,a.$index,"");return f+='</div> <div class="',f+=c(d.formpanel.classname),f+='"> <label class="formitem-label ',f+=c(d.label.classname),f+='" style="',f+=c(d.label.style),f+='" ',f+=c(d.attr.label),f+="></label> ",e(d.buttons,function(a){f+=" ",a.submit?(f+=' <button class="',f+=c(a.className),f+='" title="',f+=c(a.title),f+='">',f+=c(a.name),f+="</button> "):(f+=' <button class="ml15 ',f+=c(a.className),f+='" title="',f+=c(a.title),f+='">',f+=c(a.name),f+="</button> "),f+=" "}),f+=" </div>",new k(f)})}();
+a("formLabelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escape),d=a.data,e=a.p,f="";return f+='<label class="formitem-label ',f+=c(d.label.classname),f+='" style="',f+=c(d.label.style),f+='" for="formitem-',f+=c(e),f+='" data-key="',f+=c(e),f+='" ',f+=c(d.label.attr),f+=">",f+=c(d.label.title),f+="</label>",new k(f)}),/*v:25*/
+a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escape),d=a.options,e=b.$each,f=(a.op,a.index,a.$index,"");return f+='</div> <div class="',f+=c(d.formpanel.classname),f+='"> <label class="formitem-label ',f+=c(d.label.classname),f+='" style="',f+=c(d.label.style),f+='" ',f+=c(d.attr.label),f+="></label> ",e(d.buttons,function(a){f+=" ",a.submit?(f+=' <button class="',f+=c(a.classname),f+='" title="',f+=c(a.title),f+='" ',f+=c(a.attr),f+=">",f+=c(a.name),f+="</button> "):(f+=' <a href="#" class="ml10 ',f+=c(a.classname),f+='" title="',f+=c(a.title),f+='" ',f+=c(a.attr),f+=">",f+=c(a.name),f+="</a> "),f+=" "}),f+=" </div>",new k(f)})}();
 /**
  * 魔法表单，让表单从此轻松
  * @project
  * @name MagicFrom
  * @subtitle v1.0
- * @download http://115.29.195.88:92/release/magicform-0.0.1.js
+ * @uncompressdownload http://115.29.195.88:92/dist/magicform-1.0.js
+ * @download http://115.29.195.88:92/dist/magicform-1.0.min.js
  * @support ie,chrome,firefox
  * @howto
  * 首先假设已经在html页面中拥有一个form表单，假设结构如下：
@@ -28,7 +29,7 @@ a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escap
         
         ......
         
-        <script type="text/javascript" src="./release/magicform-1.0.js"></script>
+        <script type="text/javascript" src="./dist/magicform-1.0.js"></script>
         
         ......
         
@@ -432,12 +433,12 @@ a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escap
             DEFAUTLBUTTONS: [{
                 "name": "提交",
                 "title": "提交表单",
-                "className": "primary",
+                "classname": "primary",
                 "submit": true
             }, {
                 "name": "取消",
                 "title": "取消",
-                "className": "normal"
+                "classname": "normal"
             }],
 
             /**
@@ -675,8 +676,14 @@ a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escap
              * @param json {Object} 数据对象
              * @param options {Object}
              * @param options.status {String} 表单状态 "disabled","editable","new"
+             * @param options.action {String} 表单提交地址
              * @param options.functions {Array} 表单功能 ["editable"]
-             * @param options.buttons {Array} 按钮功能 [{name:"submit","title":"提交表单"},{name:"cancel",title:""},{name:"reset"}]
+             * @param options.buttons {Array} 按钮功能 [{name:"submit","classname":"primary","title":"提交表单","onclick":function(evt){},"attr":""},{name:"cancel",title:""},{name:"reset"}]
+             *  @param options.buttons.name {String} 按钮文本
+             *  @param options.buttons.classname {String} 类名
+             *  @param options.buttons.title {String} 标题
+             *  @param options.buttons.onclick {Function} 事件处理方法
+             *  @param options.buttons.attr {String} 自定义属性
              * @support: ie:>=10,chrome:all,firefox:all
              */
 
@@ -820,7 +827,7 @@ a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escap
 
             /**
              * 把显示属性，附加上去，此方法可以保持数据对象的纯净
-             * @method attach
+             * @method detach
              * @for magicform
              * @param json {Object} 数据
              * @param attr {Object} 属性
@@ -842,7 +849,7 @@ a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escap
              *  @param attr.label.title {String} 标签标题
              *  @param attr.label.attr {String} 标签自定义属性
              * @param attr.placeholder {String} 占位符
-             * @param attr.attaproc {Function} 自定义属性显示方法
+             * @param attr.detaproc {Function} 自定义属性显示方法
              *  @param attr.attaproc.atta {String} 附加对象
              *  @param attr.attaproc.prop {String} 属性
              *  @param attr.attaproc.src {String} 源数据
@@ -995,6 +1002,7 @@ a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escap
                                 control: "select",
                                 options: options,
                                 order: order,
+                                value:control.value,
                                 disabled: control.disabled ? "disabled" : ""
                             };
                         }
@@ -1058,7 +1066,7 @@ a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escap
              * @support: ie:>=10,chrome:all,firefox:all
              */
             init: function(wrapper, json, options) {
-                options = this._setOptions(options);
+                this.options = options = this._setOptions(options);
                 var self = this;
                 var initRemoveAnchor = function(removeAnchor) {
                     removeAnchor.addEventListener("click", function() {
@@ -1125,7 +1133,7 @@ a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escap
                                     var focusElem = null;
                                     while (elems.length) {
                                         last = elems[0];
-                                        if (!focusElem) {focusElem = last.querySelector("input");}
+                                        if (!focusElem) {focusElem = last.querySelector('input');}
                                         ul.insertBefore(elems[0], br);
                                     }
                                     //焦点元素
@@ -1142,22 +1150,30 @@ a("formPanelTemplate",function(a){"use strict";var b=this,c=(b.$helpers,b.$escap
                 }
 
                 //初始化表单数组
-                var controls = wrapper.querySelectorAll(".form-array-li");
+                var controls = wrapper.querySelectorAll('.form-array-li');
                 for (i = 0; i < controls.length; i++) {
                     initFormArrayItem(controls[i]);
                 }
                 //初始化详情按钮
-                var details = wrapper.querySelectorAll(".form-item-detail");
+                var details = wrapper.querySelectorAll('.form-item-detail');
                 for (i = 0; i < details.length; i++) {
-                    var key = details[i].getAttribute("for").replace(/formitem-/, "");
+                    var key = details[i].getAttribute('for').replace(/formitem-/, '');
                     var val = json[key];
                     if (val.onclick) {
-                        details[i].addEventListener("click", function() {
-                            val.onclick.call(this, JSON.parse(decodeURIComponent(this.getAttribute("data-mf-val"))));
+                        details[i].addEventListener('click', function() {
+                            val.onclick.call(this, JSON.parse(decodeURIComponent(this.getAttribute('data-mf-val'))));
                         });
                     }
                 }
 
+                //初始化面板按钮
+                var buttons = wrapper.querySelectorAll('.form-panel button');
+                for(i=0;i<buttons.length;i++){
+                    var b = buttons[i];
+                    if(options.buttons[i].onclick){
+                        b.addEventListener('click',options.buttons[i].onclick);
+                    }
+                }
                 return this;
             }
         };
